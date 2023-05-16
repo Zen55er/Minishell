@@ -1,39 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/16 13:20:57 by gacorrei         ###   ########.fr       */
+/*   Created: 2022/11/01 14:07:09 by gacorrei          #+#    #+#             */
+/*   Updated: 2022/11/09 12:11:21 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(void)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*input;
-	char	**tokens;
+	int		i;
+	int		l1;
+	int		l2;
+	int		tl;
+	char	*new;
 
-	tokens = 0;
-	signal_global();
-	while (1)
+	if (!s1 || !s2)
+		return (0);
+	i = 0;
+	l1 = ft_strlen(s1);
+	l2 = ft_strlen(s2);
+	tl = l1 + l2 + 1;
+	new = malloc(tl);
+	if (!new)
+		return (NULL);
+	while (i < tl)
 	{
-		input = readline("minishel> ");
-		if (!input)
-			break ;
-		if (!ft_strncmp(input, "quit", ft_strlen(input)))
-		{
-			free(input);
-			break ;
-		}
-		tokens = lexer(input);
-		free_tokens(tokens);
-		tokens = 0;
-		free(input);
+		if (i < l1)
+			new[i] = s1[i];
+		else
+			new[i] = s2[i - l1];
+		i++;
 	}
-	free_tokens(tokens);
-	return (0);
+	return (new);
 }

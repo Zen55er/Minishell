@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/16 13:20:57 by gacorrei         ###   ########.fr       */
+/*   Created: 2022/11/01 10:27:41 by gacorrei          #+#    #+#             */
+/*   Updated: 2022/11/09 11:58:51 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(void)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	char	*input;
-	char	**tokens;
+	size_t		i;
+	char		*new_d;
+	char		*new_s;
 
-	tokens = 0;
-	signal_global();
-	while (1)
+	if (!dest && !src)
+		return (NULL);
+	i = 0;
+	new_d = (char *) dest;
+	new_s = (char *) src;
+	while (i < n)
 	{
-		input = readline("minishel> ");
-		if (!input)
-			break ;
-		if (!ft_strncmp(input, "quit", ft_strlen(input)))
-		{
-			free(input);
-			break ;
-		}
-		tokens = lexer(input);
-		free_tokens(tokens);
-		tokens = 0;
-		free(input);
+		new_d[i] = new_s[i];
+		i++;
 	}
-	free_tokens(tokens);
-	return (0);
+	return (dest);
 }

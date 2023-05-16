@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/16 13:20:57 by gacorrei         ###   ########.fr       */
+/*   Created: 2023/05/16 12:48:32 by gacorrei          #+#    #+#             */
+/*   Updated: 2023/05/16 13:18:01 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+void	free_tokens(char **tokens)
 {
-	char	*input;
-	char	**tokens;
+	int	i;
 
-	tokens = 0;
-	signal_global();
-	while (1)
-	{
-		input = readline("minishel> ");
-		if (!input)
-			break ;
-		if (!ft_strncmp(input, "quit", ft_strlen(input)))
-		{
-			free(input);
-			break ;
-		}
-		tokens = lexer(input);
-		free_tokens(tokens);
-		tokens = 0;
-		free(input);
-	}
-	free_tokens(tokens);
-	return (0);
+	if (!tokens)
+		return ;
+	i = -1;
+	while (tokens[++i])
+		free(tokens[i]);
+	free(tokens);
 }

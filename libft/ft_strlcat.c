@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/16 13:20:57 by gacorrei         ###   ########.fr       */
+/*   Created: 2022/11/01 10:21:59 by gacorrei          #+#    #+#             */
+/*   Updated: 2022/11/09 11:54:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(void)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	char	*input;
-	char	**tokens;
+	size_t	i;
+	size_t	ls;
+	size_t	ld;
 
-	tokens = 0;
-	signal_global();
-	while (1)
+	if (!dst && !size)
+		return (0);
+	i = 0;
+	ls = ft_strlen(src);
+	ld = ft_strlen(dst);
+	if (size <= ld)
+		return (size + ls);
+	while (src[i] && ld + 1 + i < size)
 	{
-		input = readline("minishel> ");
-		if (!input)
-			break ;
-		if (!ft_strncmp(input, "quit", ft_strlen(input)))
-		{
-			free(input);
-			break ;
-		}
-		tokens = lexer(input);
-		free_tokens(tokens);
-		tokens = 0;
-		free(input);
+		dst[ld + i] = src[i];
+		i++;
 	}
-	free_tokens(tokens);
-	return (0);
+	dst[ld + i] = '\0';
+	return (ls + ld);
 }

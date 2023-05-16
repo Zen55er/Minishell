@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/16 13:20:57 by gacorrei         ###   ########.fr       */
+/*   Created: 2022/11/08 14:30:44 by gacorrei          #+#    #+#             */
+/*   Updated: 2022/11/11 11:27:54 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(void)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	char	*input;
-	char	**tokens;
+	t_list	*nlist;
+	t_list	*temp;
 
-	tokens = 0;
-	signal_global();
-	while (1)
+	if (!lst || !f || !del)
+		return (0);
+	nlist = 0;
+	while (lst)
 	{
-		input = readline("minishel> ");
-		if (!input)
-			break ;
-		if (!ft_strncmp(input, "quit", ft_strlen(input)))
+		temp = ft_lstnew(f(lst->content));
+		if (!temp)
 		{
-			free(input);
-			break ;
+			ft_lstclear(&nlist, del);
+			return (0);
 		}
-		tokens = lexer(input);
-		free_tokens(tokens);
-		tokens = 0;
-		free(input);
+		ft_lstadd_back(&nlist, temp);
+		lst = lst->next;
 	}
-	free_tokens(tokens);
-	return (0);
+	return (nlist);
 }

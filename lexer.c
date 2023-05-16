@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/16 13:20:57 by gacorrei         ###   ########.fr       */
+/*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
+/*   Updated: 2023/05/16 10:40:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+char	**lexer(char *input)
 {
-	char	*input;
 	char	**tokens;
 
-	tokens = 0;
-	signal_global();
-	while (1)
-	{
-		input = readline("minishel> ");
-		if (!input)
-			break ;
-		if (!ft_strncmp(input, "quit", ft_strlen(input)))
-		{
-			free(input);
-			break ;
-		}
-		tokens = lexer(input);
-		free_tokens(tokens);
-		tokens = 0;
-		free(input);
-	}
-	free_tokens(tokens);
-	return (0);
+	tokens = ft_split(input, ' ');
+	printf("\n");
+	for (int i = 0; tokens[i]; i++)
+		printf("Token %i: %s\n", i, tokens[i]);
+	printf("\n");
+	return (tokens);
 }

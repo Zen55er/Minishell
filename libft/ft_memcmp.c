@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/16 13:20:57 by gacorrei         ###   ########.fr       */
+/*   Created: 2022/11/01 10:24:57 by gacorrei          #+#    #+#             */
+/*   Updated: 2022/11/11 11:29:43 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(void)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	char	*input;
-	char	**tokens;
+	size_t			i;
+	unsigned char	*ns1;
+	unsigned char	*ns2;
 
-	tokens = 0;
-	signal_global();
-	while (1)
+	i = 0;
+	ns1 = (unsigned char *) s1;
+	ns2 = (unsigned char *) s2;
+	while (i < n)
 	{
-		input = readline("minishel> ");
-		if (!input)
-			break ;
-		if (!ft_strncmp(input, "quit", ft_strlen(input)))
+		if (ns1[i] != ns2[i])
 		{
-			free(input);
-			break ;
+			return (ns1[i] - ns2[i]);
 		}
-		tokens = lexer(input);
-		free_tokens(tokens);
-		tokens = 0;
-		free(input);
+		i++;
 	}
-	free_tokens(tokens);
 	return (0);
 }

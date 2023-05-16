@@ -1,39 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/16 13:20:57 by gacorrei         ###   ########.fr       */
+/*   Created: 2022/11/03 11:01:05 by gacorrei          #+#    #+#             */
+/*   Updated: 2022/11/03 15:50:38 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(void)
+void	ft_putnbr_fd(int n, int fd)
 {
-	char	*input;
-	char	**tokens;
+	int		nbr;
+	char	nbrc;
 
-	tokens = 0;
-	signal_global();
-	while (1)
+	nbr = n;
+	if (nbr == -2147483648)
 	{
-		input = readline("minishel> ");
-		if (!input)
-			break ;
-		if (!ft_strncmp(input, "quit", ft_strlen(input)))
-		{
-			free(input);
-			break ;
-		}
-		tokens = lexer(input);
-		free_tokens(tokens);
-		tokens = 0;
-		free(input);
+		write(fd, "-2", 2);
+		nbr = 147483648;
 	}
-	free_tokens(tokens);
-	return (0);
+	if (nbr < 0)
+	{
+		nbr *= -1;
+		write(fd, "-", 1);
+	}
+	if (nbr < 10)
+	{
+		nbrc = nbr + '0';
+		write(fd, &nbrc, 1);
+	}
+	else
+	{
+		ft_putnbr_fd(nbr / 10, fd);
+		ft_putnbr_fd(nbr % 10, fd);
+	}
+	return ;
 }

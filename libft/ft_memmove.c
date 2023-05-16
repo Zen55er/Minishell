@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/16 13:20:57 by gacorrei         ###   ########.fr       */
+/*   Created: 2022/11/01 10:24:20 by gacorrei          #+#    #+#             */
+/*   Updated: 2022/11/09 11:59:43 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(void)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	char	*input;
-	char	**tokens;
+	size_t			i;
+	unsigned char	*ndest;
+	unsigned char	*nsrc;
 
-	tokens = 0;
-	signal_global();
-	while (1)
+	i = 0;
+	ndest = (unsigned char *) dest;
+	nsrc = (unsigned char *) src;
+	while (ndest < nsrc && i < n)
 	{
-		input = readline("minishel> ");
-		if (!input)
-			break ;
-		if (!ft_strncmp(input, "quit", ft_strlen(input)))
-		{
-			free(input);
-			break ;
-		}
-		tokens = lexer(input);
-		free_tokens(tokens);
-		tokens = 0;
-		free(input);
+		ndest[i] = nsrc[i];
+		i++;
 	}
-	free_tokens(tokens);
-	return (0);
+	while (ndest > nsrc && n > 0)
+	{
+		ndest[n - 1] = nsrc[n - 1];
+		n--;
+	}
+	return (dest);
 }
