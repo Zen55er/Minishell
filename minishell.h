@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/16 13:16:37 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/17 10:33:51 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@
 
 
 /*lexer.c*/
+int		quote_finder(char *str);
+int		count_tokens(char *str);
+void	set_tokens(char **tokens, char *str);
 char	**lexer(char *input);
 
 /*signals.c*/

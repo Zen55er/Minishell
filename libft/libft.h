@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:00:02 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/02/27 13:24:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/17 09:13:29 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_list
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isascii(int c);
+int		ft_isspace(int c);
 int		ft_isdigit(int c);
 int		ft_isprint(int c);
 int		ft_toupper(int c);
