@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/16 13:20:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/17 11:33:10 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,9 @@ int	main(void)
 	signal_global();
 	while (1)
 	{
-		input = readline("minishel> ");
+		input = readline("minishell> ");
 		if (!input)
 			break ;
-		if (!ft_strncmp(input, "quit", ft_strlen(input)))
-		{
-			free(input);
-			break ;
-		}
 		tokens = lexer(input);
 		free_tokens(tokens);
 		tokens = 0;

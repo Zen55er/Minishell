@@ -6,11 +6,21 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/17 10:49:58 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/17 12:26:04 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	skip_space(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && ft_isspace(str[i]))
+		i++;
+	return (i);
+}
 
 int	quote_finder(char *str)
 {
@@ -36,20 +46,22 @@ int	count_tokens(char *str)
 
 	i = 0;
 	tok_num = 0;
-	while (str[i++])
+	while (str[i])
 	{
-		while (str[i] && ft_isspace(str[i]))
-			i++;
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			j = quote_finder(&str[i]);
-			if (!j)
-				return (-1);
-			tok_num++;
-			i += j + 1;
-		}
+		i += skip_space(&str[i]);
 		while (str[i] && !ft_isspace(str[i]))
+		{
+			if (str[i] == '\'' || str[i] == '\"')
+			{
+				j = quote_finder(&str[i]);
+				if (!j)
+					return (-1);
+				if (j > 1)
+					tok_num++;
+				i += j;
+			}
 			i++;
+		}
 		if (!ft_isspace(str[i - 1]) && str[i - 1] != '\'' && str[i - 1] != '\"')
 			tok_num++;
 	}
@@ -71,7 +83,7 @@ void	set_tokens(char **tokens, char *str)
 		if (str[i] == '\'' || str[i] == '\"')
 		{
 			j = quote_finder(&str[i]);
-			tokens[++k] = ft_substr(str, i, j);
+			tokens[++k] = ft_substr(str, i, j + 1);
 			i += j + 1;
 		}
 		j = 0;
@@ -89,19 +101,15 @@ char	**lexer(char *input)
 {
 	char	**tokens;
 	int		i;
-	int		j;
 	int		tok_num;
 
 	i = -1;
-	j = -1;
 	tok_num = count_tokens(input);
-	if (tok_num == -1)
+	if (tok_num <= 0)
 		return (0);
 	tokens = (char **)malloc(sizeof(char *) * (tok_num + 1));
 	set_tokens(tokens, input);
-	printf("\n");
 	for (int i = 0; tokens[i]; i++)
 		printf("Token %i: :%s:\n", i, tokens[i]);
-	printf("\n");
 	return (tokens);
 }
