@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/18 08:57:35 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/18 09:40:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	quote_case(char *str, int *tok_num, int i)
 	{
 		j = quote_finder(&str[i]);
 		if (!j)
-			return (-1);
+			return (0);
 		(*tok_num)++;
 		i += j + 1;
 		return (i);
@@ -56,7 +56,11 @@ int	count_tokens(char *str)
 		while (str[i] && ft_isspace(str[i]))
 			i++;
 		while (str[i] && !ft_isspace(str[i]))
+		{
 			i = quote_case(str, &tok_num, i);
+			if (!i)
+				return (-1);
+		}
 		if (!ft_isspace(str[i - 1]) && str[i - 1] != '\'' && str[i - 1] != '\"')
 			tok_num++;
 	}
