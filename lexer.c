@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/18 13:17:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/18 16:10:27 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	quote_case(char *str, int i, int flag)
 	char	find;
 
 	find = 0;
+	j = 0;
 	if (str[i] == '\'' || str[i] == '\"' || str[i] == '(' || str[i] == '{')
 	{
 		get_find(&str[i], &find);
@@ -70,7 +71,10 @@ int	quote_case(char *str, int i, int flag)
 		printf("Found unopened parenthesis: %s\n", str);
 		return (0);
 	}
-	return (++i);
+	if (flag == 0)
+		return (++i);
+	else
+		return (++j);
 }
 
 /*Checks for characters that should not be interpreted*/
@@ -117,7 +121,7 @@ int	count_tokens(char *str)
 
 /*Places input tokens in 2d array for parser to analyse.
 Ignores whitepaces between tokens*/
-void	set_tokens(char **tokens, char *s)
+/* void	set_tokens(char **tokens, char *s)
 {
 	int		i;
 	int		j;
@@ -138,10 +142,61 @@ void	set_tokens(char **tokens, char *s)
 		j = 0;
 		while (s[i + j] && !ft_isspace(s[i + j]))
 			j++;
-		if (!j)
-			continue ;
-		tokens[++k] = ft_substr(s, i, j);
-		i += j;
+		if (j)
+		{
+			tokens[++k] = ft_substr(s, i, j);
+			i += j;
+		}
+	}
+	tokens[++k] = 0;
+} */
+
+int	delim(char *str)
+{
+	int	i;
+
+	i = 0;
+	/*CHECK FOR FUNCTIONS IN LIBFT THAT DO THIS*/
+	if ((str[i] == '|' && str[i + 1] != '|')
+		|| (str[i] == '>' && str[i + 1] != '>')
+		|| (str[i] == '<' && str[i + 1] != '<')
+		|| str[i] == '$')
+		return (1);
+	if ((str[i] == '|' && str[i + 1] == '|')
+		|| (str[i] == '>' && str[i + 1] == '>')
+		|| (str[i] == '<' && str[i + 1] == '<'))
+		return (2);
+	return (0);
+}
+
+void	set_tokens(char **tokens, char *s)
+{
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	k = -1;
+	while (s[i])
+	{
+		while (s[i] && ft_isspace(s[i]))
+			i++;
+		while (s[i + j] && !ft_isspace(s[i + j]))
+		{
+			/*CHECK THIS!!!*/
+			j = delim(&s[i]);
+			if (j)
+			{
+				tokens[++k] = ft_substr(s, i, j);
+				continue ;
+			}
+			else
+			{
+				j = quote_case(&s[i], i, 1);
+				tokens[++k] = ft_substr(s, i, j);
+			}
+			i += j + 1;
+		}
 	}
 	tokens[++k] = 0;
 }
