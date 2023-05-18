@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/18 11:18:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/18 13:17:56 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,20 @@ int	char_finder(char *str, char c)
 	}
 	if (c == '\'' || c == '\"')
 		printf("Found unclosed quotes: %s\n", str);
-	else if (c == ')')
+	else if (c == ')' || c == '}')
 		printf("Found unclosed parenthesis: %s\n", str);
 	return (0);
+}
+
+/*Sets find value*/
+void	get_find(char *str, char *find)
+{
+	if (str[0] == '\'' || str[0] == '\"')
+		*find = str[0];
+	else if (str[0] == '(')
+		*find = ')';
+	else if (str[0] == '{')
+		*find = '}';
 }
 
 /*If str[i] is a quote or parenthesis, calls char_finder to check
@@ -42,12 +53,9 @@ int	quote_case(char *str, int i, int flag)
 	char	find;
 
 	find = 0;
-	if (str[i] == '\'' || str[i] == '\"' || str[i] == '(')
+	if (str[i] == '\'' || str[i] == '\"' || str[i] == '(' || str[i] == '{')
 	{
-		if (str[i] == '\'' || str[i] == '\"')
-			find = str[i];
-		else if (str[i] == '(')
-			find = ')';
+		get_find(&str[i], &find);
 		j = char_finder(&str[i], find);
 		if (!j)
 			return (0);
@@ -57,12 +65,24 @@ int	quote_case(char *str, int i, int flag)
 		else
 			return (j);
 	}
-	if (str[i] == ')')
+	if (str[i] == ')' || str[i] == '}')
 	{
 		printf("Found unopened parenthesis: %s\n", str);
-		return (-1);
+		return (0);
 	}
 	return (++i);
+}
+
+/*Checks for characters that should not be interpreted*/
+int	forbidden(char *str)
+{
+	if (str[0] == '\\' || str[0] == ';' || str[0] == '[' || str[0] == ']'
+		|| str[0] == '^' || str[0] == '#')
+	{
+		printf("Found forbidden character: %s\n", str);
+		return (1);
+	}
+	return (0);
 }
 
 /*Counts tokens in input, taking into account quotes and parentheses*/
@@ -79,14 +99,17 @@ int	count_tokens(char *str)
 			i++;
 		while (str[i] && !ft_isspace(str[i]))
 		{
+			if (forbidden(&str[i]))
+				return (-1);
 			i = quote_case(str, i, 0);
 			if (!i)
 				return (-1);
-			if (str[i - 1] == '\'' || str[i - 1] == '\"' || str[i - 1] == ')')
+			if (str[i - 1] == '\'' || str[i - 1] == '\"'
+				|| str[i - 1] == ')' || str[i - 1] == '}')
 				tok_num++;
 		}
 		if (!ft_isspace(str[i - 1]) && str[i - 1] != '\'' && str[i - 1] != '\"'
-			&& str[i - 1] != ')')
+			&& str[i - 1] != ')' && str[i - 1] != '}')
 			tok_num++;
 	}
 	return (tok_num);
@@ -94,7 +117,7 @@ int	count_tokens(char *str)
 
 /*Places input tokens in 2d array for parser to analyse.
 Ignores whitepaces between tokens*/
-void	set_tokens(char **tokens, char *str)
+void	set_tokens(char **tokens, char *s)
 {
 	int		i;
 	int		j;
@@ -102,22 +125,22 @@ void	set_tokens(char **tokens, char *str)
 
 	i = 0;
 	k = -1;
-	while (str[i])
+	while (s[i])
 	{
-		while (str[i] && ft_isspace(str[i]))
+		while (s[i] && ft_isspace(s[i]))
 			i++;
-		while (str[i] == '\'' || str[i] == '\"' || str[i] == '(')
+		while (s[i] == '\'' || s[i] == '\"' || s[i] == '(' || s[i] == '}')
 		{
-			j = quote_case(str, i, 1);
-			tokens[++k] = ft_substr(str, i, j + 1);
+			j = quote_case(s, i, 1);
+			tokens[++k] = ft_substr(s, i, j + 1);
 			i += j + 1;
 		}
 		j = 0;
-		while (str[i + j] && !ft_isspace(str[i + j]))
+		while (s[i + j] && !ft_isspace(s[i + j]))
 			j++;
 		if (!j)
 			continue ;
-		tokens[++k] = ft_substr(str, i, j);
+		tokens[++k] = ft_substr(s, i, j);
 		i += j;
 	}
 	tokens[++k] = 0;
