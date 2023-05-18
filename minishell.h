@@ -6,13 +6,12 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/18 10:25:47 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/18 10:57:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
 
 # include "libft/libft.h"
 # include <stdio.h>
@@ -31,7 +30,6 @@
 # include <term.h>
 
 /*main.c*/
-
 
 /*lexer.c*/
 int		char_finder(char *str, char c);

@@ -6,12 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 10:57:25 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/17 11:33:43 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/18 11:20:03 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Changes ctrl+c (SIGINT) so that a new line is correctly displayed.*/
 void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
@@ -23,6 +24,7 @@ void	signal_handler(int sig)
 	}
 }
 
+/*Runs at start of minishell to capture ctrl+c and ctrl+\ signals.*/
 void	signal_global(void)
 {
 	signal(SIGINT, signal_handler);

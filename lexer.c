@@ -6,12 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/18 10:55:13 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/18 11:18:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Looks for c in str, if found returns how far from the start it is.
+If the char is not found, prints error message.*/
 int	char_finder(char *str, char c)
 {
 	int	i;
@@ -29,13 +31,24 @@ int	char_finder(char *str, char c)
 	return (0);
 }
 
+/*If str[i] is a quote or parenthesis, calls char_finder to check
+if it is closed correctly. Also checks for unopened parenthesis.
+If str[i] is none off the above simply increments i.
+With flag 0 returns i for main iterator (calls from count_tokens),
+with flag 1 returns j for distance from start (calls from set_tokens)*/
 int	quote_case(char *str, int i, int flag)
 {
-	int	j;
+	int		j;
+	char	find;
 
-	if (str[i] == '\'' || str[i] == '\"')
+	find = 0;
+	if (str[i] == '\'' || str[i] == '\"' || str[i] == '(')
 	{
-		j = char_finder(&str[i], str[i]);
+		if (str[i] == '\'' || str[i] == '\"')
+			find = str[i];
+		else if (str[i] == '(')
+			find = ')';
+		j = char_finder(&str[i], find);
 		if (!j)
 			return (0);
 		i += j + 1;
@@ -44,20 +57,15 @@ int	quote_case(char *str, int i, int flag)
 		else
 			return (j);
 	}
-	if (str[i] == '(')
+	if (str[i] == ')')
 	{
-		j = char_finder(&str[i], ')');
-		if (!j)
-			return (0);
-		i += j + 1;
-		if (flag == 0)
-			return (i);
-		else
-			return (j);
+		printf("Found unopened parenthesis: %s\n", str);
+		return (-1);
 	}
 	return (++i);
 }
 
+/*Counts tokens in input, taking into account quotes and parentheses*/
 int	count_tokens(char *str)
 {
 	int		i;
@@ -71,23 +79,21 @@ int	count_tokens(char *str)
 			i++;
 		while (str[i] && !ft_isspace(str[i]))
 		{
-			if (str[i] == ')')
-			{
-				printf("Found unopened parenthesis: %s\n", str);
-				return (-1);
-			}
 			i = quote_case(str, i, 0);
 			if (!i)
 				return (-1);
 			if (str[i - 1] == '\'' || str[i - 1] == '\"' || str[i - 1] == ')')
 				tok_num++;
 		}
-		if (!ft_isspace(str[i - 1]) && str[i - 1] != '\'' && str[i - 1] != '\"' && str[i - 1] != ')')
+		if (!ft_isspace(str[i - 1]) && str[i - 1] != '\'' && str[i - 1] != '\"'
+			&& str[i - 1] != ')')
 			tok_num++;
 	}
 	return (tok_num);
 }
 
+/*Places input tokens in 2d array for parser to analyse.
+Ignores whitepaces between tokens*/
 void	set_tokens(char **tokens, char *str)
 {
 	int		i;
@@ -117,6 +123,7 @@ void	set_tokens(char **tokens, char *str)
 	tokens[++k] = 0;
 }
 
+/*Calls functions to count and set tokens to send to parser.*/
 char	**lexer(char *input)
 {
 	char	**tokens;
