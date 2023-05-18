@@ -6,21 +6,11 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/17 12:26:04 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/18 08:57:35 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	skip_space(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && ft_isspace(str[i]))
-		i++;
-	return (i);
-}
 
 int	quote_finder(char *str)
 {
@@ -38,30 +28,35 @@ int	quote_finder(char *str)
 	return (0);
 }
 
+int	quote_case(char *str, int *tok_num, int i)
+{
+	int	j;
+
+	if (str[i] == '\'' || str[i] == '\"')
+	{
+		j = quote_finder(&str[i]);
+		if (!j)
+			return (-1);
+		(*tok_num)++;
+		i += j + 1;
+		return (i);
+	}
+	return (++i);
+}
+
 int	count_tokens(char *str)
 {
 	int		i;
-	int		j;
 	int		tok_num;
 
 	i = 0;
 	tok_num = 0;
 	while (str[i])
 	{
-		i += skip_space(&str[i]);
-		while (str[i] && !ft_isspace(str[i]))
-		{
-			if (str[i] == '\'' || str[i] == '\"')
-			{
-				j = quote_finder(&str[i]);
-				if (!j)
-					return (-1);
-				if (j > 1)
-					tok_num++;
-				i += j;
-			}
+		while (str[i] && ft_isspace(str[i]))
 			i++;
-		}
+		while (str[i] && !ft_isspace(str[i]))
+			i = quote_case(str, &tok_num, i);
 		if (!ft_isspace(str[i - 1]) && str[i - 1] != '\'' && str[i - 1] != '\"')
 			tok_num++;
 	}
