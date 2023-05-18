@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/18 08:44:51 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/18 10:25:47 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 
 
 /*lexer.c*/
-int		quote_finder(char *str);
-int		quote_case(char *str, int *tok_num, int i);
+int		char_finder(char *str, char c);
+int		quote_case(char *str, int i, int flag);
 int		count_tokens(char *str);
 void	set_tokens(char **tokens, char *str);
 char	**lexer(char *input);

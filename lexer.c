@@ -6,40 +6,54 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/18 09:40:46 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/18 10:55:13 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	quote_finder(char *str)
+int	char_finder(char *str, char c)
 {
 	int	i;
-	int	quote;
 
 	i = 0;
-	quote = str[i];
 	while (str[++i])
 	{
-		if (str[i] == quote)
+		if (str[i] == c)
 			return (i);
 	}
-	printf("Found unclosed quotes: %s\n", str);
+	if (c == '\'' || c == '\"')
+		printf("Found unclosed quotes: %s\n", str);
+	else if (c == ')')
+		printf("Found unclosed parenthesis: %s\n", str);
 	return (0);
 }
 
-int	quote_case(char *str, int *tok_num, int i)
+int	quote_case(char *str, int i, int flag)
 {
 	int	j;
 
 	if (str[i] == '\'' || str[i] == '\"')
 	{
-		j = quote_finder(&str[i]);
+		j = char_finder(&str[i], str[i]);
 		if (!j)
 			return (0);
-		(*tok_num)++;
 		i += j + 1;
-		return (i);
+		if (flag == 0)
+			return (i);
+		else
+			return (j);
+	}
+	if (str[i] == '(')
+	{
+		j = char_finder(&str[i], ')');
+		if (!j)
+			return (0);
+		i += j + 1;
+		if (flag == 0)
+			return (i);
+		else
+			return (j);
 	}
 	return (++i);
 }
@@ -57,11 +71,18 @@ int	count_tokens(char *str)
 			i++;
 		while (str[i] && !ft_isspace(str[i]))
 		{
-			i = quote_case(str, &tok_num, i);
+			if (str[i] == ')')
+			{
+				printf("Found unopened parenthesis: %s\n", str);
+				return (-1);
+			}
+			i = quote_case(str, i, 0);
 			if (!i)
 				return (-1);
+			if (str[i - 1] == '\'' || str[i - 1] == '\"' || str[i - 1] == ')')
+				tok_num++;
 		}
-		if (!ft_isspace(str[i - 1]) && str[i - 1] != '\'' && str[i - 1] != '\"')
+		if (!ft_isspace(str[i - 1]) && str[i - 1] != '\'' && str[i - 1] != '\"' && str[i - 1] != ')')
 			tok_num++;
 	}
 	return (tok_num);
@@ -79,9 +100,9 @@ void	set_tokens(char **tokens, char *str)
 	{
 		while (str[i] && ft_isspace(str[i]))
 			i++;
-		if (str[i] == '\'' || str[i] == '\"')
+		while (str[i] == '\'' || str[i] == '\"' || str[i] == '(')
 		{
-			j = quote_finder(&str[i]);
+			j = quote_case(str, i, 1);
 			tokens[++k] = ft_substr(str, i, j + 1);
 			i += j + 1;
 		}
