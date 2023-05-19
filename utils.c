@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:48:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/18 11:20:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/19 13:09:11 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	free_tokens(char **tokens)
 		return ;
 	i = -1;
 	while (tokens[++i])
-		free(tokens[i]);
+	{
+		if (tokens[i])
+			free(tokens[i]);
+	}
 	free(tokens);
 }
