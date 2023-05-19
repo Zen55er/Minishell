@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/17 11:33:10 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/19 09:39:30 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(void)
 			break ;
 		tokens = lexer(input);
 		free_tokens(tokens);
+		/*IS THIS NECESSARY?*/
 		tokens = 0;
 		free(input);
 	}

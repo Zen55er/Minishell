@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/18 16:10:27 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/19 12:23:04 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	quote_case(char *str, int i, int flag)
 		j = char_finder(&str[i], find);
 		if (!j)
 			return (0);
+		/*CHECK ITERATIONS, SHOULD IT STAY ON I + J OR GO TO THE NEXT?*/
 		i += j + 1;
 		if (flag == 0)
 			return (i);
@@ -71,6 +72,7 @@ int	quote_case(char *str, int i, int flag)
 		printf("Found unopened parenthesis: %s\n", str);
 		return (0);
 	}
+	/*CHECK ITERATIONS, SHOULD IT STAY ON I + J OR GO TO THE NEXT?*/
 	if (flag == 0)
 		return (++i);
 	else
@@ -86,6 +88,32 @@ int	forbidden(char *str)
 		printf("Found forbidden character: %s\n", str);
 		return (1);
 	}
+	return (0);
+}
+
+/*Checks if character is a delimiter*/
+int	delim(char *str)
+{
+	if ((str[0] == '|' && str[1] != '|')
+		|| (str[0] == '>' && str[1] != '>')
+		|| (str[0] == '<' && str[1] != '<')
+		|| str[0] == '$')
+		return (1);
+	if ((str[0] == '|' && str[1] == '|')
+		|| (str[0] == '>' && str[1] == '>')
+		|| (str[0] == '<' && str[1] == '<')
+		|| (str[0] == '&' && str[1] == '&'))
+		return (2);
+	return (0);
+}
+
+int	other(char *str)
+{
+	if (forbidden(&str[0]))
+		return (0);
+	if (!ft_isspace(str[0]))
+	/*NEEDS TO GO TO CORRECT PLACE, CAN'T GO 1 BY 1*/
+		return (1);
 	return (0);
 }
 
@@ -119,57 +147,26 @@ int	count_tokens(char *str)
 	return (tok_num);
 }
 
-/*Places input tokens in 2d array for parser to analyse.
-Ignores whitepaces between tokens*/
-/* void	set_tokens(char **tokens, char *s)
+/*FInds length of current token after determining its type*/
+int	tok_len(char *str, int i)
 {
-	int		i;
-	int		j;
-	int		k;
+	int	j;
 
-	i = 0;
-	k = -1;
-	while (s[i])
-	{
-		while (s[i] && ft_isspace(s[i]))
-			i++;
-		while (s[i] == '\'' || s[i] == '\"' || s[i] == '(' || s[i] == '}')
-		{
-			j = quote_case(s, i, 1);
-			tokens[++k] = ft_substr(s, i, j + 1);
-			i += j + 1;
-		}
-		j = 0;
-		while (s[i + j] && !ft_isspace(s[i + j]))
-			j++;
-		if (j)
-		{
-			tokens[++k] = ft_substr(s, i, j);
-			i += j;
-		}
-	}
-	tokens[++k] = 0;
-} */
-
-int	delim(char *str)
-{
-	int	i;
-
-	i = 0;
-	/*CHECK FOR FUNCTIONS IN LIBFT THAT DO THIS*/
-	if ((str[i] == '|' && str[i + 1] != '|')
-		|| (str[i] == '>' && str[i + 1] != '>')
-		|| (str[i] == '<' && str[i + 1] != '<')
-		|| str[i] == '$')
-		return (1);
-	if ((str[i] == '|' && str[i + 1] == '|')
-		|| (str[i] == '>' && str[i + 1] == '>')
-		|| (str[i] == '<' && str[i + 1] == '<'))
-		return (2);
+	j = delim(&str[i]);
+	if (j)
+		return (j);
+	j = quote_case(str, i, 1);
+	if (j)
+		return (j);
+	j = other(&str[i]);
+	if (j)
+		return (j);
 	return (0);
 }
 
-void	set_tokens(char **tokens, char *s)
+/*Places input tokens in 2d array for parser to analyse.
+Ignores whitepaces between tokens*/
+void	set_tokens(char **tokens, char *str)
 {
 	int		i;
 	int		j;
@@ -177,26 +174,13 @@ void	set_tokens(char **tokens, char *s)
 
 	i = 0;
 	k = -1;
-	while (s[i])
+	while (str[i])
 	{
-		while (s[i] && ft_isspace(s[i]))
+		while (str[i] && ft_isspace(str[i]))
 			i++;
-		while (s[i + j] && !ft_isspace(s[i + j]))
-		{
-			/*CHECK THIS!!!*/
-			j = delim(&s[i]);
-			if (j)
-			{
-				tokens[++k] = ft_substr(s, i, j);
-				continue ;
-			}
-			else
-			{
-				j = quote_case(&s[i], i, 1);
-				tokens[++k] = ft_substr(s, i, j);
-			}
-			i += j + 1;
-		}
+		j = tok_len(str, i);
+		tokens[++k] = ft_substr(str, i, j);
+		i += j + 1;
 	}
 	tokens[++k] = 0;
 }
