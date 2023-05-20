@@ -26,10 +26,12 @@ void	free_tokens(char **tokens)
 	free(tokens);
 }
 
-void	free_all(char *input, char **tokens)
+void	free_all(char *input, char *input2, char **tokens)
 {
 	if (input)
 		free(input);
+	if (input2)
+		free(input2);
 	if (tokens)
 		free_tokens(tokens);
 	return ;

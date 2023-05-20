@@ -88,11 +88,11 @@ int	quote_case(char *str, int i)
 		j = char_finder(&str[i], find);
 		if (!j)
 			return (-1);
-		return (j);
+		return (++j);
 	}
 	if (str[i] == ')' || str[i] == '}')
 	{
-		printf("Found unopened parenthesis: %s\n", str);
+		printf("Found unopened parenthesis: %s\n", &str[i]);
 		return (-1);
 	}
 	return (0);
@@ -155,6 +155,8 @@ int	count_tokens(char *str)
 		if (j < 0)
 			return (0);
 		tok_num++;
+		/* if (!str[i + j])
+			break ; */
 		i += j;
 	}
 	return (tok_num);
@@ -181,6 +183,8 @@ void	set_tokens(char **tokens, char *str)
 			continue ;
 		else
 			tokens[++k] = ft_substr(str, i, j);
+		/* if (!str[i + j])
+			break ; */
 		i += j;
 	}
 	tokens[++k] = 0;

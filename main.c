@@ -15,6 +15,7 @@
 int	main(void)
 {
 	char	*input;
+	char	*input2;
 	char	**tokens;
 
 	tokens = 0;
@@ -24,10 +25,13 @@ int	main(void)
 		input = readline("minishell> ");
 		if (!input || !ft_strncmp(input, "exit", ft_strlen(input)))
 			break ;
+		input2 = ft_strtrim(input, " ");
+		add_history(input2);
 		tokens = lexer(input);
-		free_all(input, tokens);
+		free_all(input, input2, tokens);
+		input2 = 0;
 		tokens = 0;
 	}
-	free_all(input, tokens);
+	free_all(input, input2, tokens);
 	return (0);
 }

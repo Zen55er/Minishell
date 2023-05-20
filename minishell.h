@@ -46,5 +46,5 @@ void	signal_global(void);
 
 /*utils*/
 void	free_tokens(char **tokens);
-void	free_all(char *input, char **tokens);
+void	free_all(char *input, char *input2, char **tokens);
 #endif
