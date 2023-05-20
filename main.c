@@ -22,14 +22,12 @@ int	main(void)
 	while (1)
 	{
 		input = readline("minishell> ");
-		if (!input)
+		if (!input || !ft_strncmp(input, "exit", ft_strlen(input)))
 			break ;
 		tokens = lexer(input);
-		free_tokens(tokens);
-		/*IS THIS NECESSARY?*/
+		free_all(input, tokens);
 		tokens = 0;
-		free(input);
 	}
-	free_tokens(tokens);
+	free_all(input, tokens);
 	return (0);
 }

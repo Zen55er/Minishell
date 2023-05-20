@@ -87,21 +87,15 @@ int	quote_case(char *str, int i)
 		get_find(&str[i], &find);
 		j = char_finder(&str[i], find);
 		if (!j)
-			return (0);
+			return (-1);
 		return (j);
 	}
 	if (str[i] == ')' || str[i] == '}')
 	{
 		printf("Found unopened parenthesis: %s\n", str);
-		return (0);
+		return (-1);
 	}
 	return (0);
-}
-
-int	ft_isspace1(int c)
-{
-	return (c == ' ' || c == '\f' || c == '\n'
-		|| c == '\r' || c == '\t' || c == '\v');
 }
 
 /*Checks for length of remaining characters, excluding forbidden values,
@@ -114,8 +108,8 @@ int	other(char *str, int flag)
 	while (str[++i])
 	{
 		if (!flag && forbidden(&str[i]))
-			return (0);
-		if (!str[i] || ft_isspace1(str[i]) || str[i] == '$'
+			return (-1);
+		if (!str[i] || ft_isspace(str[i]) || str[i] == '$'
 			|| str[i] == '|' || str[i] == '&'
 			|| str[i] == '>' || str[i] == '<'
 			|| str[i] == '\'' || str[i] == '\"'
@@ -142,36 +136,7 @@ int	tok_len(char *str, int i, int flag)
 
 }
 
-/*Counts tokens in input, taking into account quotes and parentheses*/
-/* int	count_tokens(char *str)
-{
-	int		i;
-	int		tok_num;
-
-	i = 0;
-	tok_num = 0;
-	while (str[i])
-	{
-		while (str[i] && ft_isspace(str[i]))
-			i++;
-		while (str[i] && !ft_isspace(str[i]))
-		{
-			if (forbidden(&str[i]))
-				return (-1);
-			i = quote_case(str, i, 0);
-			if (!i)
-				return (-1);
-			if (str[i - 1] == '\'' || str[i - 1] == '\"'
-				|| str[i - 1] == ')' || str[i - 1] == '}')
-				tok_num++;
-		}
-		if (!ft_isspace(str[i - 1]) && str[i - 1] != '\'' && str[i - 1] != '\"'
-			&& str[i - 1] != ')' && str[i - 1] != '}')
-			tok_num++;
-	}
-	return (tok_num);
-} */
-
+/*Counts tokens in input, accounts for delimiters, quotes and parentheses*/
 int	count_tokens(char *str)
 {
 	int		i;
@@ -184,8 +149,10 @@ int	count_tokens(char *str)
 	{
 		while (str[i] && ft_isspace(str[i]))
 			i++;
+		if (!str[i])
+			break ;
 		j = tok_len(str, i, 0);
-		if (!j)
+		if (j < 0)
 			return (0);
 		tok_num++;
 		i += j;
@@ -207,10 +174,13 @@ void	set_tokens(char **tokens, char *str)
 	{
 		while (str[i] && ft_isspace(str[i]))
 			i++;
+		if (!str[i])
+			break ;
 		j = tok_len(str, i, 1);
-		if (!j)
-			return ;
-		tokens[++k] = ft_substr(str, i, j);
+		if (!j && ++i)
+			continue ;
+		else
+			tokens[++k] = ft_substr(str, i, j);
 		i += j;
 	}
 	tokens[++k] = 0;
@@ -220,10 +190,8 @@ void	set_tokens(char **tokens, char *str)
 char	**lexer(char *input)
 {
 	char	**tokens;
-	int		i;
 	int		tok_num;
 
-	i = -1;
 	tok_num = count_tokens(input);
 	if (tok_num <= 0)
 		return (0);

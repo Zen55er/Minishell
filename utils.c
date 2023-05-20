@@ -17,8 +17,6 @@ void	free_tokens(char **tokens)
 {
 	int	i;
 
-	if (!tokens)
-		return ;
 	i = -1;
 	while (tokens[++i])
 	{
@@ -26,4 +24,13 @@ void	free_tokens(char **tokens)
 			free(tokens[i]);
 	}
 	free(tokens);
+}
+
+void	free_all(char *input, char **tokens)
+{
+	if (input)
+		free(input);
+	if (tokens)
+		free_tokens(tokens);
+	return ;
 }
