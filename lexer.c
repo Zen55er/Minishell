@@ -75,7 +75,7 @@ int	count_tokens(char *str)
 
 /*Places input tokens in 2d array for parser to analyse.
 Ignores whitepaces between tokens*/
-->/*MAYBE KEEP 1 WHITESPACE BETWEEN STUFF?*/
+/*->MAYBE KEEP 1 WHITESPACE BETWEEN STUFF?*/
 void	set_tokens(char **tokens, char *str)
 {
 	int		i;

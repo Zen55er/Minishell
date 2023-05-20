@@ -29,9 +29,6 @@ int	main(void)
 		add_history(input2);
 		tokens = lexer(input);
 		free_all(input, input2, tokens);
-		input2 = 0;
-		tokens = 0;
 	}
-	free_all(input, input2, tokens);
 	return (0);
 }
