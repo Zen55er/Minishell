@@ -31,11 +31,15 @@
 
 /*main.c*/
 
-/*lexer.c*/
+/*utils_lexer.c*/
 int		char_finder(char *str, char c);
 void	get_find(char *str, char *find);
-int		quote_case(char *str, int i);
 int		forbidden(char *str);
+int		delim(char *str);
+int		quote_case(char *str);
+/*lexer.c*/
+int		other(char *str, int flag);
+int		tok_len(char *str, int i, int flag);
 int		count_tokens(char *str);
 void	set_tokens(char **tokens, char *str);
 char	**lexer(char *input);

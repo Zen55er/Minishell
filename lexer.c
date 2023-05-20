@@ -12,92 +12,6 @@
 
 #include "minishell.h"
 
-/*Looks for c in str, if found returns how far from the start it is.
-If the char is not found, prints error message.*/
-int	char_finder(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[++i])
-	{
-		if (str[i] == c)
-			return (i);
-	}
-	if (c == '\'' || c == '\"')
-		printf("Found unclosed quotes: %s\n", str);
-	else if (c == ')' || c == '}')
-		printf("Found unclosed parenthesis: %s\n", str);
-	return (0);
-}
-
-/*Sets find value*/
-void	get_find(char *str, char *find)
-{
-	if (str[0] == '\'' || str[0] == '\"')
-		*find = str[0];
-	else if (str[0] == '(')
-		*find = ')';
-	else if (str[0] == '{')
-		*find = '}';
-}
-
-/*Checks for characters that should not be interpreted*/
-int	forbidden(char *str)
-{
-	if (str[0] == '\\' || str[0] == ';' || str[0] == '[' || str[0] == ']'
-		|| str[0] == '^' || str[0] == '#')
-	{
-		printf("Found forbidden character: %s\n", str);
-		return (1);
-	}
-	return (0);
-}
-
-/*Checks if character is a delimiter*/
-int	delim(char *str)
-{
-	if ((str[0] == '|' && str[1] != '|')
-		|| (str[0] == '>' && str[1] != '>')
-		|| (str[0] == '<' && str[1] != '<')
-		|| str[0] == '$')
-		return (1);
-	if ((str[0] == '|' && str[1] == '|')
-		|| (str[0] == '>' && str[1] == '>')
-		|| (str[0] == '<' && str[1] == '<')
-		|| (str[0] == '&' && str[1] == '&'))
-		return (2);
-	return (0);
-}
-
-/*If str[i] is a quote or parenthesis, calls char_finder to check
-if it is closed correctly. Also checks for unopened parenthesis.
-If str[i] is none off the above simply increments i.
-With flag 0 returns i for main iterator (calls from count_tokens),
-with flag 1 returns j for distance from start (calls from set_tokens)*/
-int	quote_case(char *str, int i)
-{
-	int		j;
-	char	find;
-
-	find = 0;
-	j = 0;
-	if (str[i] == '\'' || str[i] == '\"' || str[i] == '(' || str[i] == '{')
-	{
-		get_find(&str[i], &find);
-		j = char_finder(&str[i], find);
-		if (!j)
-			return (-1);
-		return (++j);
-	}
-	if (str[i] == ')' || str[i] == '}')
-	{
-		printf("Found unopened parenthesis: %s\n", &str[i]);
-		return (-1);
-	}
-	return (0);
-}
-
 /*Checks for length of remaining characters, excluding forbidden values,
 delimiters, quotes and parentheses.*/
 int	other(char *str, int flag)
@@ -128,12 +42,11 @@ int	tok_len(char *str, int i, int flag)
 	j = delim(&str[i]);
 	if (j)
 		return (j);
-	j = quote_case(str, i);
+	j = quote_case(&str[i]);
 	if (j)
 		return (j);
 	j = other(&str[i], flag);
 	return (j);
-
 }
 
 /*Counts tokens in input, accounts for delimiters, quotes and parentheses*/
@@ -155,8 +68,6 @@ int	count_tokens(char *str)
 		if (j < 0)
 			return (0);
 		tok_num++;
-		/* if (!str[i + j])
-			break ; */
 		i += j;
 	}
 	return (tok_num);
@@ -164,6 +75,7 @@ int	count_tokens(char *str)
 
 /*Places input tokens in 2d array for parser to analyse.
 Ignores whitepaces between tokens*/
+->/*MAYBE KEEP 1 WHITESPACE BETWEEN STUFF?*/
 void	set_tokens(char **tokens, char *str)
 {
 	int		i;
@@ -183,8 +95,6 @@ void	set_tokens(char **tokens, char *str)
 			continue ;
 		else
 			tokens[++k] = ft_substr(str, i, j);
-		/* if (!str[i + j])
-			break ; */
 		i += j;
 	}
 	tokens[++k] = 0;
