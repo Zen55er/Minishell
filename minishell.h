@@ -29,7 +29,21 @@
 # include <curses.h>
 # include <term.h>
 
+typedef struct s_ll
+{
+	char			*content;
+	struct s_ll		*next;
+}					t_ll;
+
+typedef struct s_data
+{
+	char	**tokens;
+	t_ll	*env;
+	char	**path;
+}			t_data;
+
 /*main.c*/
+void	prep_env_path(t_data *data, char **envp);
 
 /*utils_lexer.c*/
 int		char_finder(char *str, char c);
@@ -37,6 +51,7 @@ void	get_find(char *str, char *find);
 int		forbidden(char *str);
 int		delim(char *str);
 int		quote_case(char *str);
+
 /*lexer.c*/
 int		other(char *str, int flag);
 int		tok_len(char *str, int i, int flag);
@@ -49,6 +64,13 @@ void	signal_handler(int sig);
 void	signal_global(void);
 
 /*utils*/
-void	free_tokens(char **tokens);
-void	free_all(char *input, char *input2, char **tokens);
+void	free_double(char **tokens);
+void	free_all(char *input, char *input2, t_data *data);
+
+/*utils_lists.c*/
+t_ll	*new_node(char *content);
+t_ll	*list_last(t_ll *list);
+void	node_add_front(t_ll **list, t_ll *node);
+void	node_add_back(t_ll **list, t_ll *node);
+
 #endif

@@ -12,23 +12,57 @@
 
 #include "minishell.h"
 
-int	main(void)
+/*Duplicates envp into a linked list and splits PATH into a 2d array*/
+void	prep_env_path(t_data *data, char **envp)
 {
+	int		i;
+
+	i = -1;
+	while (envp[++i])
+	{
+		node_add_back(&data->env, new_node(ft_strdup(envp[i])));
+		if (!ft_strncmp(envp[i], "PATH", 4))
+			data->path = ft_split(envp[i] + 5, ':');
+	}
+	/*DELETE AFTER TESTING BUT KEEP THE ENV WRITING FOR LATER*/
+	t_ll	*temp = data->env;
+	printf("\nEnvironment\n");
+	while (temp)
+	{
+		printf("%s\n", temp->content);
+		temp = temp->next;
+	}
+	printf("\nPATH\n");
+	i = -1;
+	while (data->path[++i])
+		printf("%s\n", data->path[i]);
+	return ;
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	t_data	data;
 	char	*input;
 	char	*input2;
-	char	**tokens;
 
-	tokens = 0;
+	(void) ac;
+	(void) av;
+	data.env = 0;
+	data.tokens = 0;
 	signal_global();
+	prep_env_path(&data, envp);
 	while (1)
 	{
 		input = readline("minishell> ");
-		if (!input || !ft_strncmp(input, "exit", ft_strlen(input)))
+		if (!input || !ft_strncmp(input, "exit", ft_strlen(input))/*SHOULD EXIT ALSO BE WRITTEN WHEN CLOSING WITH CTRL+D?*/)
 			break ;
 		input2 = ft_strtrim(input, " ");
 		add_history(input2);
-		tokens = lexer(input);
-		free_all(input, input2, tokens);
+		data.tokens = lexer(input);
+		free_all(input, input2, 0);
+		free_double(data.tokens);
+		data.tokens = 0;
 	}
+	free_all(0, 0, &data);
 	return (0);
 }
