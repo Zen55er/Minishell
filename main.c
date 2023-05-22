@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/19 09:39:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/22 11:40:26 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,11 @@ void	prep_env_path(t_data *data, char **envp)
 		if (!ft_strncmp(envp[i], "PATH", 4))
 			data->path = ft_split(envp[i] + 5, ':');
 	}
-	/*DELETE AFTER TESTING BUT KEEP THE ENV WRITING FOR LATER*/
-	t_ll	*temp = data->env;
-	printf("\nEnvironment\n");
-	while (temp)
-	{
-		printf("%s\n", temp->content);
-		temp = temp->next;
-	}
-	printf("\nPATH\n");
+	/*DELETE AFTER TESTING*/
+	/* printf("\nPATH\n");
 	i = -1;
 	while (data->path[++i])
-		printf("%s\n", data->path[i]);
+		printf("%s\n", data->path[i]); */
 	return ;
 }
 
@@ -59,6 +52,7 @@ int	main(int ac, char **av, char **envp)
 		input2 = ft_strtrim(input, " ");
 		add_history(input2);
 		data.tokens = lexer(input);
+		parser(&data);
 		free_all(input, input2, 0);
 		free_double(data.tokens);
 		data.tokens = 0;

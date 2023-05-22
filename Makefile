@@ -3,15 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+         #
+#    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 14:15:32 by gacorrei          #+#    #+#              #
-#    Updated: 2023/05/21 08:41:38 by gacorrei         ###   ########.fr        #
+#    Updated: 2023/05/22 11:09:38 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
-SRC			= main.c lexer.c signals.c utils.c utils_lexer.c utils_lists.c
+SRC			= main.c lexer.c signals.c utils.c utils_lexer.c utils_lists.c \
+			parser.c commands.c
 CC			= @cc
 LIBFT		= libft/libft.a
 LIBFT_DIR	= libft

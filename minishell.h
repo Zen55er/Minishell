@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/19 14:25:27 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/22 11:20:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ typedef struct s_data
 /*main.c*/
 void	prep_env_path(t_data *data, char **envp);
 
+/*lexer.c*/
+int		other(char *str, int flag);
+int		tok_len(char *str, int i, int flag);
+int		count_tokens(char *str);
+void	set_tokens(char **tokens, char *str);
+char	**lexer(char *input);
+
 /*utils_lexer.c*/
 int		char_finder(char *str, char c);
 void	get_find(char *str, char *find);
@@ -52,12 +59,12 @@ int		forbidden(char *str);
 int		delim(char *str);
 int		quote_case(char *str);
 
-/*lexer.c*/
-int		other(char *str, int flag);
-int		tok_len(char *str, int i, int flag);
-int		count_tokens(char *str);
-void	set_tokens(char **tokens, char *str);
-char	**lexer(char *input);
+/*parser.c*/
+int		command_check(t_data *data, char *input);
+void	parser(t_data *data);
+
+/*commands.c*/
+int		cmd_env(t_data *data);
 
 /*signals.c*/
 void	signal_handler(int sig);
