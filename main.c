@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/22 15:00:28 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:46:00 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	prep_env_path(t_data *data, char **envp)
 	i = -1;
 	while (envp[++i])
 	{
-		node_add_back(&data->env, new_node(ft_strdup(envp[i])));
+		node_add_back(&data->env, new_node(envp[i]));
 		if (!ft_strncmp(envp[i], "PATH", 4))
 			data->path = ft_split(envp[i] + 5, ':');
 	}

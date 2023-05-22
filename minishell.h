@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/22 11:20:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:01:56 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@
 
 typedef struct s_ll
 {
-	char			*content;
+	char			*var;
+	char			*value;
+	int				rank;
 	struct s_ll		*next;
 }					t_ll;
 
@@ -39,6 +41,7 @@ typedef struct s_data
 {
 	char	**tokens;
 	t_ll	*env;
+	t_ll	*export;
 	char	**path;
 }			t_data;
 

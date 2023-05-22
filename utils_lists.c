@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lists.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:46:39 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/21 09:09:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:57:48 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,17 @@
 t_ll	*new_node(char *content)
 {
 	t_ll	*node;
+	int		i;
 
+	i = 0;
+	while (content[i] && content[i] != '=')
+		i++;
 	node = malloc(sizeof(t_ll));
 	if (!node)
 		return (0);
-	node->content = content;
+	node->var = ft_substr(content, 0, i);
+	node->value = ft_substr(content, i + 1, ft_strlen(content) - i);
+	node->rank = 0;
 	node->next = 0;
 	return (node);
 }
