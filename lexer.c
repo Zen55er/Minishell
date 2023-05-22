@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/19 14:44:34 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/22 12:54:08 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	**lexer(char *input)
 		return (0);
 	tokens = (char **)malloc(sizeof(char *) * (tok_num + 1));
 	set_tokens(tokens, input);
-	for (int i = 0; tokens[i]; i++)
-		printf("Token %i: :%s:\n", i, tokens[i]);
+	/* for (int i = 0; tokens[i]; i++)
+		printf("Token %i: :%s:\n", i, tokens[i]); */
 	return (tokens);
 }

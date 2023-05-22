@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/22 11:24:14 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:15:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,12 @@ int	command_check(t_data *data, char *input)
 	if (!ft_strncmp(input, "env", ft_strlen(input)))
 		return (cmd_env(data));
 	if (!ft_strncmp(input, "exit", ft_strlen(input)))
-		return (1);
+	{
+		printf("exit\n");
+		rl_clear_history();
+		free_all(0, 0, data);
+		exit (1);
+	}
 	return (0);
 }
 

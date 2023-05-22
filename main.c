@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/22 11:40:26 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:00:28 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,28 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		input = readline("minishell> ");
-		if (!input || !ft_strncmp(input, "exit", ft_strlen(input))/*SHOULD EXIT ALSO BE WRITTEN WHEN CLOSING WITH CTRL+D?*/)
+		if (!input)
+		{
+			printf("exit\n");
 			break ;
+		}
+		if (!input[0])
+		{
+			free(input);
+			continue ;
+		}
 		input2 = ft_strtrim(input, " ");
 		add_history(input2);
 		data.tokens = lexer(input);
-		parser(&data);
 		free_all(input, input2, 0);
-		free_double(data.tokens);
+		if (data.tokens)
+		{
+			parser(&data);
+			free_double(data.tokens);
+		}
 		data.tokens = 0;
 	}
+	rl_clear_history();
 	free_all(0, 0, &data);
 	return (0);
 }
