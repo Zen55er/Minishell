@@ -27,24 +27,19 @@ void	dollar(t_data *data)
 int	command_check(t_data *data, char *input)
 {
 	if (!ft_strncmp(input, "echo", ft_strlen(input)))
-		return (1);
+		return (cmd_echo(data));
 	if (!ft_strncmp(input, "cd", ft_strlen(input)))
-		return (1);
+		return (cmd_cd(data));
 	if (!ft_strncmp(input, "pwd", ft_strlen(input)))
-		return (1);
+		return (cmd_pwd(data));
 	if (!ft_strncmp(input, "export", ft_strlen(input)))
-		return (1);
+		return (cmd_export(data, input));
 	if (!ft_strncmp(input, "unset", ft_strlen(input)))
-		return (1);
+		return (cmd_unset(data));
 	if (!ft_strncmp(input, "env", ft_strlen(input)))
 		return (cmd_env(data));
 	if (!ft_strncmp(input, "exit", ft_strlen(input)))
-	{
-		printf("exit\n");
-		rl_clear_history();
-		free_all(0, 0, data);
-		exit (1);
-	}
+		cmd_exit(data);
 	return (0);
 }
 

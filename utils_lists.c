@@ -41,6 +41,21 @@ t_ll	*list_last(t_ll *list)
 	return (list);
 }
 
+int	list_size(t_ll *list)
+{
+	int	n;
+
+	if (!list)
+		return (0);
+	n = 0;
+	while (list)
+	{
+		list = list->next;
+		n++;
+	}
+	return (n);
+}
+
 /*Adds node to the start of the list*/
 void	node_add_front(t_ll **list, t_ll *node)
 {
