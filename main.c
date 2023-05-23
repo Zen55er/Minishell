@@ -15,14 +15,19 @@
 /*Duplicates envp into a linked list and splits PATH into a 2d array*/
 void	prep_env_path(t_data *data, char **envp)
 {
-	int		i;
+	int	i;
+	int	flag;
 
 	i = -1;
+	flag = 0;
 	while (envp[++i])
 	{
-		node_add_back(&data->env, new_node(envp[i]));
-		if (!ft_strncmp(envp[i], "PATH", 4))
+		node_add_back(&data->env, new_node(envp[i], 1));
+		if (!flag && !ft_strncmp(envp[i], "PATH", 4))
+		{
 			data->path = ft_split(envp[i] + 5, ':');
+			flag = 1;
+		}
 	}
 	/*DELETE AFTER TESTING*/
 	/* printf("\nPATH\n");
@@ -41,6 +46,7 @@ int	main(int ac, char **av, char **envp)
 	(void) ac;
 	(void) av;
 	data.env = 0;
+	data.exp = 0;
 	data.tokens = 0;
 	signal_global();
 	prep_env_path(&data, envp);
@@ -57,6 +63,7 @@ int	main(int ac, char **av, char **envp)
 			free(input);
 			continue ;
 		}
+		/*DOUBLE CHECK THIS IN LINUX*/
 		input2 = ft_strtrim(input, " ");
 		add_history(input2);
 		data.tokens = lexer(input);

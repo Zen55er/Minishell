@@ -41,6 +41,7 @@ typedef struct s_data
 {
 	char	**tokens;
 	t_ll	*env;
+	t_ll	*exp;
 	char	**path;
 }			t_data;
 
@@ -62,19 +63,23 @@ int		delim(char *str);
 int		quote_case(char *str);
 
 /*parser.c*/
-int		command_check(t_data *data, char *input);
+int		command_check(t_data *data, char *input, int token);
 void	parser(t_data *data);
 
 /*commands.c*/
 int		cmd_echo(t_data *data);
 int		cmd_cd(t_data *data);
 int		cmd_pwd(t_data *data);
-void	rank_reset(t_ll *env);
-void	env_ranking(t_ll *env);
-int		cmd_export(t_data *data, char *input);
 int		cmd_unset(t_data *data);
 int		cmd_env(t_data *data);
 void	cmd_exit(t_data *data);
+
+/*export.c*/
+void	rank_reset(t_ll *env);
+void	env_ranking(t_ll *env);
+int		export_arg(t_data *data, int token);
+void	print_ordered(t_ll *list);
+int		cmd_export(t_data *data, int token);
 
 /*signals.c*/
 void	signal_handler(int sig);
@@ -85,7 +90,7 @@ void	free_double(char **tokens);
 void	free_all(char *input, char *input2, t_data *data);
 
 /*utils_lists.c*/
-t_ll	*new_node(char *content);
+t_ll	*new_node(char *content, int flag);
 t_ll	*list_last(t_ll *list);
 int		list_size(t_ll *list);
 void	node_add_front(t_ll **list, t_ll *node);

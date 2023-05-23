@@ -24,7 +24,7 @@ void	dollar(t_data *data)
 	return ;
 }
 
-int	command_check(t_data *data, char *input)
+int	command_check(t_data *data, char *input, int token)
 {
 	if (!ft_strncmp(input, "echo", ft_strlen(input)))
 		return (cmd_echo(data));
@@ -33,7 +33,7 @@ int	command_check(t_data *data, char *input)
 	if (!ft_strncmp(input, "pwd", ft_strlen(input)))
 		return (cmd_pwd(data));
 	if (!ft_strncmp(input, "export", ft_strlen(input)))
-		return (cmd_export(data, input));
+		return (cmd_export(data, token));
 	if (!ft_strncmp(input, "unset", ft_strlen(input)))
 		return (cmd_unset(data));
 	if (!ft_strncmp(input, "env", ft_strlen(input)))
@@ -54,7 +54,7 @@ void	parser(t_data *data)
 			redirection(data);
 		else if (!ft_strncmp(data->tokens[i], "$", ft_strlen(data->tokens[i])))
 			dollar(data);
-		command_check(data, data->tokens[i]);
+		command_check(data, data->tokens[i], i);
 	}
 	return ;
 }

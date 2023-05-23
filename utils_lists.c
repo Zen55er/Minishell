@@ -12,20 +12,29 @@
 
 #include "minishell.h"
 
-/*Creates a new node*/
-t_ll	*new_node(char *content)
+/*Creates a new node, if flag is 1 fills var and value,
+otherwise only fills var (for exporting variables without proper formatting)*/
+t_ll	*new_node(char *content, int flag)
 {
 	t_ll	*node;
 	int		i;
 
 	i = 0;
-	while (content[i] && content[i] != '=')
-		i++;
 	node = malloc(sizeof(t_ll));
 	if (!node)
 		return (0);
-	node->var = ft_substr(content, 0, i);
-	node->value = ft_substr(content, i + 1, ft_strlen(content) - i);
+	if (flag)
+	{
+		while (content[i] && content[i] != '=')
+			i++;
+		node->var = ft_substr(content, 0, i);
+		node->value = ft_substr(content, i + 1, ft_strlen(content) - i);
+	}
+	else
+	{
+		node->var = ft_strdup(content);
+		node->value = 0;
+	}
 	node->rank = 0;
 	node->next = 0;
 	return (node);
@@ -59,7 +68,6 @@ int	list_size(t_ll *list)
 /*Adds node to the start of the list*/
 void	node_add_front(t_ll **list, t_ll *node)
 {
-/*IS THIS EVEN USEFUL?*/
 	if (!node)
 		return ;
 	if (!list)
