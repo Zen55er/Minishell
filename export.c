@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/24 12:11:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/24 13:01:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ int	check_entry(t_data *data, t_ll *list, int tok, int i)
 	while (temp)
 	{
 		if (i >= (int)ft_strlen(temp->var))
-			len = (int)ft_strlen(data->tokens[tok]);
+			len = i;
 		else
 			len = (int)ft_strlen(temp->var);
 		if (!ft_strncmp(temp->var, data->tokens[tok], len))
 		{
-			/*HERE!!!*/
-			update_var();
+			if (temp->value)
+				free(temp->value);
+			temp->value = ft_substr(data->tokens[tok], i + 1,
+					ft_strlen(data->tokens[tok]) - i);
 			return (1);
 		}
 		temp = temp->next;
@@ -63,7 +65,7 @@ int	export_arg(t_data *data, int tok)
 		{
 			printf("export: '%c': not a valid identifier\n",
 				data->tokens[tok][0]);
-			return (0);
+			continue ;
 		}
 		i = char_finder(data->tokens[tok], '=');
 		if ((data->tokens[tok][0] == '_' && !data->tokens[tok][1])
@@ -73,35 +75,6 @@ int	export_arg(t_data *data, int tok)
 		add_to_exp(data, tok, i);
 	}
 	return (1);
-}
-
-/*Prints linked list in alphabetical order*/
-void	print_ordered(t_ll *list)
-{
-	int		i;
-	int		j;
-	t_ll	*temp;
-
-	i = -1;
-	j = list_size(list);
-	while (++i < j)
-	{
-		temp = list;
-		while (temp)
-		{
-			if (temp->rank == i)
-			{
-				printf("declare -x ");
-				printf("%s", temp->var);
-				if (temp->value)
-					printf("=\"%s\"\n", temp->value);
-				else
-					printf("\n");
-				break ;
-			}
-			temp = temp->next;
-		}
-	}
 }
 
 /*With no arguments simply prints env alphabetically,
