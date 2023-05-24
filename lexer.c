@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/22 12:54:08 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/24 09:14:47 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ int	count_tokens(char *str)
 
 /*Places input tokens in 2d array for parser to analyse.
 Ignores whitepaces between tokens*/
-/*->MAYBE KEEP 1 WHITESPACE BETWEEN STUFF?*/
 void	set_tokens(char **tokens, char *str)
 {
+/*->MAYBE KEEP 1 WHITESPACE BETWEEN STUFF?*/
 	int		i;
 	int		j;
 	int		k;

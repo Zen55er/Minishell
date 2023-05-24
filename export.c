@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/23 12:22:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/24 10:11:48 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ int	export_arg(t_data *data, int token)
 	int	j;
 
 	i = ++token;
-	if (delim(data->tokens[i]))
+	if (!data->tokens[i] || delim(data->tokens[i]))
 		return (0);
 	j = char_finder(data->tokens[token], '=');
 	if (j && data->tokens[token][j - 1] != '='
-		&& data->tokens[token][j - 1] != ' '
+		&& !ft_isspace(data->tokens[token][j - 1])
 		&& data->tokens[token][j + 1] != '='
-		&& data->tokens[token][j + 1] != ' ')
+		&& !ft_isspace(data->tokens[token][j + 1]))
 		node_add_front(&data->exp, new_node(data->tokens[token], 1));
 	else
 		node_add_front(&data->exp, new_node(data->tokens[token], 0));
@@ -88,8 +88,11 @@ void	print_ordered(t_ll *list)
 			if (temp->rank == i)
 			{
 				printf("declare -x ");
-				printf("%s=", temp->var);
-				printf("\"%s\"\n", temp->value);
+				printf("%s", temp->var);
+				if (temp->value)
+					printf("=\"%s\"\n", temp->value);
+				else
+					printf("\n");
 				break ;
 			}
 			temp = temp->next;
