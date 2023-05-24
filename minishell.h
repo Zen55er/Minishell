@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/22 16:01:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/24 09:12:00 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	signal_global(void);
 
 /*utils*/
 void	free_double(char **tokens);
-void	free_all(char *input, char *input2, t_data *data);
+void	free_all(char *input, t_data *data);
 
 /*utils_lists.c*/
 t_ll	*new_node(char *content, int flag);

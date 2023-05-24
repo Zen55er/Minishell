@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/22 15:46:00 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/24 09:12:24 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	main(int ac, char **av, char **envp)
 {
 	t_data	data;
 	char	*input;
-	char	*input2;
 
 	(void) ac;
 	(void) av;
@@ -63,11 +62,9 @@ int	main(int ac, char **av, char **envp)
 			free(input);
 			continue ;
 		}
-		/*DOUBLE CHECK THIS IN LINUX*/
-		input2 = ft_strtrim(input, " ");
-		add_history(input2);
+		add_history(input);
 		data.tokens = lexer(input);
-		free_all(input, input2, 0);
+		free_all(input, 0);
 		if (data.tokens)
 		{
 			parser(&data);
@@ -76,6 +73,6 @@ int	main(int ac, char **av, char **envp)
 		data.tokens = 0;
 	}
 	rl_clear_history();
-	free_all(0, 0, &data);
+	free_all(0, &data);
 	return (0);
 }

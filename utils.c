@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:48:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/22 16:01:26 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/24 09:11:51 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,10 @@ void	free_list(t_ll **list)
 }
 
 /*Frees everything*/
-void	free_all(char *input, char *input2, t_data *data)
+void	free_all(char *input, t_data *data)
 {
 	if (input)
 		free(input);
-	if (input2)
-		free(input2);
 	if (data && data->path)
 		free_double(data->path);
 	if (data && data->env)

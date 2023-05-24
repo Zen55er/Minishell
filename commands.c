@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/22 16:02:47 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/24 09:12:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ void	cmd_exit(t_data *data)
 {
 	printf("exit\n");
 	rl_clear_history();
-	free_all(0, 0, data);
+	free_all(0, data);
 	exit (1);
 }
