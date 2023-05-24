@@ -6,68 +6,72 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/24 10:11:48 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/24 12:11:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Sets ranks to 0*/
-void	rank_reset(t_ll *env)
+/*Checks if var is already in env*/
+int	check_entry(t_data *data, t_ll *list, int tok, int i)
 {
 	t_ll	*temp;
-
-	temp = env;
-	while (temp)
-	{
-		temp->rank = 0;
-		temp = temp->next;
-	}
-}
-
-/*Sets ranks for each entry in env for export function*/
-void	env_ranking(t_ll *env)
-{
 	int		len;
-	t_ll	*temp;
-	t_ll	*temp2;
 
-	rank_reset(env);
-	temp = env;
+	temp = list;
 	while (temp)
 	{
-		temp2 = env;
-		while (temp2)
+		if (i >= (int)ft_strlen(temp->var))
+			len = (int)ft_strlen(data->tokens[tok]);
+		else
+			len = (int)ft_strlen(temp->var);
+		if (!ft_strncmp(temp->var, data->tokens[tok], len))
 		{
-			if (ft_strlen(temp->var) >= ft_strlen(temp2->var))
-				len = ft_strlen(temp->var);
-			else
-				len = ft_strlen(temp2->var);
-			if (ft_strncmp(temp->var, temp2->var, len) > 0)
-				temp->rank++;
-			temp2 = temp2->next;
+			/*HERE!!!*/
+			update_var();
+			return (1);
 		}
 		temp = temp->next;
 	}
+	return (0);
+}
+
+/*Adds node to exp list taking into account if there is a value for var*/
+void	add_to_exp(t_data *data, int tok, int i)
+{
+	if (i && data->tokens[tok][i - 1] != '='
+		&& !ft_isspace(data->tokens[tok][i - 1])
+		&& data->tokens[tok][i + 1] != '='
+		&& !ft_isspace(data->tokens[tok][i + 1]))
+		node_add_front(&data->exp, new_node(data->tokens[tok], 1));
+	else
+		node_add_front(&data->exp, new_node(data->tokens[tok], 0));
 }
 
 /*Checks for argument formatting and updates exp*/
-int	export_arg(t_data *data, int token)
+int	export_arg(t_data *data, int tok)
 {
 	int	i;
-	int	j;
 
-	i = ++token;
-	if (!data->tokens[i] || delim(data->tokens[i]))
+	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1]))
 		return (0);
-	j = char_finder(data->tokens[token], '=');
-	if (j && data->tokens[token][j - 1] != '='
-		&& !ft_isspace(data->tokens[token][j - 1])
-		&& data->tokens[token][j + 1] != '='
-		&& !ft_isspace(data->tokens[token][j + 1]))
-		node_add_front(&data->exp, new_node(data->tokens[token], 1));
-	else
-		node_add_front(&data->exp, new_node(data->tokens[token], 0));
+	while (data->tokens[++tok])
+	{
+		if (delim(data->tokens[tok]))
+			break ;
+		if (!ft_isalpha(data->tokens[tok][0]) && data->tokens[tok][0] != '_')
+		{
+			printf("export: '%c': not a valid identifier\n",
+				data->tokens[tok][0]);
+			return (0);
+		}
+		i = char_finder(data->tokens[tok], '=');
+		if ((data->tokens[tok][0] == '_' && !data->tokens[tok][1])
+			|| check_entry(data, data->env, tok, i)
+			|| check_entry(data, data->exp, tok, i))
+			continue ;
+		add_to_exp(data, tok, i);
+	}
 	return (1);
 }
 
@@ -106,8 +110,8 @@ int	cmd_export(t_data *data, int token)
 {
 	if (export_arg(data, token))
 		return (1);
-	env_ranking(data->env);
-	env_ranking(data->exp);
+	list_ranking(data->env);
+	list_ranking(data->exp);
 	print_ordered(data->env);
 	print_ordered(data->exp);
 	return (0);

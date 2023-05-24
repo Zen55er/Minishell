@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/24 09:12:00 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/24 11:56:49 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int		cmd_env(t_data *data);
 void	cmd_exit(t_data *data);
 
 /*export.c*/
-void	rank_reset(t_ll *env);
-void	env_ranking(t_ll *env);
+int		check_entry(t_data *data, t_ll *list, int tok, int i);
+void	add_to_exp(t_data *data, int tok, int i);
 int		export_arg(t_data *data, int token);
 void	print_ordered(t_ll *list);
 int		cmd_export(t_data *data, int token);
@@ -86,6 +86,8 @@ void	signal_handler(int sig);
 void	signal_global(void);
 
 /*utils*/
+void	rank_reset(t_ll *env);
+void	list_ranking(t_ll *env);
 void	free_double(char **tokens);
 void	free_all(char *input, t_data *data);
 
