@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/24 13:01:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/24 13:53:21 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	check_entry(t_data *data, t_ll *list, int tok, int i)
 	temp = list;
 	while (temp)
 	{
+		if (!i)
+			i = ft_strlen(data->tokens[tok]);
 		if (i >= (int)ft_strlen(temp->var))
 			len = i;
 		else

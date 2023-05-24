@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/24 09:12:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/24 13:09:01 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ int	cmd_env(t_data *data)
 	temp = data->env;
 	/*ADD NEW LOGIC FROM EXPORT!!
 	PRINT EXP AFTER HOME*/
+	while (temp)
+	{
+		printf("%s=", temp->var);
+		printf("%s\n", temp->value);
+		temp = temp->next;
+	}
+	temp = data->exp;
 	while (temp)
 	{
 		printf("%s=", temp->var);
