@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/22 15:15:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/25 08:38:32 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	command_check(t_data *data, char *input, int token)
 	if (!ft_strncmp(input, "export", ft_strlen(input)))
 		return (cmd_export(data, token));
 	if (!ft_strncmp(input, "unset", ft_strlen(input)))
-		return (cmd_unset(data));
+		return (cmd_unset(data, token));
 	if (!ft_strncmp(input, "env", ft_strlen(input)))
 		return (cmd_env(data));
 	if (!ft_strncmp(input, "exit", ft_strlen(input)))

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/24 13:09:01 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/25 11:25:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,13 @@ int	cmd_pwd(t_data *data)
 	return (1);
 }
 
-int	cmd_unset(t_data *data)
-{
-	(void) data;
-	return (1);
-}
-
-/*Prints env linked list*/
+/*Prints env linked list and any exported variables at the end,
+in the same order they were created*/
 int	cmd_env(t_data *data)
 {
 	t_ll	*temp;
 
 	temp = data->env;
-	/*ADD NEW LOGIC FROM EXPORT!!
-	PRINT EXP AFTER HOME*/
 	while (temp)
 	{
 		printf("%s=", temp->var);
@@ -53,6 +46,11 @@ int	cmd_env(t_data *data)
 	temp = data->exp;
 	while (temp)
 	{
+		if (!temp->value)
+		{
+			temp = temp->next;
+			continue ;
+		}
 		printf("%s=", temp->var);
 		printf("%s\n", temp->value);
 		temp = temp->next;

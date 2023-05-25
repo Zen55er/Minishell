@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/24 12:48:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/25 09:44:34 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,19 @@ void	parser(t_data *data);
 int		cmd_echo(t_data *data);
 int		cmd_cd(t_data *data);
 int		cmd_pwd(t_data *data);
-int		cmd_unset(t_data *data);
 int		cmd_env(t_data *data);
 void	cmd_exit(t_data *data);
 
 /*export.c*/
 int		check_entry(t_data *data, t_ll *list, int tok, int i);
 void	add_to_exp(t_data *data, int tok, int i);
-int		export_arg(t_data *data, int token);
+int		export_arg(t_data *data, int tok);
 int		cmd_export(t_data *data, int token);
+
+/*unset.c*/
+int		unset_var(t_ll *list, int count);
+int		check_unset(t_data *data, t_ll *list, int token);
+int		cmd_unset(t_data *data, int tok);
 
 /*utils_export.c*/
 void	rank_reset(t_ll *env);
@@ -90,6 +94,7 @@ void	signal_handler(int sig);
 void	signal_global(void);
 
 /*utils*/
+int		len_compare(char *str1, char *str2);
 void	free_double(char **tokens);
 void	free_list(t_ll **list);
 void	free_all(char *input, t_data *data);

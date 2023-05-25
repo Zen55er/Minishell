@@ -6,11 +6,25 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:48:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/24 12:47:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/25 09:43:37 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Returns length of largest string*/
+int	len_compare(char *str1, char *str2)
+{
+	int	len1;
+	int	len2;
+
+	len1 = ft_strlen(str1);
+	len2 = ft_strlen(str2);
+	if (len1 >= len2)
+		return (len1);
+	else
+		return (len2);
+}
 
 /*Frees char***/
 void	free_double(char **array)
