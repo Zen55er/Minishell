@@ -6,15 +6,37 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/25 11:25:14 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/25 15:25:35 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	cmd_echo(t_data *data)
+int	cmd_echo(t_data *data, int tok)
 {
-	(void) data;
+	int	n_flag;
+	int	i;
+
+	n_flag = 0;
+	i = 0;
+	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1]))
+		return (0);
+	while (data->tokens[++tok] && ++i)
+	{
+		if (delim(data->tokens[tok]))
+			break ;
+		if (i == 1 && !ft_strncmp(data->tokens[tok], "-n", 2)
+			&& !data->tokens[tok][2])
+		{
+			n_flag = 1;
+			continue ;
+		}
+		printf("%s", data->tokens[tok]);
+		if (data->tokens[tok + 1] && !delim(data->tokens[tok + 1]))
+			printf(" ");
+	}
+	if (!n_flag)
+		printf("\n");
 	return (1);
 }
 

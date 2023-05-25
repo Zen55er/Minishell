@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/25 13:25:23 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:45:04 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int		command_check(t_data *data, char *input, int token);
 void	parser(t_data *data);
 
 /*commands.c*/
-int		cmd_echo(t_data *data);
+int		cmd_echo(t_data *data, int tok);
 int		cmd_cd(t_data *data);
 int		cmd_pwd(t_data *data);
 int		cmd_env(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/25 08:38:32 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:43:11 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	dollar(t_data *data)
 int	command_check(t_data *data, char *input, int token)
 {
 	if (!ft_strncmp(input, "echo", ft_strlen(input)))
-		return (cmd_echo(data));
+		return (cmd_echo(data, token));
 	if (!ft_strncmp(input, "cd", ft_strlen(input)))
 		return (cmd_cd(data));
 	if (!ft_strncmp(input, "pwd", ft_strlen(input)))
