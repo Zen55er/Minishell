@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/26 09:32:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/26 09:46:24 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,23 @@ int	cmd_echo(t_data *data, int tok)
 	return (1);
 }
 
-int	cmd_cd(t_data *data)
+int	cmd_cd(t_data *data, int token)
 {
-	(void) data;
-	return (1);
+	int	out;
+
+	token++;
+	if (data->tokens[token + 1] && !delim(data->tokens[token + 1]))
+	{
+		printf("cmd_cd: too many arguments\n");
+		return (1);
+	}
+	out = chdir(data->tokens[token]);
+	if (out)
+	{
+		perror("cmd_cd");
+		return (1);
+	}
+	return (0);
 }
 
 int	cmd_pwd(void)
