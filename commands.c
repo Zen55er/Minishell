@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/25 15:25:35 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/26 09:26:48 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,15 @@ int	cmd_cd(t_data *data)
 	return (1);
 }
 
-int	cmd_pwd(t_data *data)
+int	cmd_pwd(void)
 {
-	(void) data;
+	char	*path;
+
+	path = 0;
+	path = getcwd(path, 0);
+	if (path)
+		printf("%s\n", path);
+	free(path);
 	return (1);
 }
 
