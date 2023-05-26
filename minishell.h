@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/26 09:51:15 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:38:24 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@
 # include <curses.h>
 # include <term.h>
 # include <errno.h>
+
+# define CMD_ECHO 1
+# define CMD_CD 2
+# define CMD_PWD 3
+# define CMD_EXPORT 4
+# define CMD_UNSET 5
+# define CMD_ENV 6
+# define CMD_EXIT 7
 
 typedef struct s_ll
 {
@@ -64,7 +72,8 @@ int		delim(char *str);
 int		quote_case(char *str);
 
 /*parser.c*/
-int		command_check(t_data *data, char *input, int token);
+int		command_call(t_data *data, int token, int command);
+int		command_check(char *input);
 void	parser(t_data *data);
 
 /*commands.c*/
@@ -73,6 +82,9 @@ int		cmd_cd(t_data *data, int token);
 int		cmd_pwd(void);
 int		cmd_env(t_data *data);
 void	cmd_exit(t_data *data);
+
+/*normal_command.c*/
+int		normal_command(t_data *data, int token);
 
 /*export.c*/
 int		check_entry(t_data *data, t_ll *list, int tok, int i);

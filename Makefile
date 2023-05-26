@@ -6,13 +6,13 @@
 #    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 14:15:32 by gacorrei          #+#    #+#              #
-#    Updated: 2023/05/25 09:43:07 by gacorrei         ###   ########.fr        #
+#    Updated: 2023/05/26 11:36:44 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 SRC			= main.c lexer.c signals.c utils.c utils_lexer.c utils_lists.c \
-			parser.c commands.c export.c utils_export.c unset.c
+			parser.c commands.c export.c utils_export.c unset.c normal_command.c
 CC			= @cc
 LIBFT		= libft/libft.a
 LIBFT_DIR	= libft
