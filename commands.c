@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/26 09:26:48 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/26 09:32:56 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,13 @@ int	cmd_pwd(void)
 	path = 0;
 	path = getcwd(path, 0);
 	if (path)
+	{
 		printf("%s\n", path);
-	free(path);
-	return (1);
+		free(path);
+		return (1);
+	}
+	perror("cmd_pwd");
+	return (0);
 }
 
 /*Prints env linked list and any exported variables at the end,
