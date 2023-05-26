@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/26 11:01:51 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:04:19 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int ac, char **av, char **envp)
 		cwd = getcwd(cwd, 0);
 		temp = ft_strjoin("minishell:", cwd);
 		free(cwd);
-		cwd = ft_strjoin(temp, "$");
+		cwd = ft_strjoin(temp, "$ ");
 		free(temp);
 		input = readline(cwd);
 		free(cwd);
