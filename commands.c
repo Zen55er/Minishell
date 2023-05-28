@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+/*Prints arguments of echo, if -n flag is present, does not write newline*/
 int	cmd_echo(t_data *data, int tok)
 {
 	int	n_flag;
@@ -38,41 +39,6 @@ int	cmd_echo(t_data *data, int tok)
 	if (!n_flag)
 		printf("\n");
 	return (1);
-}
-
-int	cmd_cd(t_data *data, int token)
-{
-	int	out;
-
-	token++;
-	if (data->tokens[token + 1] && !delim(data->tokens[token + 1]))
-	{
-		printf("cmd_cd: too many arguments\n");
-		return (1);
-	}
-	out = chdir(data->tokens[token]);
-	if (out)
-	{
-		perror("cmd_cd");
-		return (1);
-	}
-	return (0);
-}
-
-int	cmd_pwd(void)
-{
-	char	*path;
-
-	path = 0;
-	path = getcwd(path, 0);
-	if (path)
-	{
-		printf("%s\n", path);
-		free(path);
-		return (1);
-	}
-	perror("cmd_pwd");
-	return (0);
 }
 
 /*Prints env linked list and any exported variables at the end,

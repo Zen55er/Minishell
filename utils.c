@@ -40,6 +40,7 @@ void	free_double(char **array)
 	free(array);
 }
 
+/*Fress linked list*/
 void	free_list(t_ll **list)
 {
 	t_ll	*temp;
@@ -67,5 +68,10 @@ void	free_all(char *input, t_data *data)
 		free_list(&data->env);
 	if (data && data->exp)
 		free_list(&data->exp);
+	if (data && data->curr_dir)
+	{
+		free(data->curr_dir);
+		free(data->prev_dir);
+	}
 	return ;
 }

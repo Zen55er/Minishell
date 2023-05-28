@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+/*Prepares cmds struct and sends it to execve*/
 int	normal_command(t_data *data, int token)
 {
 	char	**cmds;

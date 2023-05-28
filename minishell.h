@@ -52,10 +52,13 @@ typedef struct s_data
 	t_ll	*env;
 	t_ll	*exp;
 	char	**path;
+	char	*curr_dir;
+	char	*prev_dir;
 }			t_data;
 
 /*main.c*/
 void	prep_env_path(t_data *data, char **envp);
+char	*build_prompt(t_data *data);
 
 /*lexer.c*/
 int		other(char *str, int flag);
@@ -78,13 +81,17 @@ void	parser(t_data *data);
 
 /*commands.c*/
 int		cmd_echo(t_data *data, int tok);
-int		cmd_cd(t_data *data, int token);
-int		cmd_pwd(void);
 int		cmd_env(t_data *data);
 void	cmd_exit(t_data *data);
 
 /*normal_command.c*/
 int		normal_command(t_data *data, int token);
+
+/*directories*/
+void	update_curr_prev(t_data *data);
+char	*cd_cases(t_data *data, int token);
+int		cmd_cd(t_data *data, int token);
+int		cmd_pwd(t_data *data);
 
 /*export.c*/
 int		check_entry(t_data *data, t_ll *list, int tok, int i);

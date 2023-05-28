@@ -24,14 +24,15 @@ void	dollar(t_data *data)
 	return ;
 }
 
+/*Calls function to execute according to input*/
 int	command_call(t_data *data, int token, int command)
 {
-	if (command == ECHO)
+	if (command == CMD_ECHO)
 		return (cmd_echo(data, token));
 	if (command == CMD_CD)
 		return (cmd_cd(data, token));
 	if (command == CMD_PWD)
-		return (cmd_pwd());
+		return (cmd_pwd(data));
 	if (command == CMD_EXPORT)
 		return (cmd_export(data, token));
 	if (command == CMD_UNSET)
@@ -44,6 +45,7 @@ int	command_call(t_data *data, int token, int command)
 	return (0);
 }
 
+/*Checks if input matches specific functions*/
 int	command_check(char *input)
 {
 	if (!ft_strncmp(input, "echo", ft_strlen(input)))

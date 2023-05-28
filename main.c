@@ -29,38 +29,41 @@ void	prep_env_path(t_data *data, char **envp)
 			flag = 1;
 		}
 	}
-	/*DELETE AFTER TESTING*/
-	/* printf("\nPATH\n");
-	i = -1;
-	while (data->path[++i])
-		printf("%s\n", data->path[i]); */
 	return ;
+}
+
+/*Gets current working directory to display in prompt*/
+char	*build_prompt(t_data *data)
+{
+	char	*prompt;
+	char	*temp;
+
+	temp = ft_strjoin("minishell:", data->curr_dir);
+	prompt = ft_strjoin(temp, "$ ");
+	free(temp);
+	return (prompt);
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	t_data	data;
 	char	*input;
-	char	*temp;
-	char	*cwd;
+	char	*prompt;
 
 	(void) ac;
 	(void) av;
 	data.env = 0;
 	data.exp = 0;
 	data.tokens = 0;
+	data.curr_dir = 0;
 	signal_global();
+	update_curr_prev(&data);
 	prep_env_path(&data, envp);
 	while (1)
 	{
-		cwd = 0;
-		cwd = getcwd(cwd, 0);
-		temp = ft_strjoin("minishell:", cwd);
-		free(cwd);
-		cwd = ft_strjoin(temp, "$ ");
-		free(temp);
-		input = readline(cwd);
-		free(cwd);
+		prompt = build_prompt(&data);
+		input = readline(prompt);
+		free(prompt);
 		if (!input)
 		{
 			printf("exit\n");
@@ -73,7 +76,7 @@ int	main(int ac, char **av, char **envp)
 		}
 		add_history(input);
 		data.tokens = lexer(input);
-		free_all(input, 0);
+		free(input);
 		if (data.tokens)
 		{
 			parser(&data);
