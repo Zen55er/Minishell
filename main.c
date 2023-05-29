@@ -6,17 +6,19 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/26 11:04:19 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/29 16:01:13 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Duplicates envp into a linked list and splits PATH into a 2d array*/
+/*Duplicates envp into a linked list and splits PATH into a 2d array,
+adding / to the end*/
 void	prep_env_path(t_data *data, char **envp)
 {
-	int	i;
-	int	flag;
+	int		i;
+	int		flag;
+	char	*temp;
 
 	i = -1;
 	flag = 0;
@@ -28,6 +30,13 @@ void	prep_env_path(t_data *data, char **envp)
 			data->path = ft_split(envp[i] + 5, ':');
 			flag = 1;
 		}
+	}
+	i = -1;
+	while (data->path[++i])
+	{
+		temp = data->path[i];
+		data->path[i] = ft_strjoin(temp, "/");
+		free(temp);
 	}
 	return ;
 }
