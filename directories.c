@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   directories.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/28 12:37:49 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/29 10:20:48 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ char	*cd_cases(t_data *data, int token)
 {
 	char	*dir;
 
-	/*ADD CASE FOR cd and ~, NEED TO IMPLEMENT $ TO GET $HOME*/
-	/*ADD CASE FOR /, NEED CASE FOR ~*/
-	if (!ft_strncmp(data->tokens[token], "-", 2))
+	if (!ft_strncmp(data->tokens[token], "~", 2))
+		dir = find_var(data->env, "HOME");
+	else if (!ft_strncmp(data->tokens[token], "-", 2))
 	{
 		dir = data->prev_dir;
 		printf("%s\n", data->prev_dir);
