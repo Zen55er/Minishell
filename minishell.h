@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/26 11:38:24 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/29 10:11:52 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ int		delim(char *str);
 int		quote_case(char *str);
 
 /*parser.c*/
+void	redirection(t_data *data);
+char	*find_var(t_ll *list, char *str);
+void	dollar(t_data *data, int token);
 int		command_call(t_data *data, int token, int command);
 int		command_check(char *input);
 void	parser(t_data *data);

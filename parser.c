@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/26 11:38:53 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/29 10:09:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,31 @@ void	redirection(t_data *data)
 	return ;
 }
 
-void	dollar(t_data *data)
+char	*find_var(t_ll *list, char *str)
 {
-	(void) data;
+	t_ll	*temp;
+	int		len;
+
+	temp = list;
+	while (temp)
+	{
+		len = len_compare(str, temp->var);
+		if (!ft_strncmp(str, temp->var, len))
+			return (temp->value);
+		temp = temp->next;
+	}
+	return (0);
+}
+
+void	dollar(t_data *data, int token)
+{
+	char	*str;
+
+	token++;
+	str = find_var(data->env, data->tokens[token]);
+	if (!str)
+		str = find_var(data->exp, data->tokens[token]);
+	printf("%s\n", str);
 	return ;
 }
 
@@ -41,7 +63,7 @@ int	command_call(t_data *data, int token, int command)
 		return (cmd_env(data));
 	if (command == CMD_EXIT)
 		cmd_exit(data);
-	normal_command(data, token);
+	// normal_command(data, token);
 	return (0);
 }
 
@@ -76,9 +98,12 @@ void	parser(t_data *data)
 		if (!ft_strncmp(data->tokens[i], "<", ft_strlen(data->tokens[i])))
 			redirection(data);
 		else if (!ft_strncmp(data->tokens[i], "$", ft_strlen(data->tokens[i])))
-			dollar(data);
-		command = command_check(data->tokens[i]);
-		command_call(data, i, command);
+			dollar(data, i);
+		else
+		{
+			command = command_check(data->tokens[i]);
+			command_call(data, i, command);
+		}
 	}
 	return ;
 }
