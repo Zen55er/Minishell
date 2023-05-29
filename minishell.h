@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/29 10:11:52 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/29 16:22:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/history.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <dirent.h>
 # include <string.h>
 # include <sys/ioctl.h>
@@ -37,6 +38,12 @@
 # define CMD_UNSET 5
 # define CMD_ENV 6
 # define CMD_EXIT 7
+
+typedef struct s_cmds
+{
+	char	*cmd;
+	char	**cmd_args;
+}			t_cmds;
 
 typedef struct s_ll
 {
@@ -76,18 +83,19 @@ int		quote_case(char *str);
 
 /*parser.c*/
 void	redirection(t_data *data);
-char	*find_var(t_ll *list, char *str);
-void	dollar(t_data *data, int token);
 int		command_call(t_data *data, int token, int command);
 int		command_check(char *input);
 void	parser(t_data *data);
 
 /*commands.c*/
+char	*find_var(t_ll *list, char *str);
+void	dollar(t_data *data, int token);
 int		cmd_echo(t_data *data, int tok);
 int		cmd_env(t_data *data);
 void	cmd_exit(t_data *data);
 
 /*normal_command.c*/
+char	**prep_cmds(t_data *data, int token);
 int		normal_command(t_data *data, int token);
 
 /*directories*/
