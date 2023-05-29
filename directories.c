@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/29 10:20:48 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/29 16:47:47 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*cd_cases(t_data *data, int token)
 {
 	char	*dir;
 
-	if (!ft_strncmp(data->tokens[token], "~", 2))
+	if (!data->tokens[token] || !ft_strncmp(data->tokens[token], "~", 2))
 		dir = find_var(data->env, "HOME");
 	else if (!ft_strncmp(data->tokens[token], "-", 2))
 	{
