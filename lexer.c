@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/24 09:14:47 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/30 13:28:21 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	other(char *str, int flag)
 	{
 		if (!flag && forbidden(&str[i]))
 			return (-1);
-		if (!str[i] || ft_isspace(str[i]) || str[i] == '$'
+		if (!str[i] || ft_isspace(str[i])
 			|| str[i] == '|' || str[i] == '&'
 			|| str[i] == '>' || str[i] == '<'
 			|| str[i] == '\'' || str[i] == '\"'
@@ -111,7 +111,7 @@ char	**lexer(char *input)
 		return (0);
 	tokens = (char **)malloc(sizeof(char *) * (tok_num + 1));
 	set_tokens(tokens, input);
-	/* for (int i = 0; tokens[i]; i++)
-		printf("Token %i: :%s:\n", i, tokens[i]); */
+	for (int i = 0; tokens[i]; i++)
+		printf("Token %i: :%s:\n", i, tokens[i]);
 	return (tokens);
 }
