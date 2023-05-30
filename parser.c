@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/29 16:53:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:30:23 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ void	parser(t_data *data)
 	{
 		if (!ft_strncmp(data->tokens[i], "<", ft_strlen(data->tokens[i])))
 			redirection(data);
-		else if (!ft_strncmp(data->tokens[i], "$", ft_strlen(data->tokens[i])))
-			dollar(data, i);
 		else
 		{
 			command = command_check(data->tokens[i]);

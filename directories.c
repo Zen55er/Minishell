@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/29 16:47:47 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:35:29 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,21 @@ void	update_curr_prev(t_data *data)
 		free(temp);
 	}
 	return ;
+}
+
+/*Returns value of var from list, if it exists*/
+char	*find_var(t_ll *list, char *str)
+{
+	int		len;
+
+	while (list)
+	{
+		len = len_compare(list->var, str);
+		if (!ft_strncmp(list->var, str, len))
+			return (list->value);
+		list = list->next;
+	}
+	return (0);
 }
 
 /*Special cases for cd, ~ goes to $HOME, / goes 1 level above $HOME,

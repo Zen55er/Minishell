@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/29 16:22:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:35:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ int		command_check(char *input);
 void	parser(t_data *data);
 
 /*commands.c*/
-char	*find_var(t_ll *list, char *str);
-void	dollar(t_data *data, int token);
 int		cmd_echo(t_data *data, int tok);
 int		cmd_env(t_data *data);
 void	cmd_exit(t_data *data);
@@ -100,6 +98,7 @@ int		normal_command(t_data *data, int token);
 
 /*directories*/
 void	update_curr_prev(t_data *data);
+char	*find_var(t_ll *list, char *str);
 char	*cd_cases(t_data *data, int token);
 int		cmd_cd(t_data *data, int token);
 int		cmd_pwd(t_data *data);
