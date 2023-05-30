@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/30 11:30:23 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/30 13:39:34 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,51 @@ int	command_check(char *input)
 	return (0);
 }
 
-void	parser(t_data *data)
+/*Returns variable value, if it exists*/
+char	*expansion(t_data *data, char	*str)
+{
+	int		i;
+	char	*test;
+	char	*val;
+
+	i = 0;
+	while (str[++i] && str[i] != '$')
+		continue ;
+	if (i <= 1)
+		return (0); /*CHECK IF THIS IS OK*/
+	test = ft_substr(str, 1, i - 1);
+	if (!test)
+		return (0); /*CHECK IF THIS IS OK*/
+	val = find_var(data->env, test);
+	if (!val)
+		val = find_var(data->exp, test);
+	return (0);
+}
+
+/*Returns new string with text formatted according to quote type*/
+char	*quotes(char *str)
+{
+	(void) str;
+	return (0);
+}
+
+/*Parses cases with $ and quotes*/
+void	parser(t_data	*data)
+{
+	int	i;
+
+	return ;
+	i = -1;
+	while (data->tokens[++i])
+	{
+		if (data->tokens[i][0] == '$')
+			data->tokens[i] = expansion(data, data->tokens[i]);
+		else if (data->tokens[i][0] == '\'' || data->tokens[i][0] == '\"')
+			data->tokens[i] = quotes(data, data->tokens[i]);
+	}
+}
+
+void	executer(t_data *data)
 {
 	int	i;
 	int	command;
