@@ -59,6 +59,8 @@ int	command_check(char *input)
 	return (0);
 }
 
+/*Joins test to val if it exists after expanding variable
+or if it is just text*/
 char	*update_expansion(t_data *data, char *val, char **test)
 {
 	char	*temp;
@@ -133,6 +135,7 @@ void	parser(t_data	*data)
 	}
 }
 
+/*Iterates through tokens and executes commands*/
 void	executer(t_data *data)
 {
 	int	i;
