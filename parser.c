@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/31 14:03:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:37:41 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char	*update_expansion(t_data *data, char *val, char **test)
 	if (*test[0] == '$')
 	{
 		temp = find_var(data->env, *test + 1);
+		/*IF 0 STRDUP ""*/
 		temp_val = val;
 		val = ft_strjoin(temp_val, temp);
 		free(temp);
