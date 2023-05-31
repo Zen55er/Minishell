@@ -67,7 +67,8 @@ char	*update_expansion(t_data *data, char *val, char **test)
 	if (*test[0] == '$')
 	{
 		temp = find_var(data->env, *test + 1);
-		/*IF 0 STRDUP ""*/
+		if (!temp)
+			temp = ft_strdup("");
 		temp_val = val;
 		val = ft_strjoin(temp_val, temp);
 		free(temp);
