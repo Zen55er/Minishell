@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/29 16:01:13 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:08:55 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	main(int ac, char **av, char **envp)
 		if (data.tokens)
 		{
 			parser(&data);
+			// executer(&data);
 			free_double(data.tokens);
 		}
 		data.tokens = 0;
