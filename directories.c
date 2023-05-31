@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/30 11:35:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:52:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*find_var(t_ll *list, char *str)
 	{
 		len = len_compare(list->var, str);
 		if (!ft_strncmp(list->var, str, len))
-			return (list->value);
+			return (ft_strdup(list->value));
 		list = list->next;
 	}
 	return (0);
@@ -66,13 +66,13 @@ char	*cd_cases(t_data *data, int token)
 		dir = find_var(data->env, "HOME");
 	else if (!ft_strncmp(data->tokens[token], "-", 2))
 	{
-		dir = data->prev_dir;
-		printf("%s\n", data->prev_dir);
+		dir = ft_strdup(data->prev_dir);
+		printf("%s\n", dir);
 	}
 	else if (!ft_strncmp(data->tokens[token], "~-", 3))
-		dir = data->prev_dir;
+		dir = ft_strdup(data->prev_dir);
 	else
-		dir = data->tokens[token];
+		dir = ft_strdup(data->tokens[token]);
 	return (dir);
 }
 
@@ -80,6 +80,7 @@ char	*cd_cases(t_data *data, int token)
 int	cmd_cd(t_data *data, int token)
 {
 	int		out;
+	char	*dir;
 
 	token++;
 	if (data->tokens[token] && data->tokens[token + 1]
@@ -88,7 +89,9 @@ int	cmd_cd(t_data *data, int token)
 		printf("cmd_cd: too many arguments\n");
 		return (1);
 	}
-	out = chdir(cd_cases(data, token));
+	dir = cd_cases(data, token);
+	out = chdir(dir);
+	free(dir);
 	if (out)
 	{
 		perror("cmd_cd");
