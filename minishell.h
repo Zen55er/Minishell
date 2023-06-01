@@ -82,10 +82,15 @@ int		delim(char *str);
 int		quote_case(char *str);
 
 /*parser.c*/
+char	*update_expansion(t_data *data, char *val, char **test);
+char	*expansion(t_data *data, char	*str);
+char	*quotes(t_data *data, char *str);
+void	parser(t_data *data);
+
+/*executer.c*/
 void	redirection(t_data *data);
 int		command_call(t_data *data, int token, int command);
 int		command_check(char *input);
-void	parser(t_data *data);
 void	executer(t_data *data);
 
 /*commands.c*/
@@ -95,7 +100,17 @@ void	cmd_exit(t_data *data);
 
 /*normal_command.c*/
 char	**prep_cmds(t_data *data, int token);
+t_cmds	*get_cmd(t_data *data, int token);
+char	**get_env2d(t_ll *env);
+void	child(t_data *data, int token);
 int		normal_command(t_data *data, int token);
+
+/*utils_normal_command.c*/
+int		awk_quotes(char *cmd, char c, int *i);
+int		awk_cmd(t_cmds **cmds, char *cmd);
+void	test_cmd(char **paths, t_cmds **cmds);
+char	*get_full_var(char *var, char *value);
+int		check_path(char **paths, char *cmd);
 
 /*directories*/
 void	update_curr_prev(t_data *data);

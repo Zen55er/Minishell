@@ -18,11 +18,6 @@ int	unset_var(t_ll **list, int count)
 	t_ll	*temp;
 	t_ll	*temp2;
 
-	/* for(t_ll *temp3 = list; temp3; temp3 = temp3->next)
-	{
-		printf("%s=", temp3->var);
-		printf("%s\n", temp3->value);
-	} */
 	if (list_size(*list) == 1)
 	{
 		free((*list)->var);
