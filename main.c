@@ -12,32 +12,47 @@
 
 #include "minishell.h"
 
-/*Duplicates envp into a linked list and splits PATH into a 2d array,
-adding / to the end*/
-void	prep_env_path(t_data *data, char **envp)
+/*Updates path so that any env changes are reflected in this 2d array.
+Splits PATH into a 2d array, adding / to the end*/
+void	update_path(t_data  *data)
 {
+	t_ll	*temp;
+	char	*temp2;
+	int		len;
 	int		i;
-	int		flag;
-	char	*temp;
 
-	i = -1;
-	flag = 0;
-	while (envp[++i])
+	if (data->path)
+		free_double(data->path);
+	data->path = 0;
+	temp = data->env;
+	while (temp)
 	{
-		node_add_back(&data->env, new_node(envp[i], 1));
-		if (!flag && !ft_strncmp(envp[i], "PATH", 4))
-		{
-			data->path = ft_split(envp[i] + 5, ':');
-			flag = 1;
-		}
+		len = len_compare(temp->var, "PATH");
+		if (!ft_strncmp(temp->var, "PATH", len))
+			data->path = ft_split(temp->value, ':');
+		temp = temp->next;
 	}
+	if (!data->path)
+		return ;
 	i = -1;
 	while (data->path[++i])
 	{
-		temp = data->path[i];
-		data->path[i] = ft_strjoin(temp, "/");
-		free(temp);
+		temp2 = data->path[i];
+		data->path[i] = ft_strjoin(temp2, "/");
+		free(temp2);
 	}
+	return ;
+}
+
+/*Duplicates envp into a linked list and call update_path*/
+void	prep_env(t_data *data, char **envp)
+{
+	int	i;
+
+	i = -1;
+	while (envp[++i])
+		node_add_back(&data->env, new_node(envp[i], 1));
+	update_path(data);
 	return ;
 }
 
@@ -63,13 +78,15 @@ int	main(int ac, char **av, char **envp)
 	(void) av;
 	data.env = 0;
 	data.exp = 0;
+	data.path = 0;
 	data.tokens = 0;
 	data.curr_dir = 0;
 	signal_global();
 	update_curr_prev(&data);
-	prep_env_path(&data, envp);
+	prep_env(&data, envp);
 	while (1)
 	{
+		update_path(&data);
 		prompt = build_prompt(&data);
 		input = readline(prompt);
 		free(prompt);
@@ -89,7 +106,7 @@ int	main(int ac, char **av, char **envp)
 		if (data.tokens)
 		{
 			parser(&data);
-			// executer(&data);
+			executer(&data);
 			free_double(data.tokens);
 		}
 		data.tokens = 0;

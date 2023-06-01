@@ -64,7 +64,8 @@ typedef struct s_data
 }			t_data;
 
 /*main.c*/
-void	prep_env_path(t_data *data, char **envp);
+void	update_path(t_data  *data);
+void	prep_env(t_data *data, char **envp);
 char	*build_prompt(t_data *data);
 
 /*lexer.c*/

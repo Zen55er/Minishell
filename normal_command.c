@@ -89,7 +89,7 @@ void	child(t_data *data, int token)
 	cmds = get_cmd(data, token);
 	if (!cmds->cmd)
 	{
-		ft_printf("Command not found: %s.\n", cmds->cmd_args[0]);
+		ft_printf("Command not found: %s\n", cmds->cmd_args[0]);
 		free_double(cmds->cmd_args);
 		free(cmds->cmd);
 		free(cmds);
