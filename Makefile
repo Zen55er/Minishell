@@ -13,7 +13,7 @@
 NAME		= minishell
 SRC			= main.c lexer.c signals.c utils.c utils_lexer.c utils_lists.c \
 			parser.c commands.c export.c utils_export.c unset.c normal_command.c \
-			directories.c
+			directories.c executer.c
 CC			= @cc
 LIBFT		= libft/libft.a
 LIBFT_DIR	= libft
