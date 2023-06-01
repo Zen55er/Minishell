@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/31 14:37:41 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:56:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ char	*expansion(t_data *data, char	*str)
 		val = update_expansion(data, val, &test);
 		i = j;
 	}
-	printf("Starting str: %s\n", str);
-	printf("Expanded str: %s\n", val);
+	// printf("Starting str: %s\n", str);
+	// printf("Expanded str: %s\n", val);
 	free(str);
 	return (val);
 }

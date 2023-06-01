@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   normal_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/29 16:30:01 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:49:35 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void	child(t_data *data, int token)
 		free_double(cmds->cmd_args);
 		free(cmds->cmd);
 		free(cmds);
-		return ;
+		exit (1);
+
 	}
 	env2d = get_env2d(data->env);
 	execve(cmds->cmd, cmds->cmd_args, env2d);
@@ -102,7 +103,7 @@ void	child(t_data *data, int token)
 	free_double(env2d);
 	free(cmds->cmd);
 	free(cmds);
-	return ;
+	exit (1);
 }
 
 /*Prepares cmds struct and sends it to execve*/
@@ -112,7 +113,10 @@ int	normal_command(t_data *data, int token)
 
 	new_fork = fork();
 	if (new_fork < 0)
+	{
 		perror("Error when forking process");
+		return (1);
+	}
 	else if (new_fork == 0)
 		child(data, token);
 	waitpid(new_fork, 0, 0);
