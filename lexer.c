@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/31 10:08:53 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:11:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char	**lexer(char *input)
 		return (0);
 	tokens = (char **)malloc(sizeof(char *) * (tok_num + 1));
 	set_tokens(tokens, input);
-	for (int i = 0; tokens[i]; i++)
-		printf("Token %i: :%s:\n", i, tokens[i]);
+	// for (int i = 0; tokens[i]; i++)
+	// 	printf("Token %i: :%s:\n", i, tokens[i]);
 	return (tokens);
 }
