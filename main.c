@@ -14,7 +14,7 @@
 
 /*Updates path so that any env changes are reflected in this 2d array.
 Splits PATH into a 2d array, adding / to the end*/
-void	update_path(t_data  *data)
+void	update_path(t_data *data)
 {
 	t_ll	*temp;
 	char	*temp2;
@@ -82,8 +82,8 @@ int	main(int ac, char **av, char **envp)
 	data.tokens = 0;
 	data.curr_dir = 0;
 	signal_global();
-	update_curr_prev(&data);
 	prep_env(&data, envp);
+	update_curr_prev(&data);
 	while (1)
 	{
 		update_path(&data);

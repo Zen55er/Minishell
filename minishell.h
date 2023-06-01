@@ -120,6 +120,10 @@ char	*cd_cases(t_data *data, int token);
 int		cmd_cd(t_data *data, int token);
 int		cmd_pwd(t_data *data);
 
+/*utils_directories.c*/
+char	*get_dir(t_data *data, char *dir);
+void	update_env_dir(t_data *data, char *dir, char *new_dir);
+
 /*export.c*/
 int		check_entry(t_data *data, t_ll *list, int tok, int i);
 void	add_to_exp(t_data *data, int tok, int i);
