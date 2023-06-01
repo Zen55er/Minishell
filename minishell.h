@@ -64,7 +64,8 @@ typedef struct s_data
 }			t_data;
 
 /*main.c*/
-void	prep_env_path(t_data *data, char **envp);
+void	update_path(t_data  *data);
+void	prep_env(t_data *data, char **envp);
 char	*build_prompt(t_data *data);
 
 /*lexer.c*/
@@ -118,6 +119,10 @@ char	*find_var(t_ll *list, char *str);
 char	*cd_cases(t_data *data, int token);
 int		cmd_cd(t_data *data, int token);
 int		cmd_pwd(t_data *data);
+
+/*utils_directories.c*/
+char	*get_dir(t_data *data, char *dir);
+void	update_env_dir(t_data *data, char *dir, char *new_dir);
 
 /*export.c*/
 int		check_entry(t_data *data, t_ll *list, int tok, int i);

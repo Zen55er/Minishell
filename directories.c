@@ -18,24 +18,20 @@ void	update_curr_prev(t_data *data)
 	char	*temp;
 	int		len;
 
-	temp = 0;
-	if (!data->curr_dir)
+	if (data->curr_dir)
 	{
-		data->curr_dir = getcwd(data->curr_dir, 0);
-		data->prev_dir = ft_strdup(data->curr_dir);
-	}
-	else
-	{
+		temp = 0;
 		temp = getcwd(temp, 0);
 		len = len_compare(temp, data->curr_dir);
 		if (ft_strncmp(temp, data->curr_dir, len))
 		{
-			free(data->prev_dir);
-			data->prev_dir = data->curr_dir;
-			data->curr_dir = ft_strdup(temp);
+			update_env_dir(data, "OLDPWD", data->curr_dir);
+			update_env_dir(data, "PWD", temp);
+			free(temp);
 		}
-		free(temp);
 	}
+	data->curr_dir = get_dir(data, "PWD");
+	data->prev_dir = get_dir(data, "OLDPWD");
 	return ;
 }
 

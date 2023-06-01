@@ -55,6 +55,8 @@ void	test_cmd(char **paths, t_cmds **cmds)
 	char	*test;
 
 	i = -1;
+	if (!paths)
+		return ;
 	while (paths[++i])
 	{
 		test = ft_strjoin(paths[i], (*cmds)->cmd_args[0]);
@@ -85,6 +87,8 @@ int	check_path(char **paths, char *cmd)
 	int	i;
 
 	i = -1;
+	if (!paths)
+		return (0);
 	while (paths[++i])
 	{
 		if (ft_strncmp(paths[i], cmd, ft_strlen(paths[i])) == 0)
