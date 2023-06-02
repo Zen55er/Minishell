@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/01 15:35:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/02 13:59:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	command_call(t_data *data, int token, int command)
 		return (cmd_env(data));
 	if (command == CMD_EXIT)
 		cmd_exit(data);
-	normal_command(data, token);
-	return (0);
+	return (normal_command(data, token));
 }
 
 /*Checks if input matches specific functions*/
@@ -73,7 +72,7 @@ void	executer(t_data *data)
 		else
 		{
 			command = command_check(data->tokens[i]);
-			command_call(data, i, command);
+			data->last_exit = command_call(data, i, command);
 		}
 		while (data->tokens[++i])
 		{

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/25 09:37:41 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/02 12:56:05 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ otherwise updates env with new args or new arg values*/
 int	cmd_export(t_data *data, int token)
 {
 	if (export_arg(data, token))
-		return (1);
+		return (EXPORT_VAR);
 	list_ranking(data->env);
 	list_ranking(data->exp);
 	print_ordered(data->env);
 	print_ordered(data->exp);
-	return (0);
+	return (OK_EXIT);
 }

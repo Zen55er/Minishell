@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/31 13:52:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/02 12:07:38 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	cmd_cd(t_data *data, int token)
 		&& !delim(data->tokens[token + 1]))
 	{
 		printf("cmd_cd: too many arguments\n");
-		return (1);
+		return (CD_TOO_MANY_ARGS);
 	}
 	dir = cd_cases(data, token);
 	out = chdir(dir);
@@ -91,15 +91,15 @@ int	cmd_cd(t_data *data, int token)
 	if (out)
 	{
 		perror("cmd_cd");
-		return (1);
+		return (CD_ERROR_DIR_CHANGE);
 	}
 	update_curr_prev(data);
-	return (0);
+	return (OK_EXIT);
 }
 
 /*Print current working directory*/
 int	cmd_pwd(t_data *data)
 {
 	printf("%s\n", data->curr_dir);
-	return (0);
+	return (OK_EXIT);
 }

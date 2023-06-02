@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/02 10:43:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/02 13:34:11 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,15 @@
 # define OK_EXIT 0
 # define ERROR_EXIT 1
 
+# define ECHO_NO_PRINT 10
+
+# define CD_TOO_MANY_ARGS 21
+# define CD_ERROR_DIR_CHANGE 22
+
+# define EXPORT_VAR 30
+
+# define EMPTY_UNSET 40
+
 typedef struct s_cmds
 {
 	char	*cmd;
@@ -64,6 +73,7 @@ typedef struct s_data
 	char	**path;
 	char	*curr_dir;
 	char	*prev_dir;
+	int		last_exit;
 }			t_data;
 
 /*main.c*/

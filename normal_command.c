@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   normal_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/01 15:49:35 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/02 11:48:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	child(t_data *data, int token)
 		free_double(cmds->cmd_args);
 		free(cmds->cmd);
 		free(cmds);
-		exit (1);
+		exit (ERROR_EXIT);
 
 	}
 	env2d = get_env2d(data->env);
@@ -103,13 +103,14 @@ void	child(t_data *data, int token)
 	free_double(env2d);
 	free(cmds->cmd);
 	free(cmds);
-	exit (1);
+	exit (ERROR_EXIT);
 }
 
 /*Prepares cmds struct and sends it to execve*/
 int	normal_command(t_data *data, int token)
 {
-	pid_t		new_fork;
+	pid_t	new_fork;
+	int		status;
 
 	new_fork = fork();
 	if (new_fork < 0)
@@ -119,6 +120,8 @@ int	normal_command(t_data *data, int token)
 	}
 	else if (new_fork == 0)
 		child(data, token);
-	waitpid(new_fork, 0, 0);
-	return (0);
+	waitpid(new_fork, &status, 0);
+	if (status == ERROR_EXIT)
+		return (ERROR_EXIT);
+	return (OK_EXIT);
 }
