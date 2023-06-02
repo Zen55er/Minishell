@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/01 15:56:14 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/02 10:22:36 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ char	*expansion(t_data *data, char	*str)
 		j = i;
 		if (str[i] == '$')
 			j++;
-		while (str[j] && str[j] != '$')
+		while (str[j] && str[j] != '$' && str[j] != '\'' && str[j] != '\"')
+			j++;
+		if (j == i && str[j] && (str[j] != '\'' || str[j] != '\"'))
 			j++;
 		test = ft_substr(str, i, j - i);
 		val = update_expansion(data, val, &test);
 		i = j;
 	}
-	// printf("Starting str: %s\n", str);
-	// printf("Expanded str: %s\n", val);
 	free(str);
 	return (val);
 }
@@ -68,9 +68,23 @@ char	*expansion(t_data *data, char	*str)
 /*Returns new string with text formatted according to quote type*/
 char	*quotes(t_data *data, char *str)
 {
-	(void) data;
-	(void) str;
-	return (0);
+	int		len;
+	int		flag;
+	char	*new;
+	char	*expand_new;
+
+	flag = 0;
+	if (str[0] == '\"')
+		flag = 1;
+	len = ft_strlen(str);
+	new = ft_substr(str, 1, len - 2);
+	free (str);
+	if (flag)
+	{
+		expand_new = expansion(data, new);
+		return (expand_new);
+	}
+	return (new);
 }
 
 /*Parses cases with $ and quotes*/
@@ -81,9 +95,11 @@ void	parser(t_data	*data)
 	i = -1;
 	while (data->tokens[++i])
 	{
+		// printf("Starting str: %s\n", data->tokens[i]);
 		if (data->tokens[i][0] == '\'' || data->tokens[i][0] == '\"')
 			data->tokens[i] = quotes(data, data->tokens[i]);
 		else
 			data->tokens[i] = expansion(data, data->tokens[i]);
+		// printf("Replaced str: %s\n", data->tokens[i]);
 	}
 }

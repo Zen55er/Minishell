@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/31 14:06:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/02 09:54:36 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_data
 }			t_data;
 
 /*main.c*/
-void	update_path(t_data  *data);
+void	update_path(t_data *data);
 void	prep_env(t_data *data, char **envp);
 char	*build_prompt(t_data *data);
 
