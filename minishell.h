@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/02 09:54:36 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/02 10:43:56 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,16 @@
 # include <term.h>
 # include <errno.h>
 
-# define CMD_ECHO 1
-# define CMD_CD 2
-# define CMD_PWD 3
-# define CMD_EXPORT 4
-# define CMD_UNSET 5
-# define CMD_ENV 6
-# define CMD_EXIT 7
+# define CMD_ECHO 2
+# define CMD_CD 3
+# define CMD_PWD 4
+# define CMD_EXPORT 5
+# define CMD_UNSET 6
+# define CMD_ENV 7
+# define CMD_EXIT 8
+
+# define OK_EXIT 0
+# define ERROR_EXIT 1
 
 typedef struct s_cmds
 {
