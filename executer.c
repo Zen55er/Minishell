@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/01 15:35:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/02 16:29:21 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	redirection(t_data *data)
-{
-	(void) data;
-	return ;
-}
 
 /*Calls function to execute according to input*/
 int	command_call(t_data *data, int token, int command)
@@ -63,18 +57,23 @@ int	command_check(char *input)
 void	executer(t_data *data)
 {
 	int	i;
-	int	command;
+	/* int	command; */
 
 	i = 0;
 	while (data->tokens[i])
 	{
 		if (!ft_strncmp(data->tokens[i], "<", ft_strlen(data->tokens[i])))
-			redirection(data);
-		else
+			redirection(data, i);
+		else if (!ft_strncmp(data->tokens[i], "|", ft_strlen(data->tokens[i])))
+			pipeline(data, i);
+		/*vou ter de alterar este while para ele nao correr o command antes do pipe "|" 
+		porque se nao vai correr o mesmo command varias vezes*/
+		/* /pipe ja esta a dar para casos simples "cmd1 | cmd2"/ */
+		/* else if
 		{
 			command = command_check(data->tokens[i]);
 			command_call(data, i, command);
-		}
+		} */
 		while (data->tokens[++i])
 		{
 			if (delim(data->tokens[i]))

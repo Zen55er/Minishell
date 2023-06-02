@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/31 14:06:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:59:33 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,13 @@ typedef struct s_data
 	char	**path;
 	char	*curr_dir;
 	char	*prev_dir;
+	int		fdin;
+	int		fdout;
+	int		lastfdout;
 }			t_data;
 
 /*main.c*/
-void	update_path(t_data  *data);
+void	update_path(t_data *data);
 void	prep_env(t_data *data, char **envp);
 char	*build_prompt(t_data *data);
 
@@ -89,10 +92,17 @@ char	*quotes(t_data *data, char *str);
 void	parser(t_data *data);
 
 /*executer.c*/
-void	redirection(t_data *data);
+int		redirection(t_data *data, int i);
 int		command_call(t_data *data, int token, int command);
 int		command_check(char *input);
 void	executer(t_data *data);
+
+/*pipes*/
+int		pipeline(t_data *data, int i);
+void	pipes(t_data *data, int i);
+
+/*redirection*/
+int		redirection(t_data *data, int i);
 
 /*commands.c*/
 int		cmd_echo(t_data *data, int tok);
