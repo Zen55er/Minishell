@@ -21,7 +21,7 @@ int	cmd_echo(t_data *data, int tok)
 	n_flag = 0;
 	i = 0;
 	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1]))
-		return (ECHO_NO_PRINT);
+		return (OK_EXIT);
 	while (data->tokens[++tok] && ++i)
 	{
 		if (delim(data->tokens[tok]))

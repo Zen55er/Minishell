@@ -83,7 +83,7 @@ int	cmd_cd(t_data *data, int token)
 		&& !delim(data->tokens[token + 1]))
 	{
 		printf("cmd_cd: too many arguments\n");
-		return (CD_TOO_MANY_ARGS);
+		return (ERROR_EXIT);
 	}
 	dir = cd_cases(data, token);
 	out = chdir(dir);
@@ -91,7 +91,7 @@ int	cmd_cd(t_data *data, int token)
 	if (out)
 	{
 		perror("cmd_cd");
-		return (CD_ERROR_DIR_CHANGE);
+		return (ERROR_EXIT);
 	}
 	update_curr_prev(data);
 	return (OK_EXIT);

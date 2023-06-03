@@ -41,15 +41,7 @@
 
 # define OK_EXIT 0
 # define ERROR_EXIT 1
-
-# define ECHO_NO_PRINT 10
-
-# define CD_TOO_MANY_ARGS 21
-# define CD_ERROR_DIR_CHANGE 22
-
-# define EXPORT_VAR 30
-
-# define EMPTY_UNSET 40
+# define ERROR_WRONG_COMMAND 127
 
 typedef struct s_cmds
 {

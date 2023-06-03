@@ -93,7 +93,7 @@ void	child(t_data *data, int token)
 		free_double(cmds->cmd_args);
 		free(cmds->cmd);
 		free(cmds);
-		exit (ERROR_EXIT);
+		exit (ERROR_WRONG_COMMAND);
 
 	}
 	env2d = get_env2d(data->env);
@@ -121,7 +121,5 @@ int	normal_command(t_data *data, int token)
 	else if (new_fork == 0)
 		child(data, token);
 	waitpid(new_fork, &status, 0);
-	if (status == ERROR_EXIT)
-		return (ERROR_EXIT);
-	return (OK_EXIT);
+	return (WEXITSTATUS(status));
 }

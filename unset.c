@@ -70,7 +70,7 @@ and deletes that node*/
 int	cmd_unset(t_data *data, int tok)
 {
 	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1]))
-		return (EMPTY_UNSET);
+		return (OK_EXIT);
 	while (data->tokens[++tok])
 	{
 		if (delim(data->tokens[tok]))
