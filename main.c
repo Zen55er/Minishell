@@ -80,6 +80,7 @@ int	main(int ac, char **av, char **envp)
 	data.path = 0;
 	data.tokens = 0;
 	data.curr_dir = 0;
+	data.logic_operator = 0;
 	signal_global();
 	prep_env(&data, envp);
 	update_curr_prev(&data);
