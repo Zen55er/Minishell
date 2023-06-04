@@ -58,7 +58,8 @@ char	*cd_cases(t_data *data, int token)
 {
 	char	*dir;
 
-	if (!data->tokens[token] || !ft_strncmp(data->tokens[token], "~", 2))
+	if (!data->tokens[token] || delim(data->tokens[token], 1)
+		|| !ft_strncmp(data->tokens[token], "~", 2))
 		dir = find_var(data->env, "HOME");
 	else if (!ft_strncmp(data->tokens[token], "-", 2))
 	{
@@ -80,7 +81,7 @@ int	cmd_cd(t_data *data, int token)
 
 	token++;
 	if (data->tokens[token] && data->tokens[token + 1]
-		&& !delim(data->tokens[token + 1], 1))
+		&& !delim(data->tokens[token], 1) && !delim(data->tokens[token + 1], 1))
 	{
 		printf("cmd_cd: too many arguments\n");
 		return (ERROR_EXIT);
