@@ -85,10 +85,11 @@ char	**lexer(t_data *data, char *input);
 int		char_finder(char *str, char c);
 void	get_find(char *str, char *find);
 int		forbidden(char *str);
-int		delim(char *str);
+int		delim(char *str, int flag);
 int		quote_case(char *str);
 
 /*logical_operators.c*/
+int		logical_search(t_data *data, char *str);
 int		check_and_or(t_data *data, char *str);
 
 /*parser.c*/

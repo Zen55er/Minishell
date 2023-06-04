@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/31 14:20:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/04 11:17:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,13 @@ int	forbidden(char *str)
 	return (0);
 }
 
-/*Checks if character is a delimiter*/
-int	delim(char *str)
+/*Checks if character is a delimiter.
+When running executer (flag == 1), 
+avoids pasrenthesis from logical operator cases*/
+int	delim(char *str, int flag)
 {
+	if (flag && (str[0] == '(' || str[0] == ')'))
+		return (1);
 	if ((str[0] == '|' && str[1] != '|')
 		|| (str[0] == '>' && str[1] != '>')
 		|| (str[0] == '<' && str[1] != '<'))

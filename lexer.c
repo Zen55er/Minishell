@@ -39,7 +39,7 @@ int	tok_len(char *str, int i, int flag)
 {
 	int	j;
 
-	j = delim(&str[i]);
+	j = delim(&str[i], 0);
 	if (j)
 		return (j);
 	j = quote_case(&str[i]);
@@ -67,8 +67,8 @@ int	count_tokens(t_data *data, char *str)
 		/*&& || CASES*/
 		if ((str[i] == '(' || str[i] == ')') && check_and_or(data, &str[i]))
 			j = 1;
-		/*else*/
-		j = tok_len(str, i, 0);
+		else
+			j = tok_len(str, i, 0);
 		if (j < 0)
 			return (0);
 		tok_num++;
@@ -96,8 +96,8 @@ void	set_tokens(t_data *data, char **tokens, char *str)
 		/*&& || CASES*/
 		if ((str[i] == '(' || str[i] == ')') && check_and_or(data, &str[i]))
 			j = 1;
-		/*else*/
-		j = tok_len(str, i, 1);
+		else
+			j = tok_len(str, i, 1);
 		if (!j && ++i)
 			continue ;
 		else
@@ -118,7 +118,7 @@ char	**lexer(t_data *data, char *input)
 		return (0);
 	tokens = (char **)malloc(sizeof(char *) * (tok_num + 1));
 	set_tokens(data, tokens, input);
-	// for (int i = 0; tokens[i]; i++)
-	// 	printf("Token %i: :%s:\n", i, tokens[i]);
+	for (int i = 0; tokens[i]; i++)
+		printf("Token %i: :%s:\n", i, tokens[i]);
 	return (tokens);
 }

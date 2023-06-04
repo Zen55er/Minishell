@@ -101,7 +101,7 @@ int	main(int ac, char **av, char **envp)
 			continue ;
 		}
 		add_history(input);
-		data.tokens = lexer(input);
+		data.tokens = lexer(&data, input);
 		free(input);
 		if (data.tokens)
 		{

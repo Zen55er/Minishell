@@ -80,7 +80,7 @@ int	cmd_cd(t_data *data, int token)
 
 	token++;
 	if (data->tokens[token] && data->tokens[token + 1]
-		&& !delim(data->tokens[token + 1]))
+		&& !delim(data->tokens[token + 1], 1))
 	{
 		printf("cmd_cd: too many arguments\n");
 		return (ERROR_EXIT);

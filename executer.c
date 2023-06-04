@@ -67,6 +67,11 @@ void	executer(t_data *data)
 	i = 0;
 	while (data->tokens[i])
 	{
+		if ((data->tokens[i][0] == '(' || data->tokens[i][0] == ')') && !data->tokens[i][1])
+		{
+			i++;
+			continue ;
+		}
 		if (!ft_strncmp(data->tokens[i], "<", ft_strlen(data->tokens[i])))
 			redirection(data);
 		else
@@ -76,7 +81,7 @@ void	executer(t_data *data)
 		}
 		while (data->tokens[++i])
 		{
-			if (delim(data->tokens[i]))
+			if (delim(data->tokens[i], 1))
 				break ;
 		}
 	}

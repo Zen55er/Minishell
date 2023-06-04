@@ -57,11 +57,11 @@ int	export_arg(t_data *data, int tok)
 {
 	int	i;
 
-	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1]))
+	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1], 1))
 		return (0);
 	while (data->tokens[++tok])
 	{
-		if (delim(data->tokens[tok]))
+		if (delim(data->tokens[tok], 1))
 			break ;
 		if (!ft_isalpha(data->tokens[tok][0]) && data->tokens[tok][0] != '_')
 		{

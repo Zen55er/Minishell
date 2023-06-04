@@ -69,11 +69,11 @@ int	check_unset(t_data *data, t_ll **list, int token)
 and deletes that node*/
 int	cmd_unset(t_data *data, int tok)
 {
-	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1]))
+	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1], 1))
 		return (OK_EXIT);
 	while (data->tokens[++tok])
 	{
-		if (delim(data->tokens[tok]))
+		if (delim(data->tokens[tok], 1))
 			break ;
 		if (!ft_isalpha(data->tokens[tok][0]) && data->tokens[tok][0] != '_')
 		{

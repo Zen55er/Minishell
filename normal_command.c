@@ -23,7 +23,7 @@ char	**prep_cmds(t_data *data, int token)
 	temp = token;
 	while (data->tokens[temp])
 	{
-		if (delim(data->tokens[temp]))
+		if (delim(data->tokens[temp], 1))
 			break ;
 		i++;
 		temp++;

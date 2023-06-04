@@ -20,11 +20,11 @@ int	cmd_echo(t_data *data, int tok)
 
 	n_flag = 0;
 	i = 0;
-	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1]))
+	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1], 1))
 		return (OK_EXIT);
 	while (data->tokens[++tok] && ++i)
 	{
-		if (delim(data->tokens[tok]))
+		if (delim(data->tokens[tok], 1))
 			break ;
 		if (i == 1 && !ft_strncmp(data->tokens[tok], "-n", 2)
 			&& !data->tokens[tok][2])
@@ -34,7 +34,7 @@ int	cmd_echo(t_data *data, int tok)
 		}
 		if (data->tokens[tok])
 			printf("%s", data->tokens[tok]);
-		if (data->tokens[tok + 1] && !delim(data->tokens[tok + 1]))
+		if (data->tokens[tok + 1] && !delim(data->tokens[tok + 1], 1))
 			printf(" ");
 	}
 	if (!n_flag)
