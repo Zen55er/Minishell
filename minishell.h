@@ -89,6 +89,7 @@ int		delim(char *str, int flag);
 int		quote_case(char *str);
 
 /*logical_operators.c*/
+int		logical_choice(t_data *data, int token);
 int		logical_search(t_data *data, char *str);
 int		check_and_or(t_data *data, char *str);
 

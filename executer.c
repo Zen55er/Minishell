@@ -67,21 +67,22 @@ void	executer(t_data *data)
 	i = 0;
 	while (data->tokens[i])
 	{
-		if ((data->tokens[i][0] == '(' || data->tokens[i][0] == ')') && !data->tokens[i][1])
+		if ((data->tokens[i][0] == '(' || data->tokens[i][0] == ')')
+			&& !data->tokens[i][1])
 		{
 			i++;
 			continue ;
 		}
 		if (!ft_strncmp(data->tokens[i], "<", ft_strlen(data->tokens[i])))
 			redirection(data);
-		else
+		else if (logical_choice(data, i))
 		{
 			command = command_check(data->tokens[i]);
 			data->last_exit = command_call(data, i, command);
 		}
 		while (data->tokens[++i])
 		{
-			if (delim(data->tokens[i], 1))
+			if (delim(data->tokens[i], 1) && ++i)
 				break ;
 		}
 	}

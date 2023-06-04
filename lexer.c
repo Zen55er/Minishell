@@ -64,7 +64,6 @@ int	count_tokens(t_data *data, char *str)
 			i++;
 		if (!str[i])
 			break ;
-		/*&& || CASES*/
 		if ((str[i] == '(' || str[i] == ')') && check_and_or(data, &str[i]))
 			j = 1;
 		else
@@ -93,7 +92,6 @@ void	set_tokens(t_data *data, char **tokens, char *str)
 			i++;
 		if (!str[i])
 			break ;
-		/*&& || CASES*/
 		if ((str[i] == '(' || str[i] == ')') && check_and_or(data, &str[i]))
 			j = 1;
 		else
