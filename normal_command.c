@@ -6,14 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/02 11:48:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:29:58 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*Fills 2d array with command name and flags*/
-char	**prep_cmds(t_data *data, int token)
+char	**prep_cmds(t_data *data, int token, char *cmd)
 {
 	char	**cmds;
 	int		temp;
@@ -30,12 +30,14 @@ char	**prep_cmds(t_data *data, int token)
 	}
 	cmds = (char **)malloc(sizeof(char *) * (i + 1));
 	cmds[i] = 0;
-	i = 0;
-	while (token < temp)
+	i = -1;
+	while (token < temp && ++i >= 0)
 	{
-		cmds[i] = ft_strdup(data->tokens[token]);
+		if (!i && cmd)
+			cmds[i] = cmd;
+		else
+			cmds[i] = ft_strdup(data->tokens[token]);
 		token++;
-		i++;
 	}
 	return (cmds);
 }
@@ -47,7 +49,9 @@ t_cmds	*get_cmd(t_data *data, int token)
 
 	cmd = data->tokens[token];
 	if (cmd[0] == '/' && check_path(data->path, cmd))
-		cmd = ft_strrchr(data->tokens[token], '/');
+		cmd = get_end_cmd(cmd);
+	else
+		cmd = 0;
 	cmds = (t_cmds *)malloc(sizeof(t_cmds));
 	cmds->cmd = 0;
 	if (ft_strncmp(cmd, "awk ", 4) == 0 || ft_strncmp(cmd, "sed ", 4) == 0)
@@ -56,7 +60,7 @@ t_cmds	*get_cmd(t_data *data, int token)
 			return (cmds);
 	}
 	else
-		cmds->cmd_args = prep_cmds(data, token);
+		cmds->cmd_args = prep_cmds(data, token, cmd);
 	test_cmd(data->path, &cmds);
 	return (cmds);
 }

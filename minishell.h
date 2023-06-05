@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/02 13:34:11 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:11:04 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int		quote_case(char *str);
 
 /*logical_operators.c*/
 int		logical_choice(t_data *data, int token);
+int		check_single_cmd(t_data *data, char *cmd);
+int		is_cmd(t_data *data, char *str);
 int		logical_search(t_data *data, char *str);
 int		check_and_or(t_data *data, char *str);
 
@@ -111,7 +113,7 @@ int		cmd_env(t_data *data);
 void	cmd_exit(t_data *data);
 
 /*normal_command.c*/
-char	**prep_cmds(t_data *data, int token);
+char	**prep_cmds(t_data *data, int token, char *cmd);
 t_cmds	*get_cmd(t_data *data, int token);
 char	**get_env2d(t_ll *env);
 void	child(t_data *data, int token);
@@ -156,6 +158,7 @@ void	signal_handler(int sig);
 void	signal_global(void);
 
 /*utils*/
+char	*get_end_cmd(char *str);
 int		len_compare(char *str1, char *str2);
 void	free_double(char **tokens);
 void	free_list(t_ll **list);
