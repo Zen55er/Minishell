@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 18:34:49 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/05 11:26:46 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:55:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,47 @@ int	logical_choice(t_data *data, int token)
 	return (0);
 }
 
+int	check_single_cmd(t_data *data, char *cmd)
+{
+	int		i;
+	char	*test;
+
+	i = -1;
+	while (data->path[++i])
+	{
+		test = ft_strjoin(data->path[i], cmd);
+		if (!access(test, F_OK & X_OK))
+		{
+			free(test);
+			return (1);
+		}
+		else
+			free(test);
+	}
+	return (0);
+}
+
+int	is_cmd(t_data *data, char *str)
+{
+	int		i;
+	char	*test;
+
+	i = 0;
+	while (!ft_isspace(str[i]) && str[i] != ')')
+		i++;
+	test = ft_substr(str, 0, i);
+	if (command_check(test)
+		|| (test[0] == '/' && check_path(data->path, test))
+		|| (!ft_strncmp(test, "awk ", 4) || !ft_strncmp(test, "sed ", 4))
+		|| check_single_cmd(data, test))
+	{
+		free (test);
+		return (1);
+	}
+	free (test);
+	return (0);
+}
+
 /*When a '(' is found, if it contains a delimiter,
 only '(' is considered for the current token
 and the logical operator flag is set.*/
@@ -33,10 +74,14 @@ int	logical_search(t_data *data, char *str)
 	int	i;
 	int	flag;
 
-	i = -1;
+	i = 0;
+	while (ft_isspace(str[++i]))
+		continue ;
 	flag = 0;
-	while (str[++i])
+	while (str[i])
 	{
+		if (is_cmd(data, &str[i]))
+			return (++data->logic_operator);
 		if (delim(&str[i], 0))
 			flag = 1;
 		else if (str[i] == ')')
@@ -44,12 +89,10 @@ int	logical_search(t_data *data, char *str)
 			flag++;
 			break ;
 		}
+		i++;
 	}
 	if (flag == 2)
-	{
-		data->logic_operator = 1;
-		return (1);
-	}
+		return (++data->logic_operator);
 	return (0);
 }
 
