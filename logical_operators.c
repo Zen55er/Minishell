@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   logical_operators.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 18:34:49 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/04 16:02:02 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/05 11:26:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 based on preceding logic operator and the previous command exit value*/
 int	logical_choice(t_data *data, int token)
 {
-	if (!token)
+	if (!token || (ft_strncmp(data->tokens[token - 1], "&&", 3)
+			&& (ft_strncmp(data->tokens[token - 1], "||", 3))))
 		return (1);
 	if ((!ft_strncmp(data->tokens[token - 1], "&&", 3) && !data->last_exit)
 		|| (!ft_strncmp(data->tokens[token - 1], "||", 3) && data->last_exit))
