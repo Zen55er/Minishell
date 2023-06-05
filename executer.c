@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/02 13:59:14 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:21:30 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,19 @@ int	command_call(t_data *data, int token, int command)
 /*Checks if input matches specific functions*/
 int	command_check(char *input)
 {
-	if (!ft_strncmp(input, "echo", ft_strlen(input)))
+	if (!ft_strncmp(input, "echo", ft_strlen("echo") + 1))
 		return (CMD_ECHO);
-	if (!ft_strncmp(input, "cd", ft_strlen(input)))
+	if (!ft_strncmp(input, "cd", ft_strlen("cd") + 1))
 		return (CMD_CD);
-	if (!ft_strncmp(input, "pwd", ft_strlen(input)))
+	if (!ft_strncmp(input, "pwd", ft_strlen("pwd") + 1))
 		return (CMD_PWD);
-	if (!ft_strncmp(input, "export", ft_strlen(input)))
+	if (!ft_strncmp(input, "export", ft_strlen("export") + 1))
 		return (CMD_EXPORT);
-	if (!ft_strncmp(input, "unset", ft_strlen(input)))
+	if (!ft_strncmp(input, "unset", ft_strlen("unset") + 1))
 		return (CMD_UNSET);
-	if (!ft_strncmp(input, "env", ft_strlen(input)))
+	if (!ft_strncmp(input, "env", ft_strlen("env") + 1))
 		return (CMD_ENV);
-	if (!ft_strncmp(input, "exit", ft_strlen(input)))
+	if (!ft_strncmp(input, "exit", ft_strlen("exit") + 1))
 		return (CMD_EXIT);
 	return (0);
 }
@@ -67,8 +67,7 @@ void	executer(t_data *data)
 	i = 0;
 	while (data->tokens[i])
 	{
-		if ((data->tokens[i][0] == '(' || data->tokens[i][0] == ')')
-			&& !data->tokens[i][1])
+		if (delim(data->tokens[i], 1))
 		{
 			i++;
 			continue ;
