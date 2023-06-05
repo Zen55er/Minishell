@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/02 13:58:47 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:14:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ char	*quotes(t_data *data, char *str)
 	if (str[0] == '\"')
 		flag = 1;
 	len = ft_strlen(str);
+	/*REMOVE FROM "AAA"BBB*/
 	new = ft_substr(str, 1, len - 2);
 	free (str);
 	if (flag)
