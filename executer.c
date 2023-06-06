@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/02 16:29:21 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/02 16:40:20 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,7 @@ void	executer(t_data *data)
 			pipeline(data, i);
 		/*vou ter de alterar este while para ele nao correr o command antes do pipe "|" 
 		porque se nao vai correr o mesmo command varias vezes*/
-		/* /pipe ja esta a dar para casos simples "cmd1 | cmd2"/ */
-		/* else if
-		{
-			command = command_check(data->tokens[i]);
-			command_call(data, i, command);
-		} */
+		/* /pipe ja esta a dar para casos simples "cmd1 | cmd2"/ */ 
 		while (data->tokens[++i])
 		{
 			if (delim(data->tokens[i]))

@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/02 15:45:40 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/02 16:34:36 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	pipeline(t_data *data, int i)
 	// escolher i correcto para comando previo ao | e o seguinte
 	//de momento assumindo caso mais simples "cmd1 | cmd 2"
 	//i = 1 entao cmd1 -> i = 0 e cmd2 -> i = 2
+	
 	pipes(data, i - 1);
 	dup2(data->lastfdout, STDIN_FILENO);
 	pipes(data, i + 1);
