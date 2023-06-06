@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/05 15:21:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/06 14:26:03 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	redirection(t_data *data)
-{
-	(void) data;
-	return ;
-}
 
 /*Calls function to execute according to input*/
 int	command_call(t_data *data, int token, int command)
@@ -62,7 +56,7 @@ int	command_check(char *input)
 void	executer(t_data *data)
 {
 	int	i;
-	int	command;
+	/* int	command; */
 
 	i = 0;
 	while (data->tokens[i])

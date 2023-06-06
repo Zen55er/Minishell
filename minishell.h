@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/06 12:49:48 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/06 14:24:34 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ typedef struct s_data
 	char	**path;
 	char	*curr_dir;
 	char	*prev_dir;
+	int		fdin;
+	int		fdout;
+	int		lastfdout;
 	int		last_exit;
 	int		logic_operator;
 }			t_data;
@@ -102,10 +105,17 @@ char	*quotes(t_data *data, char *str);
 void	parser(t_data *data);
 
 /*executer.c*/
-void	redirection(t_data *data);
+int		redirection(t_data *data, int i);
 int		command_call(t_data *data, int token, int command);
 int		command_check(char *input);
 void	executer(t_data *data);
+
+/*pipes*/
+int		pipeline(t_data *data, int i);
+void	pipes(t_data *data, int i);
+
+/*redirection*/
+int		redirection(t_data *data, int i);
 
 /*commands.c*/
 int		cmd_echo(t_data *data, int tok);
