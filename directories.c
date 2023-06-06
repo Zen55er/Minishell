@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/02 12:07:38 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/06 12:47:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,12 @@ otherwise, goes to path in input*/
 char	*cd_cases(t_data *data, int token)
 {
 	char	*dir;
+	/* int		wildcard;
 
-	if (!data->tokens[token] || delim(data->tokens[token], 1)
+	wildcard = char_finder(data->tokens[token], '*');
+	if (data->tokens[token][0] == '*' || wildcard)
+		dir = test_wildcard(data->tokens[token], wildcard); */
+	/* else  */if (!data->tokens[token] || delim(data->tokens[token], 1)
 		|| !ft_strncmp(data->tokens[token], "~", 2))
 		dir = find_var(data->env, "HOME");
 	else if (!ft_strncmp(data->tokens[token], "-", 2))

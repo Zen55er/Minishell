@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/05 17:11:04 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/06 12:49:48 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ int		cmd_cd(t_data *data, int token);
 int		cmd_pwd(t_data *data);
 
 /*utils_directories.c*/
+char	*search_dir(char *pre, char *post);
+char	*test_wildcard(char *token, int wildcard);
 char	*get_dir(t_data *data, char *dir);
 void	update_env_dir(t_data *data, char *dir, char *new_dir);
 
