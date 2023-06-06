@@ -5,8 +5,13 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/15 14:15:32 by gacorrei          #+#    #+#              #
-#    Updated: 2023/06/02 14:59:55 by mpatrao          ###   ########.fr        #
+#    Created: Invalid date        by                   #+#    #+#              #
+#    Updated: 2023/06/06 14:26:16 by mpatrao          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+#    Updated: 2023/06/03 18:57:23 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +19,8 @@ NAME		= minishell
 SRC			= main.c lexer.c signals.c utils.c utils_lexer.c utils_lists.c \
 			parser.c commands.c export.c utils_export.c unset.c normal_command.c \
 			directories.c executer.c utils_normal_command.c utils_directories.c \
-			redirection.c pipes.c
+			redirection.c pipes.c \
+			logical_operators.c
 CC			= @cc
 LIBFT		= libft/libft.a
 LIBFT_DIR	= libft

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/25 09:37:41 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/02 12:56:05 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,17 @@ int	export_arg(t_data *data, int tok)
 {
 	int	i;
 
-	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1]))
+	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1], 1))
 		return (0);
 	while (data->tokens[++tok])
 	{
-		if (delim(data->tokens[tok]))
+		if (delim(data->tokens[tok], 1))
 			break ;
 		if (!ft_isalpha(data->tokens[tok][0]) && data->tokens[tok][0] != '_')
 		{
 			printf("export: '%c': not a valid identifier\n",
 				data->tokens[tok][0]);
-			continue ;
+			return (ERROR_EXIT);
 		}
 		i = char_finder(data->tokens[tok], '=');
 		if ((data->tokens[tok][0] == '_' && !data->tokens[tok][1])
@@ -76,7 +76,7 @@ int	export_arg(t_data *data, int tok)
 			continue ;
 		add_to_exp(data, tok, i);
 	}
-	return (1);
+	return (OK_EXIT);
 }
 
 /*With no arguments simply prints env alphabetically,
@@ -84,10 +84,10 @@ otherwise updates env with new args or new arg values*/
 int	cmd_export(t_data *data, int token)
 {
 	if (export_arg(data, token))
-		return (1);
+		return (ERROR_EXIT);
 	list_ranking(data->env);
 	list_ranking(data->exp);
 	print_ordered(data->env);
 	print_ordered(data->exp);
-	return (0);
+	return (OK_EXIT);
 }

@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/02 14:59:33 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/06 14:24:34 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@
 # include <term.h>
 # include <errno.h>
 
-# define CMD_ECHO 1
-# define CMD_CD 2
-# define CMD_PWD 3
-# define CMD_EXPORT 4
-# define CMD_UNSET 5
-# define CMD_ENV 6
-# define CMD_EXIT 7
+# define CMD_ECHO 2
+# define CMD_CD 3
+# define CMD_PWD 4
+# define CMD_EXPORT 5
+# define CMD_UNSET 6
+# define CMD_ENV 7
+# define CMD_EXIT 8
+
+# define OK_EXIT 0
+# define ERROR_EXIT 1
+# define ERROR_WRONG_COMMAND 127
 
 typedef struct s_cmds
 {
@@ -64,6 +68,8 @@ typedef struct s_data
 	int		fdin;
 	int		fdout;
 	int		lastfdout;
+	int		last_exit;
+	int		logic_operator;
 }			t_data;
 
 /*main.c*/
@@ -74,16 +80,23 @@ char	*build_prompt(t_data *data);
 /*lexer.c*/
 int		other(char *str, int flag);
 int		tok_len(char *str, int i, int flag);
-int		count_tokens(char *str);
-void	set_tokens(char **tokens, char *str);
-char	**lexer(char *input);
+int		count_tokens(t_data *data, char *str);
+void	set_tokens(t_data *data, char **tokens, char *str);
+char	**lexer(t_data *data, char *input);
 
 /*utils_lexer.c*/
 int		char_finder(char *str, char c);
 void	get_find(char *str, char *find);
 int		forbidden(char *str);
-int		delim(char *str);
+int		delim(char *str, int flag);
 int		quote_case(char *str);
+
+/*logical_operators.c*/
+int		logical_choice(t_data *data, int token);
+int		check_single_cmd(t_data *data, char *cmd);
+int		is_cmd(t_data *data, char *str);
+int		logical_search(t_data *data, char *str);
+int		check_and_or(t_data *data, char *str);
 
 /*parser.c*/
 char	*update_expansion(t_data *data, char *val, char **test);
@@ -110,7 +123,7 @@ int		cmd_env(t_data *data);
 void	cmd_exit(t_data *data);
 
 /*normal_command.c*/
-char	**prep_cmds(t_data *data, int token);
+char	**prep_cmds(t_data *data, int token, char *cmd);
 t_cmds	*get_cmd(t_data *data, int token);
 char	**get_env2d(t_ll *env);
 void	child(t_data *data, int token);
@@ -131,6 +144,8 @@ int		cmd_cd(t_data *data, int token);
 int		cmd_pwd(t_data *data);
 
 /*utils_directories.c*/
+char	*search_dir(char *pre, char *post);
+char	*test_wildcard(char *token, int wildcard);
 char	*get_dir(t_data *data, char *dir);
 void	update_env_dir(t_data *data, char *dir, char *new_dir);
 
@@ -155,6 +170,7 @@ void	signal_handler(int sig);
 void	signal_global(void);
 
 /*utils*/
+char	*get_end_cmd(char *str);
 int		len_compare(char *str1, char *str2);
 void	free_double(char **tokens);
 void	free_list(t_ll **list);
