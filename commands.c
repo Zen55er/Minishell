@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/30 11:25:32 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/02 13:02:34 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	cmd_echo(t_data *data, int tok)
 
 	n_flag = 0;
 	i = 0;
-	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1]))
-		return (0);
+	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1], 1))
+		return (OK_EXIT);
 	while (data->tokens[++tok] && ++i)
 	{
-		if (delim(data->tokens[tok]))
+		if (delim(data->tokens[tok], 1))
 			break ;
 		if (i == 1 && !ft_strncmp(data->tokens[tok], "-n", 2)
 			&& !data->tokens[tok][2])
@@ -34,12 +34,12 @@ int	cmd_echo(t_data *data, int tok)
 		}
 		if (data->tokens[tok])
 			printf("%s", data->tokens[tok]);
-		if (data->tokens[tok + 1] && !delim(data->tokens[tok + 1]))
+		if (data->tokens[tok + 1] && !delim(data->tokens[tok + 1], 1))
 			printf(" ");
 	}
 	if (!n_flag)
 		printf("\n");
-	return (1);
+	return (OK_EXIT);
 }
 
 /*Prints env linked list and any exported variables at the end,
@@ -67,7 +67,7 @@ int	cmd_env(t_data *data)
 		printf("%s\n", temp->value);
 		temp = temp->next;
 	}
-	return (1);
+	return (OK_EXIT);
 }
 
 /*Prints "exit", updates prompt, frees memory and exits program*/
@@ -76,5 +76,5 @@ void	cmd_exit(t_data *data)
 	printf("exit\n");
 	rl_clear_history();
 	free_all(0, data);
-	exit (1);
+	exit (OK_EXIT);
 }

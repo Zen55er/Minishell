@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/01 15:11:46 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:26:36 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	tok_len(char *str, int i, int flag)
 {
 	int	j;
 
-	j = delim(&str[i]);
+	j = delim(&str[i], 0);
 	if (j)
 		return (j);
 	j = quote_case(&str[i]);
@@ -50,7 +50,7 @@ int	tok_len(char *str, int i, int flag)
 }
 
 /*Counts tokens in input, accounts for delimiters, quotes and parentheses*/
-int	count_tokens(char *str)
+int	count_tokens(t_data *data, char *str)
 {
 	int		i;
 	int		j;
@@ -64,7 +64,10 @@ int	count_tokens(char *str)
 			i++;
 		if (!str[i])
 			break ;
-		j = tok_len(str, i, 0);
+		if ((str[i] == '(' || str[i] == ')') && check_and_or(data, &str[i]))
+			j = 1;
+		else
+			j = tok_len(str, i, 0);
 		if (j < 0)
 			return (0);
 		tok_num++;
@@ -75,7 +78,7 @@ int	count_tokens(char *str)
 
 /*Places input tokens in 2d array for parser to analyse.
 Ignores whitepaces between tokens*/
-void	set_tokens(char **tokens, char *str)
+void	set_tokens(t_data *data, char **tokens, char *str)
 {
 	int		i;
 	int		j;
@@ -89,7 +92,10 @@ void	set_tokens(char **tokens, char *str)
 			i++;
 		if (!str[i])
 			break ;
-		j = tok_len(str, i, 1);
+		if ((str[i] == '(' || str[i] == ')') && check_and_or(data, &str[i]))
+			j = 1;
+		else
+			j = tok_len(str, i, 1);
 		if (!j && ++i)
 			continue ;
 		else
@@ -100,17 +106,17 @@ void	set_tokens(char **tokens, char *str)
 }
 
 /*Calls functions to count and set tokens to send to parser.*/
-char	**lexer(char *input)
+char	**lexer(t_data *data, char *input)
 {
 	char	**tokens;
 	int		tok_num;
 
-	tok_num = count_tokens(input);
+	tok_num = count_tokens(data, input);
 	if (tok_num <= 0)
 		return (0);
 	tokens = (char **)malloc(sizeof(char *) * (tok_num + 1));
-	set_tokens(tokens, input);
-	// for (int i = 0; tokens[i]; i++)
-	// 	printf("Token %i: :%s:\n", i, tokens[i]);
+	set_tokens(data, tokens, input);
+	for (int i = 0; tokens[i]; i++)
+		printf("Token %i: :%s:\n", i, tokens[i]);
 	return (tokens);
 }

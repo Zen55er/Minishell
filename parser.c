@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/02 10:22:36 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:14:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ char	*update_expansion(t_data *data, char *val, char **test)
 	char	*temp;
 	char	*temp_val;
 
+	if (!ft_strncmp(*test, "$?", ft_strlen(*test)))
+	{
+		free(val);
+		free(*test);
+		return (ft_itoa(data->last_exit));
+	}
 	if (*test[0] == '$')
 	{
 		temp = find_var(data->env, *test + 1);
@@ -77,6 +83,7 @@ char	*quotes(t_data *data, char *str)
 	if (str[0] == '\"')
 		flag = 1;
 	len = ft_strlen(str);
+	/*REMOVE FROM "AAA"BBB*/
 	new = ft_substr(str, 1, len - 2);
 	free (str);
 	if (flag)

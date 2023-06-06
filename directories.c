@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/31 13:52:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/06 12:47:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,13 @@ otherwise, goes to path in input*/
 char	*cd_cases(t_data *data, int token)
 {
 	char	*dir;
+	/* int		wildcard;
 
-	if (!data->tokens[token] || !ft_strncmp(data->tokens[token], "~", 2))
+	wildcard = char_finder(data->tokens[token], '*');
+	if (data->tokens[token][0] == '*' || wildcard)
+		dir = test_wildcard(data->tokens[token], wildcard); */
+	/* else  */if (!data->tokens[token] || delim(data->tokens[token], 1)
+		|| !ft_strncmp(data->tokens[token], "~", 2))
 		dir = find_var(data->env, "HOME");
 	else if (!ft_strncmp(data->tokens[token], "-", 2))
 	{
@@ -80,10 +85,10 @@ int	cmd_cd(t_data *data, int token)
 
 	token++;
 	if (data->tokens[token] && data->tokens[token + 1]
-		&& !delim(data->tokens[token + 1]))
+		&& !delim(data->tokens[token], 1) && !delim(data->tokens[token + 1], 1))
 	{
 		printf("cmd_cd: too many arguments\n");
-		return (1);
+		return (ERROR_EXIT);
 	}
 	dir = cd_cases(data, token);
 	out = chdir(dir);
@@ -91,15 +96,15 @@ int	cmd_cd(t_data *data, int token)
 	if (out)
 	{
 		perror("cmd_cd");
-		return (1);
+		return (ERROR_EXIT);
 	}
 	update_curr_prev(data);
-	return (0);
+	return (OK_EXIT);
 }
 
 /*Print current working directory*/
 int	cmd_pwd(t_data *data)
 {
 	printf("%s\n", data->curr_dir);
-	return (0);
+	return (OK_EXIT);
 }

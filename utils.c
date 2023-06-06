@@ -6,11 +6,26 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:48:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/25 12:05:19 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:04:26 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*get_end_cmd(char *str)
+{
+	char	*cmd;
+	int		i;
+
+	i = -1;
+	while (str[++i])
+		continue ;
+	while (str[--i] != '/')
+		continue ;
+	i++;
+	cmd = ft_substr(str, i, ft_strlen(str) - i);
+	return (cmd);
+}
 
 /*Returns length of largest string*/
 int	len_compare(char *str1, char *str2)

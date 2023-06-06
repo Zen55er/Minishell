@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   normal_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/01 15:49:35 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:29:58 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*Fills 2d array with command name and flags*/
-char	**prep_cmds(t_data *data, int token)
+char	**prep_cmds(t_data *data, int token, char *cmd)
 {
 	char	**cmds;
 	int		temp;
@@ -23,19 +23,21 @@ char	**prep_cmds(t_data *data, int token)
 	temp = token;
 	while (data->tokens[temp])
 	{
-		if (delim(data->tokens[temp]))
+		if (delim(data->tokens[temp], 1))
 			break ;
 		i++;
 		temp++;
 	}
 	cmds = (char **)malloc(sizeof(char *) * (i + 1));
 	cmds[i] = 0;
-	i = 0;
-	while (token < temp)
+	i = -1;
+	while (token < temp && ++i >= 0)
 	{
-		cmds[i] = ft_strdup(data->tokens[token]);
+		if (!i && cmd)
+			cmds[i] = cmd;
+		else
+			cmds[i] = ft_strdup(data->tokens[token]);
 		token++;
-		i++;
 	}
 	return (cmds);
 }
@@ -47,7 +49,9 @@ t_cmds	*get_cmd(t_data *data, int token)
 
 	cmd = data->tokens[token];
 	if (cmd[0] == '/' && check_path(data->path, cmd))
-		cmd = ft_strrchr(data->tokens[token], '/');
+		cmd = get_end_cmd(cmd);
+	else
+		cmd = 0;
 	cmds = (t_cmds *)malloc(sizeof(t_cmds));
 	cmds->cmd = 0;
 	if (ft_strncmp(cmd, "awk ", 4) == 0 || ft_strncmp(cmd, "sed ", 4) == 0)
@@ -56,7 +60,7 @@ t_cmds	*get_cmd(t_data *data, int token)
 			return (cmds);
 	}
 	else
-		cmds->cmd_args = prep_cmds(data, token);
+		cmds->cmd_args = prep_cmds(data, token, cmd);
 	test_cmd(data->path, &cmds);
 	return (cmds);
 }
@@ -93,7 +97,7 @@ void	child(t_data *data, int token)
 		free_double(cmds->cmd_args);
 		free(cmds->cmd);
 		free(cmds);
-		exit (1);
+		exit (ERROR_WRONG_COMMAND);
 
 	}
 	env2d = get_env2d(data->env);
@@ -103,13 +107,14 @@ void	child(t_data *data, int token)
 	free_double(env2d);
 	free(cmds->cmd);
 	free(cmds);
-	exit (1);
+	exit (ERROR_EXIT);
 }
 
 /*Prepares cmds struct and sends it to execve*/
 int	normal_command(t_data *data, int token)
 {
-	pid_t		new_fork;
+	pid_t	new_fork;
+	int		status;
 
 	new_fork = fork();
 	if (new_fork < 0)
@@ -119,6 +124,6 @@ int	normal_command(t_data *data, int token)
 	}
 	else if (new_fork == 0)
 		child(data, token);
-	waitpid(new_fork, 0, 0);
-	return (0);
+	waitpid(new_fork, &status, 0);
+	return (WEXITSTATUS(status));
 }

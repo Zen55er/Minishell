@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/02 09:35:08 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/02 13:59:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	main(int ac, char **av, char **envp)
 	data.path = 0;
 	data.tokens = 0;
 	data.curr_dir = 0;
+	data.logic_operator = 0;
 	signal_global();
 	prep_env(&data, envp);
 	update_curr_prev(&data);
@@ -100,12 +101,12 @@ int	main(int ac, char **av, char **envp)
 			continue ;
 		}
 		add_history(input);
-		data.tokens = lexer(input);
+		data.tokens = lexer(&data, input);
 		free(input);
 		if (data.tokens)
 		{
 			parser(&data);
-			// executer(&data);
+			executer(&data);
 			free_double(data.tokens);
 		}
 		data.tokens = 0;

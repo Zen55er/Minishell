@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_normal_command.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:16:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/01 09:20:43 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:58:26 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
