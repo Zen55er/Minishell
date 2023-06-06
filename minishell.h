@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/06 14:24:34 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/06 14:28:25 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ char	*quotes(t_data *data, char *str);
 void	parser(t_data *data);
 
 /*executer.c*/
-int		redirection(t_data *data, int i);
 int		command_call(t_data *data, int token, int command);
 int		command_check(char *input);
 void	executer(t_data *data);
@@ -115,7 +114,7 @@ int		pipeline(t_data *data, int i);
 void	pipes(t_data *data, int i);
 
 /*redirection*/
-int		redirection(t_data *data, int i);
+int		redirection(t_data *data);
 
 /*commands.c*/
 int		cmd_echo(t_data *data, int tok);
