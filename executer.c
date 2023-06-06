@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/06 14:26:03 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/06 14:29:11 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	command_check(char *input)
 void	executer(t_data *data)
 {
 	int	i;
-	/* int	command; */
+	int	command;
 
 	i = 0;
 	while (data->tokens[i])
