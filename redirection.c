@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:25 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/06 14:28:57 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/06 15:54:41 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 int	redirection(t_data *data)
 {
-	(void)data;
-	return (0);
+	int	i;
+
+	i = 0;
+	while (data->tokens[i])
+	{
+		
+	}
 }

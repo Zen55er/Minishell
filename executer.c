@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/06 14:29:11 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/06 15:18:20 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	executer(t_data *data)
 	int	command;
 
 	i = 0;
+	redirection(data);
 	while (data->tokens[i])
 	{
 		if (delim(data->tokens[i], 1))
@@ -66,8 +67,6 @@ void	executer(t_data *data)
 			i++;
 			continue ;
 		}
-		if (!ft_strncmp(data->tokens[i], "<", ft_strlen(data->tokens[i])))
-			redirection(data);
 		else if (logical_choice(data, i))
 		{
 			command = command_check(data->tokens[i]);

@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/06 14:28:25 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/06 15:56:02 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ typedef struct s_ll
 	struct s_ll		*next;
 }					t_ll;
 
+typedef struct cmd_st
+{
+	
+}
+
 typedef struct s_data
 {
 	char	**tokens;
@@ -68,6 +73,7 @@ typedef struct s_data
 	int		fdin;
 	int		fdout;
 	int		lastfdout;
+	
 	int		last_exit;
 	int		logic_operator;
 }			t_data;
