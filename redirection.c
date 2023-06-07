@@ -14,11 +14,13 @@
 
 int	redirection(t_data *data)
 {
-	int	i;
+	(void)data;
+	/* int	i;
 
 	i = 0;
 	while (data->tokens[i])
 	{
 		
-	}
+	} */
+	return (0);
 }

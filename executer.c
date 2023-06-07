@@ -59,7 +59,7 @@ void	executer(t_data *data)
 	int	command;
 
 	i = 0;
-	redirection(data);
+	// redirection(data);
 	while (data->tokens[i])
 	{
 		if (delim(data->tokens[i], 1))

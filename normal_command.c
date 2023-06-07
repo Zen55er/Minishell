@@ -50,8 +50,6 @@ t_cmds	*get_cmd(t_data *data, int token)
 	cmd = data->tokens[token];
 	if (cmd[0] == '/' && check_path(data->path, cmd))
 		cmd = get_end_cmd(cmd);
-	else
-		cmd = 0;
 	cmds = (t_cmds *)malloc(sizeof(t_cmds));
 	cmds->cmd = 0;
 	if (ft_strncmp(cmd, "awk ", 4) == 0 || ft_strncmp(cmd, "sed ", 4) == 0)

@@ -57,11 +57,6 @@ typedef struct s_ll
 	struct s_ll		*next;
 }					t_ll;
 
-typedef struct cmd_st
-{
-	
-}
-
 typedef struct s_data
 {
 	char	**tokens;
@@ -73,7 +68,6 @@ typedef struct s_data
 	int		fdin;
 	int		fdout;
 	int		lastfdout;
-	
 	int		last_exit;
 	int		logic_operator;
 }			t_data;
