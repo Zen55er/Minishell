@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/06 15:56:02 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/09 18:19:05 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,27 @@ typedef struct s_ll
 
 typedef struct cmd_st
 {
-	
-}
+	char			**cmd;
+	int				num_redir;
+	int				num_pipes;
+	struct t_cmd_st	*next;
+	struct t_cmd_st	*prev;
+}	t_cmd_st;
 
 typedef struct s_data
 {
-	char	**tokens;
-	t_ll	*env;
-	t_ll	*exp;
-	char	**path;
-	char	*curr_dir;
-	char	*prev_dir;
-	int		fdin;
-	int		fdout;
-	int		lastfdout;
-	
-	int		last_exit;
-	int		logic_operator;
+	char		**tokens;
+	t_ll		*env;
+	t_ll		*exp;
+	char		**path;
+	char		*curr_dir;
+	char		*prev_dir;
+	int			fdin;
+	int			fdout;
+	int			lastfdout;
+	t_cmd_st	*cmd_st;
+	int			last_exit;
+	int			logic_operator;
 }			t_data;
 
 /*main.c*/
