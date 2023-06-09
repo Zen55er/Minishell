@@ -97,16 +97,27 @@ char	*quotes(t_data *data, char *str)
 /*Parses cases with $ and quotes*/
 void	parser(t_data	*data)
 {
-	int	i;
+	int		i;
+	t_ll	*matches;
 
 	i = -1;
 	while (data->tokens[++i])
 	{
-		// printf("Starting str: %s\n", data->tokens[i]);
 		if (data->tokens[i][0] == '\'' || data->tokens[i][0] == '\"')
 			data->tokens[i] = quotes(data, data->tokens[i]);
-		else
+		else if (data->tokens[i][0] == '$' || char_finder(data->tokens[i], '$'))
 			data->tokens[i] = expansion(data, data->tokens[i]);
-		// printf("Replaced str: %s\n", data->tokens[i]);
+		else if (data->tokens[i][0] == '*' || char_finder(data->tokens[i], '*'))
+		{
+			matches = expand_wildcards(data->tokens[i]);
+			if (list_size(matches) == 1)
+			{
+				free(data->tokens[i]);
+				data->tokens[i] = ft_strdup(matches->var);
+			}
+			else
+				i += add_tokens(data, matches, i);
+			free_list(&matches);
+		}
 	}
 }

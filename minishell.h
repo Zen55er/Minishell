@@ -182,4 +182,10 @@ int		list_size(t_ll *list);
 void	node_add_front(t_ll **list, t_ll *node);
 void	node_add_back(t_ll **list, t_ll *node);
 
+/*wildcards.c*/
+void	add_list_tokens(char **new_tok, t_ll *matches, int i);
+int		add_tokens(t_data *data, t_ll *matches, int token);
+int		compare_wc(char *token, char *content);
+t_ll	*expand_wildcards(char *token);
+
 #endif
