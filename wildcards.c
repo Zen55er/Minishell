@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 10:02:42 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/09 18:40:28 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/10 08:57:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	compare_wc(char *token, char *content)
 	j = 0;
 	prev_wc = -1;
 	backtrack = -1;
+	if ((content[0] == '.' && token[0] != '.'))
+		return (0);
 	while (token[i] && content[j])
 	{
 		if (token[i] == content[j])
