@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+/*In cases where input for a command comes in a path (e.g. user/bin/ls),
+returns only the end of the string (after the last '/).*/
 char	*get_end_cmd(char *str)
 {
 	char	*cmd;

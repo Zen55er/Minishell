@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+/*Searches env for specific directory*/
 char	*get_dir(t_data *data, char *dir)
 {
 	t_ll	*temp;
@@ -28,6 +29,7 @@ char	*get_dir(t_data *data, char *dir)
 	return (0);
 }
 
+/*Changes env entry for new directory*/
 void	update_env_dir(t_data *data, char *dir, char *new_dir)
 {
 	t_ll	*temp;

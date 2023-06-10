@@ -6,12 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 10:02:42 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/10 08:57:07 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/10 09:39:22 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Adds every match to their correct spots in new_tok*/
 void	add_list_tokens(char **new_tok, t_ll *matches, int i)
 {
 	t_ll	*temp;
@@ -26,6 +27,8 @@ void	add_list_tokens(char **new_tok, t_ll *matches, int i)
 	}
 }
 
+/*Calculates necessary space to allocate for new_tok,
+copies old tokens to the new variable, including the expanded wildcard values*/
 int	add_tokens(t_data *data, t_ll *matches, int token)
 {
 	int		i;
@@ -59,6 +62,8 @@ int	add_tokens(t_data *data, t_ll *matches, int token)
 	return (n_list - 1);
 }
 
+/*Compares wildcard str with current folder content.
+Only matches hidden files if input also starts with '.'.*/
 int	compare_wc(char *token, char *content)
 {
 	int	i;
@@ -102,6 +107,9 @@ int	compare_wc(char *token, char *content)
 	return (1);
 }
 
+/*Opens current directory for searching and
+compares each entry with wildcard token.
+Places every match in a list which will be added to new tokens.*/
 t_ll	*expand_wildcards(char *token)
 {
 	DIR				*directory;

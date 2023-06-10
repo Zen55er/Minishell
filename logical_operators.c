@@ -25,6 +25,7 @@ int	logical_choice(t_data *data, int token)
 	return (0);
 }
 
+/*Test if str can be accessed as a command*/
 int	check_single_cmd(t_data *data, char *cmd)
 {
 	int		i;
@@ -45,6 +46,7 @@ int	check_single_cmd(t_data *data, char *cmd)
 	return (0);
 }
 
+/*Checks if first word is a valid command*/
 int	is_cmd(t_data *data, char *str)
 {
 	int		i;

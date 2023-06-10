@@ -42,6 +42,7 @@ char	**prep_cmds(t_data *data, int token, char *cmd)
 	return (cmds);
 }
 
+/*Returns cmds struct filled with necessary info for execve*/
 t_cmds	*get_cmd(t_data *data, int token)
 {
 	t_cmds	*cmds;
@@ -63,6 +64,7 @@ t_cmds	*get_cmd(t_data *data, int token)
 	return (cmds);
 }
 
+/*Copies env to a char ** format for execve*/
 char	**get_env2d(t_ll *env)
 {
 	char	**env2d;
@@ -83,6 +85,7 @@ char	**get_env2d(t_ll *env)
 	return (env2d);
 }
 
+/*After getting commands and env, calls execve to execute command*/
 void	child(t_data *data, int token)
 {
 	t_cmds	*cmds;

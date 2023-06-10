@@ -70,6 +70,7 @@ void	test_cmd(char **paths, t_cmds **cmds)
 	return ;
 }
 
+/*Returns string with "var=value" format*/
 char	*get_full_var(char *var, char *value)
 {
 	char	*temp1;
