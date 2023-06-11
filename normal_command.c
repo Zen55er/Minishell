@@ -99,7 +99,6 @@ void	child(t_data *data, int token)
 		free(cmds->cmd);
 		free(cmds);
 		exit (ERROR_WRONG_COMMAND);
-
 	}
 	env2d = get_env2d(data->env);
 	execve(cmds->cmd, cmds->cmd_args, env2d);

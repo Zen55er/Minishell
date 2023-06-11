@@ -12,6 +12,14 @@
 
 #include "minishell.h"
 
+/*Returns last exit code.*/
+char	*get_exit_code(t_data *data, char *str1, char **str2)
+{
+	free(str1);
+	free(*str2);
+	return (ft_itoa(data->last_exit));
+}
+
 /*Joins test to val if it exists after expanding variable
 or if it is just text*/
 char	*update_expansion(t_data *data, char *val, char **test)
@@ -20,11 +28,7 @@ char	*update_expansion(t_data *data, char *val, char **test)
 	char	*temp_val;
 
 	if (!ft_strncmp(*test, "$?", ft_strlen(*test)))
-	{
-		free(val);
-		free(*test);
-		return (ft_itoa(data->last_exit));
-	}
+		return (get_exit_code(data, val, test));
 	if (*test[0] == '$')
 	{
 		temp = find_var(data->env, *test + 1);
@@ -110,12 +114,12 @@ void	parser(t_data	*data)
 		else if (data->tokens[i][0] == '*' || char_finder(data->tokens[i], '*'))
 		{
 			matches = expand_wildcards(data->tokens[i]);
-			if (list_size(matches) == 1)
+			if (matches && list_size(matches) == 1)
 			{
 				free(data->tokens[i]);
 				data->tokens[i] = ft_strdup(matches->var);
 			}
-			else
+			else if ((matches && list_size(matches) > 1))
 				i += add_tokens(data, matches, i);
 			free_list(&matches);
 		}

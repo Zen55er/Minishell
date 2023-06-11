@@ -109,6 +109,7 @@ int		logical_search(t_data *data, char *str);
 int		check_and_or(t_data *data, char *str);
 
 /*parser.c*/
+char	*get_exit_code(t_data *data, char *str1, char **str2);
 char	*update_expansion(t_data *data, char *val, char **test);
 char	*expansion(t_data *data, char	*str);
 char	*quotes(t_data *data, char *str);
@@ -194,8 +195,15 @@ void	node_add_back(t_ll **list, t_ll *node);
 
 /*wildcards.c*/
 void	add_list_tokens(char **new_tok, t_ll *matches, int i);
+int		old_tokens(t_data *data);
 int		add_tokens(t_data *data, t_ll *matches, int token);
 int		compare_wc(char *token, char *content);
 t_ll	*expand_wildcards(char *token);
+
+/*utils_wildcards.c*/
+void	double_increment(int *i, int *j);
+void	found_wildcard(int *i, int *j, int *prev_wc, int *backtrack);
+void	return_to_previous(int *i, int *j, int *prev_wc, int *backtrack);
+int		final_wc_check(int i, char *token);
 
 #endif

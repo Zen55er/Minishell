@@ -15,16 +15,23 @@
 /*Adds every match to their correct spots in new_tok*/
 void	add_list_tokens(char **new_tok, t_ll *matches, int i)
 {
-	t_ll	*temp;
-	/*TEST WITHOUT TEMP*/
-
-	temp = matches;
-	while (temp)
+	while (matches)
 	{
-		new_tok[i] = ft_strdup(temp->var);
+		new_tok[i] = ft_strdup(matches->var);
 		i++;
-		temp = temp->next;
+		matches = matches->next;
 	}
+}
+
+/*Counts old tokens*/
+int	old_tokens(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (data->tokens[++i])
+		continue ;
+	return (i);
 }
 
 /*Calculates necessary space to allocate for new_tok,
@@ -33,15 +40,11 @@ int	add_tokens(t_data *data, t_ll *matches, int token)
 {
 	int		i;
 	int		j;
-	int		n_tok;
 	int		n_list;
 	char	**new_tok;
 
-	n_tok = 0;
-	while (data->tokens[n_tok])
-		n_tok++;
 	n_list = list_size(matches);
-	new_tok = (char **)malloc(sizeof(char *) * (n_tok + n_list));
+	new_tok = (char **)ft_calloc(sizeof(char *), old_tokens(data) + n_list);
 	i = -1;
 	j = 0;
 	while (data->tokens[++i])
@@ -56,7 +59,6 @@ int	add_tokens(t_data *data, t_ll *matches, int token)
 			break ;
 		new_tok[i + j] = ft_strdup(data->tokens[i]);
 	}
-	new_tok[i + j] = 0;
 	free_double(data->tokens);
 	data->tokens = new_tok;
 	return (n_list - 1);
@@ -75,35 +77,19 @@ int	compare_wc(char *token, char *content)
 	j = 0;
 	prev_wc = -1;
 	backtrack = -1;
-	if ((content[0] == '.' && token[0] != '.'))
-		return (0);
 	while (token[i] && content[j])
 	{
 		if (token[i] == content[j])
-		{
-			i++;
-			j++;
-		}
+			double_increment(&i, &j);
 		else if (token[i] == '*')
-		{
-			i++;
-			prev_wc = i;
-			backtrack = j;
-		}
+			found_wildcard(&i, &j, &prev_wc, &backtrack);
 		else if (prev_wc == -1)
 			return (0);
 		else
-		{
-			i = prev_wc;
-			j = backtrack++;
-		}
+			return_to_previous(&i, &j, &prev_wc, &backtrack);
 	}
-	while (token[i])
-	{
-		if (token[i] != '*')
-			return (0);
-		i++;
-	}
+	if (!final_wc_check(i, token))
+		return (0);
 	return (1);
 }
 
@@ -118,15 +104,13 @@ t_ll	*expand_wildcards(char *token)
 
 	matches = 0;
 	directory = opendir(".");
-	if (!directory)
-	{
-		printf("Could not open directory.\n");
+	if (!directory && printf("Could not open directory.\n"))
 		return (0);
-	}
 	files = readdir(directory);
 	while (files)
 	{
-		if (compare_wc(token, files->d_name))
+		if (!(files->d_name[0] == '.' && token[0] != '.')
+			&& compare_wc(token, files->d_name))
 		{
 			if (!matches)
 				matches = new_node(files->d_name, 0);
