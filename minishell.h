@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/09 18:19:05 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/12 15:59:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ void	set_tokens(t_data *data, char **tokens, char *str);
 char	**lexer(t_data *data, char *input);
 
 /*utils_lexer.c*/
-int		char_finder(char *str, char c);
+int		char_finder(char *str, char c, int flag);
 void	get_find(char *str, char *find);
 int		forbidden(char *str);
 int		delim(char *str, int flag);
-int		quote_case(char *str);
+int		quote_case(char *str, int flag);
 
 /*logical_operators.c*/
 int		logical_choice(t_data *data, int token);

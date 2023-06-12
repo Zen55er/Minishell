@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/05 15:14:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/12 16:10:03 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,11 @@ void	parser(t_data	*data)
 	{
 		if (data->tokens[i][0] == '\'' || data->tokens[i][0] == '\"')
 			data->tokens[i] = quotes(data, data->tokens[i]);
-		else if (data->tokens[i][0] == '$' || char_finder(data->tokens[i], '$'))
+		else if (data->tokens[i][0] == '$'
+			|| char_finder(data->tokens[i], '$', 1))
 			data->tokens[i] = expansion(data, data->tokens[i]);
-		else if (data->tokens[i][0] == '*' || char_finder(data->tokens[i], '*'))
+		else if (data->tokens[i][0] == '*'
+			|| char_finder(data->tokens[i], '*', 1))
 		{
 			matches = expand_wildcards(data->tokens[i]);
 			if (matches && list_size(matches) == 1)

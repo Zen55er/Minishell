@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/12 13:51:14 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/12 16:08:51 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*Looks for c in str, if found returns how far from the start it is.
 If the char is not found, prints error message.*/
-int	char_finder(char *str, char c)
+int	char_finder(char *str, char c, int flag)
 {
 	int	i;
 
@@ -22,24 +22,11 @@ int	char_finder(char *str, char c)
 	while (str[++i])
 	{
 		if (str[i] == c)
-			return (i);
+			return (1);
 	}
-	if (c == '\'' || c == '\"')
-		printf("Found unclosed quotes: %s\n", str);
-	else if (c == ')' || c == '}')
-		printf("Found unclosed parenthesis: %s\n", str);
+	if (flag == -1 && (c == '\'' || c == '\"'))
+		printf("Found unclosed quotes FIX THIS CASE WITH GNL!?: %s\n", str);
 	return (0);
-}
-
-/*Sets find value*/
-void	get_find(char *str, char *find)
-{
-	if (str[0] == '\'' || str[0] == '\"')
-		*find = str[0];
-	else if (str[0] == '(')
-		*find = ')';
-	else if (str[0] == '{')
-		*find = '}';
 }
 
 /*Checks for characters that should not be interpreted*/
@@ -79,27 +66,21 @@ int	delim(char *str, int flag)
 	return (0);
 }
 
-/*If str[i] is a quote or parenthesis, calls char_finder to check
-if it is closed correctly. Also checks for unopened parenthesis.*/
-int	quote_case(char *str)
+/*If str[i] is a quote, calls char_finder to check
+if it is closed correctly.*/
+int	quote_case(char *str, int flag)
 {
 	int		j;
 	char	find;
 
 	find = 0;
 	j = 0;
-	if (str[0] == '\'' || str[0] == '\"' || str[0] == '(' || str[0] == '{')
-	{
-		get_find(str, &find);
-		j = char_finder(str, find);
-		if (!j)
-			return (-1);
-		return (++j);
-	}
-	if (str[0] == ')' || str[0] == '}')
-	{
-		printf("Found unopened parenthesis: %s\n", str);
-		return (-1);
-	}
-	return (0);
+	if (str[0] == '\'')
+		find = '\'';
+	else
+		find = '\"';
+	j = char_finder(str, find, flag);
+	if (!j)
+		return (0);
+	return (1);
 }

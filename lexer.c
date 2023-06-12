@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/12 13:32:49 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/12 16:08:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ delimiters, quotes and parentheses.*/
 int	other(char *str, int flag)
 {
 	int	i;
+	int	found_quote;
 
 	i = -1;
+	found_quote = -1;
 	while (str[++i])
 	{
 		if (!flag && forbidden(&str[i]))
 			return (-1);
-		if (!str[i] || ft_isspace(str[i])
-			|| str[i] == '|' || str[i] == '&'
-			|| str[i] == '>' || str[i] == '<'
-			|| str[i] == '\'' || str[i] == '\"'
-			|| str[i] == '(' || str[i] == ')'
-			|| str[i] == '{' || str[i] == '}')
+		if (str[i] == '\'' || str[i] == '\"')
+			if (quote_case(&str[i], found_quote))
+				found_quote *= -1;
+		if (!str[i] || ft_isspace(str[i]) || delim(&str[i], 0))
 			break ;
 	}
 	return (i);
@@ -40,9 +40,6 @@ int	tok_len(char *str, int i, int flag)
 	int	j;
 
 	j = delim(&str[i], 0);
-	if (j)
-		return (j);
-	j = quote_case(&str[i]);
 	if (j)
 		return (j);
 	j = other(&str[i], flag);
