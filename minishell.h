@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/12 15:59:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/12 17:37:10 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ char	*get_exit_code(t_data *data, char *str1, char **str2);
 char	*update_expansion(t_data *data, char *val, char **test);
 char	*expansion(t_data *data, char	*str);
 char	*quotes(t_data *data, char *str);
+char	*quote_str(t_data *data, char *str);
 void	parser(t_data *data);
 
 /*executer.c*/

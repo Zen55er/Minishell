@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/12 16:10:03 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/12 17:44:48 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ char	*quotes(t_data *data, char *str)
 	if (str[0] == '\"')
 		flag = 1;
 	len = ft_strlen(str);
-	/*REMOVE FROM "AAA"BBB*/
 	new = ft_substr(str, 1, len - 2);
 	free (str);
 	if (flag)
@@ -95,6 +94,37 @@ char	*quotes(t_data *data, char *str)
 		expand_new = expansion(data, new);
 		return (expand_new);
 	}
+	return (new);
+}
+
+/*Iterates through string to remove quotes and expand variables*/
+char	*quote_str(t_data *data, char *str)
+{
+	char	*new;
+	char	*section;
+	char	*temp;
+	int		i;
+	int		j;
+
+	i = 0;
+	new = ft_strdup("");
+	while (str[i])
+	{
+		j = -1;
+		while (str[i + ++j] && str[i + j] != '\'' && str[i + j] != '\"')
+			continue ;
+		if (str[i] == '\'' || str[i] == '\"' )
+			section = quotes(data, ft_substr(str, i, j));
+		else
+			section = ft_substr(str, i, j);
+		temp = new;
+		new = ft_strjoin(new, section);
+		free(temp);
+		if (str[i] == '\'' || str[i] == '\"' )
+			j++;
+		i = j;
+	}
+	free(str);
 	return (new);
 }
 
@@ -107,8 +137,10 @@ void	parser(t_data	*data)
 	i = -1;
 	while (data->tokens[++i])
 	{
-		if (data->tokens[i][0] == '\'' || data->tokens[i][0] == '\"')
-			data->tokens[i] = quotes(data, data->tokens[i]);
+		if (data->tokens[i][0] == '\'' || data->tokens[i][0] == '\"'
+			|| char_finder(data->tokens[i], '\'', 1)
+			|| char_finder(data->tokens[i], '\"', 1))
+			data->tokens[i] = quote_str(data, data->tokens[i]);
 		else if (data->tokens[i][0] == '$'
 			|| char_finder(data->tokens[i], '$', 1))
 			data->tokens[i] = expansion(data, data->tokens[i]);
