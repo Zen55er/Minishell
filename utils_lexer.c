@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/12 13:12:42 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/12 13:19:05 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	forbidden(char *str)
 		|| (str[0] == '$' && str[1] == '(')
 		|| (str[0] == ')' && str[1] == '$'))
 	{
-		printf("Found forbidden character(s): %s\n", str);
+		printf("Found forbidden character or character combination: %s\n", str);
 		return (1);
 	}
 	return (0);
