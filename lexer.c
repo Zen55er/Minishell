@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/05 15:26:36 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/12 13:32:49 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	count_tokens(t_data *data, char *str)
 			i++;
 		if (!str[i])
 			break ;
+		if (forbidden(str))
+			return (0);
 		if ((str[i] == '(' || str[i] == ')') && check_and_or(data, &str[i]))
 			j = 1;
 		else
