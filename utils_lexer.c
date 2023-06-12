@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/06 09:37:36 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/12 13:12:42 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,15 @@ void	get_find(char *str, char *find)
 /*Checks for characters that should not be interpreted*/
 int	forbidden(char *str)
 {
-	if (str[0] == '\\' || str[0] == ';' || str[0] == '[' || str[0] == ']'
-		|| str[0] == '^' || str[0] == '#')
+	if (str[0] == '\\' || str[0] == '[' || str[0] == ']'
+		|| str[0] == ';' || str[0] == '^' || str[0] == '#'
+		|| (str[0] == '(' && str[1] == '(')
+		|| (str[0] == ')' && str[1] == ')')
+		|| (str[0] == '<' && str[1] == '(')
+		|| (str[0] == '$' && str[1] == '(')
+		|| (str[0] == ')' && str[1] == '$'))
 	{
-		printf("Found forbidden character: %s\n", str);
+		printf("Found forbidden character(s): %s\n", str);
 		return (1);
 	}
 	return (0);
