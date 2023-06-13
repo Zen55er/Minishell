@@ -6,19 +6,11 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/13 10:04:08 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/13 10:30:13 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*Returns last exit code.*/
-char	*get_exit_code(t_data *data, char *str1, char **str2)
-{
-	free(str1);
-	free(*str2);
-	return (ft_itoa(data->last_exit));
-}
 
 /*Joins test to val if it exists after expanding variable
 or if it is just text*/
@@ -113,10 +105,7 @@ char	*quote_str(t_data *data, char *str)
 		j = 0;
 		while (str[i + ++j] && str[i + j] != '\'' && str[i + j] != '\"')
 			continue ;
-		if (str[i] == '\'' || str[i] == '\"' )
-			section = quotes(data, ft_substr(str, i, j + 1));
-		else
-			section = ft_substr(str, i, j);
+		section = get_section(data, str, i, j);
 		temp = new;
 		new = ft_strjoin(new, section);
 		free(temp);
@@ -133,7 +122,6 @@ char	*quote_str(t_data *data, char *str)
 void	parser(t_data	*data)
 {
 	int		i;
-	t_ll	*matches;
 
 	i = -1;
 	while (data->tokens[++i])
@@ -147,16 +135,8 @@ void	parser(t_data	*data)
 			data->tokens[i] = expansion(data, data->tokens[i]);
 		else if (data->tokens[i][0] == '*'
 			|| char_finder(data->tokens[i], '*', 1))
-		{
-			matches = expand_wildcards(data->tokens[i]);
-			if (matches && list_size(matches) == 1)
-			{
-				free(data->tokens[i]);
-				data->tokens[i] = ft_strdup(matches->var);
-			}
-			else if ((matches && list_size(matches) > 1))
-				i += add_tokens(data, matches, i);
-			free_list(&matches);
-		}
+			fix_tokens_wc(data, &i);
 	}
+	/* for (int i = 0; data->tokens[i]; i++)
+		printf("Token %i: :%s:\n", i, data->tokens[i]); */
 }

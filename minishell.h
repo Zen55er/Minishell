@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/12 17:37:10 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/13 10:26:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ char	**lexer(t_data *data, char *input);
 
 /*utils_lexer.c*/
 int		char_finder(char *str, char c, int flag);
-void	get_find(char *str, char *find);
 int		forbidden(char *str);
 int		delim(char *str, int flag);
 int		quote_case(char *str, int flag);
@@ -109,12 +108,16 @@ int		logical_search(t_data *data, char *str);
 int		check_and_or(t_data *data, char *str);
 
 /*parser.c*/
-char	*get_exit_code(t_data *data, char *str1, char **str2);
 char	*update_expansion(t_data *data, char *val, char **test);
 char	*expansion(t_data *data, char	*str);
 char	*quotes(t_data *data, char *str);
 char	*quote_str(t_data *data, char *str);
 void	parser(t_data *data);
+
+/*utils_parser.c*/
+char	*get_exit_code(t_data *data, char *str1, char **str2);
+char	*get_section(t_data *data, char *str, int i, int j);
+void	fix_tokens_wc(t_data *data, int *i);
 
 /*executer.c*/
 int		command_call(t_data *data, int token, int command);
