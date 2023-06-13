@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/12 17:44:48 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/13 10:04:08 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,19 +110,20 @@ char	*quote_str(t_data *data, char *str)
 	new = ft_strdup("");
 	while (str[i])
 	{
-		j = -1;
+		j = 0;
 		while (str[i + ++j] && str[i + j] != '\'' && str[i + j] != '\"')
 			continue ;
 		if (str[i] == '\'' || str[i] == '\"' )
-			section = quotes(data, ft_substr(str, i, j));
+			section = quotes(data, ft_substr(str, i, j + 1));
 		else
 			section = ft_substr(str, i, j);
 		temp = new;
 		new = ft_strjoin(new, section);
 		free(temp);
+		free(section);
 		if (str[i] == '\'' || str[i] == '\"' )
 			j++;
-		i = j;
+		i += j;
 	}
 	free(str);
 	return (new);
