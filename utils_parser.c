@@ -6,17 +6,17 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/13 10:26:45 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:04:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*Returns last exit code.*/
-char	*get_exit_code(t_data *data, char *str1, char **str2)
+char	*get_exit_code(t_data *data, char *str1, char *str2)
 {
 	free(str1);
-	free(*str2);
+	free(str2);
 	return (ft_itoa(data->last_exit));
 }
 

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/13 15:34:16 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:05:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,14 @@ int		logical_search(t_data *data, char *str);
 int		check_and_or(t_data *data, char *str);
 
 /*parser.c*/
-char	*update_expansion(t_data *data, char *val, char **test);
+char	*update_expansion(t_data *data, char *val, char *test);
 char	*expansion(t_data *data, char	*str);
 char	*quotes(t_data *data, char *str);
 char	*quote_str(t_data *data, char *str);
 void	parser(t_data *data);
 
 /*utils_parser.c*/
-char	*get_exit_code(t_data *data, char *str1, char **str2);
+char	*get_exit_code(t_data *data, char *str1, char *str2);
 char	*get_section(t_data *data, char *str, int i, int j);
 void	fix_tokens_wc(t_data *data, int *i);
 
