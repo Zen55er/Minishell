@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/12 16:08:51 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:35:37 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,29 @@ int	quote_case(char *str, int flag)
 	if (!j)
 		return (0);
 	return (1);
+}
+
+int	special_dollar(char *str, int flag)
+{
+	int		bad_sub;
+	int		found;
+	int		i;
+
+	bad_sub = 0;
+	found = 0;
+	i = -1;
+	while (str[++i])
+	{
+		if (!flag && forbidden(&str[i]))
+			return (-1);
+		if (ft_isspace(str[i]))
+			bad_sub = i;
+		if (str[i] == '}')
+			found = i;
+	}
+	if (found && bad_sub)
+		return (bad_substitution(str, found + 1));
+	else if (bad_sub)
+		return (bad_sub);
+	return (i);
 }

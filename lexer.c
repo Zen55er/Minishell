@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/12 16:08:14 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/13 14:42:54 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ int	other(char *str, int flag)
 				found_quote *= -1;
 		if (!str[i] || ft_isspace(str[i]) || delim(&str[i], 0))
 			break ;
+		if (str[i] == '$' && str[i + 1] == '{')
+		{
+			i = special_dollar(str, flag);
+			break ;
+		}
 	}
 	return (i);
 }

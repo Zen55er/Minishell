@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/13 10:26:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:34:16 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,10 @@ int		char_finder(char *str, char c, int flag);
 int		forbidden(char *str);
 int		delim(char *str, int flag);
 int		quote_case(char *str, int flag);
+int		special_dollar(char *str, int flag);
+
+/*utils_lexer2.c*/
+int		bad_substitution(char *str, int end);
 
 /*logical_operators.c*/
 int		logical_choice(t_data *data, int token);
@@ -158,8 +162,6 @@ int		cmd_cd(t_data *data, int token);
 int		cmd_pwd(t_data *data);
 
 /*utils_directories.c*/
-char	*search_dir(char *pre, char *post);
-char	*test_wildcard(char *token, int wildcard);
 char	*get_dir(t_data *data, char *dir);
 void	update_env_dir(t_data *data, char *dir, char *new_dir);
 
