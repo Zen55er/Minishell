@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/13 16:20:35 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/14 12:05:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,12 @@ char	*quote_str(t_data *data, char *str)
 }
 
 /*Parses cases with $ and quotes*/
-void	parser(t_data	*data)
+int	parser(t_data	*data)
 {
 	int		i;
 
+	if (validate_tokens(data->tokens))
+		return (1);
 	i = -1;
 	while (data->tokens[++i])
 	{
@@ -145,4 +147,5 @@ void	parser(t_data	*data)
 	}
 	for (int i = 0; data->tokens[i]; i++)
 		printf("Token %i: :%s:\n", i, data->tokens[i]);
+	return (0);
 }
