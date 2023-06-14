@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/12 16:22:02 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/14 14:33:42 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef struct cmd_st
 	char			**cmd;
 	int				num_redir;
 	int				num_pipes;
+	int				redir_in;
+	int				redir_out;
 	struct t_cmd_st	*next;
 	struct t_cmd_st	*prev;
 }	t_cmd_st;
@@ -125,6 +127,10 @@ void	pipes(t_data *data, int i);
 
 /*redirection*/
 int		redirection(t_data *data);
+
+/*redirections utils*/
+void	count_pipes(t_data *data);
+int		count_args(t_data *data, int j);
 
 /*commands.c*/
 int		cmd_echo(t_data *data, int tok);
