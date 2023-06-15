@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/12 16:10:31 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:22:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	export_arg(t_data *data, int tok)
 				data->tokens[tok][0]);
 			return (ERROR_EXIT);
 		}
-		i = char_finder(data->tokens[tok], '=', 1);
+		i = char_finder(data->tokens[tok], '=');
 		if ((data->tokens[tok][0] == '_' && !data->tokens[tok][1])
 			|| check_entry(data, data->env, tok, i)
 			|| check_entry(data, data->exp, tok, i))

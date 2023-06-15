@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/14 12:06:42 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/15 15:25:27 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	main(int ac, char **av, char **envp)
 			continue ;
 		}
 		add_history(input);
-		data.tokens = lexer(&data, input);
+		data.tokens = lexer(&data, &input);
 		free(input);
 		if (data.tokens)
 		{

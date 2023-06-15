@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/13 14:42:54 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/15 15:38:38 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,22 @@ delimiters, quotes and parentheses.*/
 int	other(char *str, int flag)
 {
 	int	i;
-	int	found_quote;
 
 	i = -1;
-	found_quote = -1;
 	while (str[++i])
 	{
 		if (!flag && forbidden(&str[i]))
 			return (-1);
-		if (str[i] == '\'' || str[i] == '\"')
-			if (quote_case(&str[i], found_quote))
-				found_quote *= -1;
 		if (!str[i] || ft_isspace(str[i]) || delim(&str[i], 0))
 			break ;
 		if (str[i] == '$' && str[i + 1] == '{')
 		{
 			i = special_dollar(str, flag);
+			break ;
+		}
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			i = quote_case(&str[i]);
 			break ;
 		}
 	}
@@ -110,16 +110,23 @@ void	set_tokens(t_data *data, char **tokens, char *str)
 }
 
 /*Calls functions to count and set tokens to send to parser.*/
-char	**lexer(t_data *data, char *input)
+char	**lexer(t_data *data, char **input)
 {
 	char	**tokens;
 	int		tok_num;
+	int		exit;
 
-	tok_num = count_tokens(data, input);
+	exit = validate_input(input);
+	if (exit)
+	{
+		data->last_exit = exit;
+		return (0);
+	}
+	tok_num = count_tokens(data, *input);
 	if (tok_num <= 0)
 		return (0);
 	tokens = (char **)malloc(sizeof(char *) * (tok_num + 1));
-	set_tokens(data, tokens, input);
+	set_tokens(data, tokens, *input);
 	for (int i = 0; tokens[i]; i++)
 		printf("Token %i: :%s:\n", i, tokens[i]);
 	return (tokens);

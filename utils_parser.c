@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/14 12:14:53 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/15 11:30:01 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ int	check_consecutive(char *tok1, char *tok2)
 				|| !ft_strncmp(tok1, "&&", 2))
 			&& (!ft_strncmp(tok2, "|", 2) || !ft_strncmp(tok2, "||", 2)
 				|| !ft_strncmp(tok2, "&&", 2))))
-	{
-		printf("minishell: syntax error near unexpected token `%s'\n", tok2);
-		return (1);
-	}
+		return (syntax_error(tok2));
 	return (0);
 }
 

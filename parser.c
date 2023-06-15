@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/14 12:05:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:21:42 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,14 +135,14 @@ int	parser(t_data	*data)
 	while (data->tokens[++i])
 	{
 		if (data->tokens[i][0] == '\'' || data->tokens[i][0] == '\"'
-			|| char_finder(data->tokens[i], '\'', 1)
-			|| char_finder(data->tokens[i], '\"', 1))
+			|| char_finder(data->tokens[i], '\'')
+			|| char_finder(data->tokens[i], '\"'))
 			data->tokens[i] = quote_str(data, data->tokens[i]);
 		else if (data->tokens[i][0] == '$'
-			|| char_finder(data->tokens[i], '$', 1))
+			|| char_finder(data->tokens[i], '$'))
 			data->tokens[i] = expansion(data, data->tokens[i]);
 		else if (data->tokens[i][0] == '*'
-			|| char_finder(data->tokens[i], '*', 1))
+			|| char_finder(data->tokens[i], '*'))
 			fix_tokens_wc(data, &i);
 	}
 	for (int i = 0; data->tokens[i]; i++)

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/14 12:05:41 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/15 15:25:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,17 @@
 # include <term.h>
 # include <errno.h>
 
-# define CMD_ECHO 2
-# define CMD_CD 3
-# define CMD_PWD 4
-# define CMD_EXPORT 5
-# define CMD_UNSET 6
-# define CMD_ENV 7
-# define CMD_EXIT 8
+# define CMD_ECHO 3
+# define CMD_CD 4
+# define CMD_PWD 5
+# define CMD_EXPORT 6
+# define CMD_UNSET 7
+# define CMD_ENV 8
+# define CMD_EXIT 9
 
 # define OK_EXIT 0
 # define ERROR_EXIT 1
+# define ERROR_SYNTAX 2
 # define ERROR_WRONG_COMMAND 127
 
 typedef struct s_cmds
@@ -92,17 +93,22 @@ int		other(char *str, int flag);
 int		tok_len(char *str, int i, int flag);
 int		count_tokens(t_data *data, char *str);
 void	set_tokens(t_data *data, char **tokens, char *str);
-char	**lexer(t_data *data, char *input);
+char	**lexer(t_data *data, char **input);
 
 /*utils_lexer.c*/
-int		char_finder(char *str, char c, int flag);
+int		char_finder(char *str, char c);
 int		forbidden(char *str);
 int		delim(char *str, int flag);
-int		quote_case(char *str, int flag);
+int		quote_case(char *str);
 int		special_dollar(char *str, int flag);
 
 /*utils_lexer2.c*/
 int		bad_substitution(char *str, int end);
+int		syntax_error(char *str);
+int		unexpected_eof(char c);
+int		missing_input(char **input, char match);
+char	get_match(char c);
+int		validate_input(char **input);
 
 /*logical_operators.c*/
 int		logical_choice(t_data *data, int token);
