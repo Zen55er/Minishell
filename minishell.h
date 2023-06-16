@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/16 09:30:47 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/16 11:46:50 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int		validate_tokens(char **tokens);
 /*executor.c*/
 int		command_call(t_data *data, int token, int command);
 int		command_check(char *input);
-void	executer(t_data *data);
+void	executor(t_data *data);
 
 /*pipes*/
 int		pipeline(t_data *data, int i);
