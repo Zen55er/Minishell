@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/15 15:25:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/16 09:30:47 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	fix_tokens_wc(t_data *data, int *i);
 int		check_consecutive(char *tok1, char *tok2);
 int		validate_tokens(char **tokens);
 
-/*executer.c*/
+/*executor.c*/
 int		command_call(t_data *data, int token, int command);
 int		command_check(char *input);
 void	executer(t_data *data);

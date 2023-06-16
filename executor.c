@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer.c                                         :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/06 15:18:20 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/16 09:31:01 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	command_check(char *input)
 }
 
 /*Iterates through tokens and executes commands*/
-void	executer(t_data *data)
+void	executor(t_data *data)
 {
 	int	i;
 	int	command;
