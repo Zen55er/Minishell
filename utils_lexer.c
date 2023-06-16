@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/16 12:44:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/16 13:04:56 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	special_dollar(char *str, int flag)
 			bad_sub = i;
 		if (str[i] == '}')
 			found = i;
-		/*CHECK IF THIS WORKS WITH ${VAR}${VAR}*/
 		if (found && str[i] == '{')
 			found = 0;
 	}
