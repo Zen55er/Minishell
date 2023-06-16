@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:52:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/14 14:48:05 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/16 14:45:50 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ void	get_fds(char **tokens, int *fdin, int *fdout, int c)
 				close(fdin);
 			*fdin = open_fd(tokens[c], tokens[c + 1]);
 		}
+		c++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:25 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/14 14:51:00 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/16 14:58:46 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,32 @@ t_cmd_st	*add_cmd_st(char **cmd, t_data *data, int fdin, int fdout)
 {
 	t_cmd_st	*new;
 
-	new = (t_cmd_st *)ft_calloc(sizeof(t_cmd_st), );
+	new = (t_cmd_st *)malloc(sizeof(t_cmd_st));
 	if (!new)
+	{
+		free_double(cmd);
 		return (0);
+	}
 	new->next = NULL;
-	new->prev = NULL;
 	new->cmd = cmd;
 	new->redir_in = fdin;
 	new->redir_out = fdout;
+	return (new);
+}
+
+void	data_cmd_st_add_back(t_cmd_st *lst, t_cmd_st *node)
+{
+	t_cmd_st	*tmp;
+
+	tmp = lst;
+	if (lst == NULL)
+	{
+		lst = node;
+		return ;
+	}
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = NULL;
 }
 
 t_cmd_st	*init_cmd_st_node(t_data *data, int i, int j)
@@ -37,6 +55,8 @@ t_cmd_st	*init_cmd_st_node(t_data *data, int i, int j)
 	fdin = 0;
 	fdout = 0;
 	cmd = ft_calloc(count_args(data, j) + 1, sizeof(char *));
+	if (!cmd)
+		return (NULL);
 	c = j + 1;
 	d = 0;
 	get_fds(data->tokens, &fdin, &fdout, c);
@@ -67,10 +87,12 @@ int	redirection(t_data *data)
 		if (!ft_strncmp(data->tokens[i], "|", 2) || !data->tokens[i + 1])
 		{
 			node = init_cmd_st_node(data, i, j);
-			data_cmd_st_add_back(data, node);
+			if (!node)
+				return (1);
+			data_cmd_st_add_back(data->cmd_st, node);
 			j = i;
 		}
 		i++;
 	}
-	return (success?);
+	return (0);
 }
