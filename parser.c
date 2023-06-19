@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/15 14:21:42 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:23:45 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*update_expansion(t_data *data, char *val, char *test)
 	char	*temp_val;
 
 	if (!ft_strncmp(test, "$?", ft_strlen(test)))
-		return (get_exit_code(data, val, test));
+		return (get_exit_code(val, test));
 	if (test[0] == '$')
 	{
 		if (test[1] == '{')

@@ -6,11 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/16 09:31:07 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:34:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int g_exit_val;
 
 /*Updates path so that any env changes are reflected in this 2d array.
 Splits PATH into a 2d array, adding / to the end*/
@@ -86,6 +88,7 @@ int	main(int ac, char **av, char **envp)
 	update_curr_prev(&data);
 	while (1)
 	{
+		data.cancelled = 0;
 		update_path(&data);
 		prompt = build_prompt(&data);
 		input = readline(prompt);

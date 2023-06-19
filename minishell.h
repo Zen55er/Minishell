@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/19 13:30:44 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:34:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 # define ERROR_SYNTAX 2
 # define ERROR_WRONG_COMMAND 127
 
+extern int	g_exit_val;
+
 typedef struct s_cmds
 {
 	char	*cmd;
@@ -79,8 +81,8 @@ typedef struct s_data
 	int			fdout;
 	int			lastfdout;
 	t_cmd_st	*cmd_st;
-	int			last_exit;
 	int			logic_operator;
+	int			cancelled;
 }			t_data;
 
 /*main.c*/
@@ -128,7 +130,7 @@ char	*quote_str(t_data *data, char *str);
 int		parser(t_data *data);
 
 /*utils_parser.c*/
-char	*get_exit_code(t_data *data, char *str1, char *str2);
+char	*get_exit_code(char *str1, char *str2);
 char	*get_section(t_data *data, char *str, int i, int j);
 void	fix_tokens_wc(t_data *data, int *i);
 int		check_consecutive(char *tok1, char *tok2);
