@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/16 12:57:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:15:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,27 +60,8 @@ int	missing_input(char **input, char match)
 		free(extra);
 		return (unexpected_eof(match));
 	}
-	if (extra)
-	{
-		temp = extra;
-		extra = ft_substr(temp, 0, ft_strlen(temp) - 1);
-		free(temp);
-		temp = *input;
-		*input = ft_strjoin(*input, extra);
-		free(temp);
-		free(extra);
-	}
+	update_input(input, extra);
 	return (0);
-}
-
-/*Returns opposing character match.*/
-char	get_match(char c)
-{
-	if (c == '(')
-		return (')');
-	if (c == '$')
-		return ('}');
-	return (c);
 }
 
 int	validate_input(char **input)

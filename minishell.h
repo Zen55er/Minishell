@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/16 11:46:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/19 13:30:44 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,11 @@ int		bad_substitution(char *str, int end);
 int		syntax_error(char *str);
 int		unexpected_eof(char c);
 int		missing_input(char **input, char match);
-char	get_match(char c);
 int		validate_input(char **input);
+
+/*utils_lexer3.c*/
+char	get_match(char c);
+void	update_input(char **input, char *extra);
 
 /*logical_operators.c*/
 int		logical_choice(t_data *data, int token);
@@ -196,6 +199,8 @@ void	signal_global(void);
 /*utils*/
 char	*get_end_cmd(char *str);
 int		len_compare(char *str1, char *str2);
+
+/*utils_free.c*/
 void	free_double(char **tokens);
 void	free_list(t_ll **list);
 void	free_all(char *input, t_data *data);
