@@ -6,13 +6,13 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:25 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/16 14:58:46 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/20 14:48:31 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd_st	*add_cmd_st(char **cmd, t_data *data, int fdin, int fdout)
+t_cmd_st	*add_cmd_st(char **cmd, int fdin, int fdout)
 {
 	t_cmd_st	*new;
 
@@ -29,22 +29,22 @@ t_cmd_st	*add_cmd_st(char **cmd, t_data *data, int fdin, int fdout)
 	return (new);
 }
 
-void	data_cmd_st_add_back(t_cmd_st *lst, t_cmd_st *node)
+void	data_cmd_st_add_back(t_cmd_st **lst, t_cmd_st *node)
 {
 	t_cmd_st	*tmp;
 
-	tmp = lst;
-	if (lst == NULL)
+	tmp = *lst;
+	if (*lst == NULL)
 	{
-		lst = node;
+		*lst = node;
 		return ;
 	}
-	while (tmp->next != NULL)
+	while (tmp->next)
 		tmp = tmp->next;
-	tmp->next = NULL;
+	tmp->next = node;
 }
 
-t_cmd_st	*init_cmd_st_node(t_data *data, int i, int j)
+t_cmd_st	*init_cmd_st_node(t_data *data, int j)
 {
 	int			c;
 	int			d;
@@ -57,10 +57,10 @@ t_cmd_st	*init_cmd_st_node(t_data *data, int i, int j)
 	cmd = ft_calloc(count_args(data, j) + 1, sizeof(char *));
 	if (!cmd)
 		return (NULL);
-	c = j + 1;
-	d = 0;
-	get_fds(data->tokens, &fdin, &fdout, c);
-	while (data->tokens[c] && !ft_strncmp(data->tokens[c], "|", 2))
+	c = j - 1;
+	d = -1;
+	get_fds(data->tokens, &fdin, &fdout, c + 1);
+	while (data->tokens[++c] && ft_strncmp(data->tokens[c], "|", 2))
 	{
 		if (!ft_strncmp(data->tokens[c], ">", 2)
 			|| !ft_strncmp(data->tokens[c], ">>", 2)
@@ -68,9 +68,9 @@ t_cmd_st	*init_cmd_st_node(t_data *data, int i, int j)
 			|| !ft_strncmp(data->tokens[c], "<<", 2))
 			c = c + 2;
 		if (data->tokens[c])
-			cmd[d++] = ft_strdup(data->tokens[c++]);
+			cmd[++d] = ft_strdup(data->tokens[c]);
 	}
-	return (add_cmd_st(cmd, data, fdin, fdout));
+	return (add_cmd_st(cmd, fdin, fdout));
 }
 
 int	redirection(t_data *data)
@@ -81,16 +81,15 @@ int	redirection(t_data *data)
 
 	i = 0;
 	j = 0;
-	count_pipes(data);
 	while (data->tokens[i])
 	{
 		if (!ft_strncmp(data->tokens[i], "|", 2) || !data->tokens[i + 1])
 		{
-			node = init_cmd_st_node(data, i, j);
+			node = init_cmd_st_node(data, j);
 			if (!node)
 				return (1);
-			data_cmd_st_add_back(data->cmd_st, node);
-			j = i;
+			data_cmd_st_add_back(&data->cmd_st, node);
+			j = i + 1;
 		}
 		i++;
 	}

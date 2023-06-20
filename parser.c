@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/05 15:14:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:05:14 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,14 @@ void	parser(t_data	*data)
 			data->tokens[i] = expansion(data, data->tokens[i]);
 		// printf("Replaced str: %s\n", data->tokens[i]);
 	}
+	redirection(data);
+	/* if (redirection(data))
+	{
+		destroy_cmd_st();
+		return ();
+	} */
+	/* for (t_cmd_st *tmp = data->cmd_st; tmp; tmp = tmp->next)
+	{
+		printf("")
+	} */
 }

@@ -6,13 +6,13 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/16 16:00:24 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/20 13:43:48 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pipeline(t_data *data, int i)
+/* int	pipeline(t_data *data, int i)
 {
 	while (data->cmd_st)
 	{
@@ -51,3 +51,4 @@ void	pipes(t_data *data, int i)
 		data->lastfdout = pipefd[0];
 	}
 }
+ */

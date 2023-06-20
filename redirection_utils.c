@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:52:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/16 14:45:50 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/20 14:10:29 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	count_pipes(t_data *data)
 	data->cmd_st->num_pipes = 0;
 	while (data->tokens[i])
 	{
-		if (data->tokens[i] == "|")
+		if (data->tokens[i][0] == '|' && !data->tokens[i][1])
 			data->cmd_st->num_pipes++;
 		i++;
 	}
@@ -31,7 +31,8 @@ int	count_args(t_data *data, int j)
 	int	c;
 
 	c = j + 1;
-	while (data->tokens[c] && data->tokens[c] != "|")
+	while (data->tokens[c]
+		&& !(data->tokens[c][0] == '|' && !data->tokens[c][1]))
 		c++;
 	return (c);
 }
@@ -61,6 +62,7 @@ int	open_fds(char *redir, char *file)
 {
 	int	i;
 
+	i = -1;
 	if (!ft_strncmp(redir, ">", 2))
 		i = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	else if (!ft_strncmp(redir, ">>", 2))
@@ -85,15 +87,15 @@ void	get_fds(char **tokens, int *fdin, int *fdout, int c)
 			|| !ft_strncmp(tokens[c], ">>", 2))
 		{
 			if (*fdout)
-				close(fdout);
-			*fdout = open_fd(tokens[c], tokens[c + 1]);
+				close(*fdout);
+			*fdout = open_fds(tokens[c], tokens[c + 1]);
 		}
 		else if (!ft_strncmp(tokens[c], "<", 2)
 			|| !ft_strncmp(tokens[c], "<<", 2))
 		{
 			if (*fdin)
-				close(fdin);
-			*fdin = open_fd(tokens[c], tokens[c + 1]);
+				close(*fdin);
+			*fdin = open_fds(tokens[c], tokens[c + 1]);
 		}
 		c++;
 	}
