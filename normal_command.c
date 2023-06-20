@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/05 17:29:58 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/20 11:15:49 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,15 @@ void	child(t_data *data, int token)
 {
 	t_cmds	*cmds;
 	char	**env2d;
+	char	*str;
 
 	cmds = get_cmd(data, token);
 	if (!cmds->cmd)
 	{
-		ft_printf("Command not found: %s\n", cmds->cmd_args[0]);
+		str = ft_strjoin("Command not found: ", cmds->cmd_args[0]);
+		ft_putendl_fd(str, STDERR_FILENO);
+		free(str);
+		ft_printf("Please ask your administrator.\n");
 		free_double(cmds->cmd_args);
 		free(cmds->cmd);
 		free(cmds);
