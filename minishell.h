@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 13:51:07 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:42:13 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,6 @@ void	signal_global(void);
 
 /*utils*/
 char	*get_end_cmd(char *str);
-int		len_compare(char *str1, char *str2);
 
 /*utils_free.c*/
 void	free_double(char **tokens);
