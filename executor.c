@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 09:35:39 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/21 13:24:39 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	executor(t_data *data)
 		else if (logical_choice(data, i))
 		{
 			command = command_check(data->tokens[i]);
-			update_exit_code(command_call(data, i, command), 1);
+			set_exit_code(command_call(data, i, command));
 		}
 		while (data->tokens[++i])
 		{
