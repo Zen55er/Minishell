@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/19 16:28:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/21 09:44:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ char	**lexer(t_data *data, char **input)
 	exit = validate_input(input);
 	if (exit)
 	{
-		g_exit_val = exit;
+		update_exit_code(exit, 1);
 		return (0);
 	}
 	tok_num = count_tokens(data, *input);

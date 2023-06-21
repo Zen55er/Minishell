@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/19 16:23:00 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/21 09:46:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*get_exit_code(char *str1, char *str2)
 {
 	free(str1);
 	free(str2);
-	return (ft_itoa(g_exit_val));
+	return (ft_itoa(update_exit_code(0, 0)));
 }
 
 char	*get_section(t_data *data, char *str, int i, int j)

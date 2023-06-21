@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/19 16:34:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/21 10:14:29 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,11 @@
 
 # define OK_EXIT 0
 # define ERROR_EXIT 1
-# define ERROR_SYNTAX 2
+# define ERROR_MISUSE 2
+# define ERROR_CANT_EXECTUTE 126
 # define ERROR_WRONG_COMMAND 127
-
-extern int	g_exit_val;
+# define ERROR_EXIT_ARG 128
+# define CTRL_C 130
 
 typedef struct s_cmds
 {
@@ -82,7 +83,6 @@ typedef struct s_data
 	int			lastfdout;
 	t_cmd_st	*cmd_st;
 	int			logic_operator;
-	int			cancelled;
 }			t_data;
 
 /*main.c*/
@@ -195,6 +195,8 @@ void	list_ranking(t_ll *env);
 void	print_ordered(t_ll *list);
 
 /*signals.c*/
+void	signal_cmd_handler(int sig);
+void	signal_cmd(void);
 void	signal_handler(int sig);
 void	signal_global(void);
 
@@ -226,5 +228,9 @@ void	double_increment(int *i, int *j);
 void	found_wildcard(int *i, int *j, int *prev_wc, int *backtrack);
 void	return_to_previous(int *i, int *j, int *prev_wc, int *backtrack);
 int		final_wc_check(int i, char *token);
+
+/*exit_code.c*/
+int		update_exit_code(int error_code, int update);
+void	set_exit_code(int exit_code);
 
 #endif

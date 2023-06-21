@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 18:34:49 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/19 16:22:04 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/21 09:45:38 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ int	logical_choice(t_data *data, int token)
 	if (!token || (ft_strncmp(data->tokens[token - 1], "&&", 3)
 			|| (ft_strncmp(data->tokens[token - 1], "||", 3))))
 		return (1);
-	if ((!ft_strncmp(data->tokens[token - 1], "&&", 3) && !g_exit_val)
-		|| (!ft_strncmp(data->tokens[token - 1], "||", 3) && g_exit_val))
+	if ((!ft_strncmp(data->tokens[token - 1], "&&", 3)
+			&& !update_exit_code(0, 0))
+		|| (!ft_strncmp(data->tokens[token - 1], "||", 3)
+			&& update_exit_code(0, 0)))
 		return (1);
 	return (0);
 }

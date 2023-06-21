@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/19 15:15:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/21 10:17:10 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	unexpected_eof(char c)
 {
 	printf("minishell: unexpected EOF while looking for matching`%c'\n", c);
 	printf("minishell: syntax error: unexpected end of file\n");
-	return (ERROR_SYNTAX);
+	return (ERROR_MISUSE);
 }
 
 int	missing_input(char **input, char match)

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/20 11:15:49 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/21 10:04:52 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int	normal_command(t_data *data, int token)
 	pid_t	new_fork;
 	int		status;
 
+	signal_cmd();
 	new_fork = fork();
 	if (new_fork < 0)
 	{
@@ -129,5 +130,8 @@ int	normal_command(t_data *data, int token)
 	else if (new_fork == 0)
 		child(data, token);
 	waitpid(new_fork, &status, 0);
+	signal_global();
+	if (update_exit_code(0, 0) == CTRL_C)
+		return (CTRL_C);
 	return (WEXITSTATUS(status));
 }
