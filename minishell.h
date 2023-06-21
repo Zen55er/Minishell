@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 11:27:03 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/21 13:51:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ char	*quote_str(t_data *data, char *str);
 int		parser(t_data *data);
 
 /*utils_parser.c*/
-char	*get_exit_code(char *str1, char *str2);
 char	*get_section(t_data *data, char *str, int i, int j);
 void	fix_tokens_wc(t_data *data, int *i);
 int		check_consecutive(char *tok1, char *tok2);
@@ -230,6 +229,7 @@ void	return_to_previous(int *i, int *j, int *prev_wc, int *backtrack);
 int		final_wc_check(int i, char *token);
 
 /*exit_code.c*/
+char	*get_exit_code(char *str1, char *str2);
 int		update_exit_code(int error_code, int update);
 void	set_exit_code(int exit_code);
 

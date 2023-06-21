@@ -6,19 +6,11 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 09:46:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:38:32 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*Returns last exit code.*/
-char	*get_exit_code(char *str1, char *str2)
-{
-	free(str1);
-	free(str2);
-	return (ft_itoa(update_exit_code(0, 0)));
-}
 
 char	*get_section(t_data *data, char *str, int i, int j)
 {
@@ -67,9 +59,18 @@ int	validate_tokens(char **tokens)
 	int	i;
 
 	i = -1;
-	while (tokens[++i + 1])
+	while (tokens[++i])
 	{
-		if (delim(tokens[i], 1) && delim(tokens[i + 1], 1)
+		if (i == 0 && (!smart_compare(tokens[i], "|")
+				|| !smart_compare(tokens[i], "||")
+				|| !smart_compare(tokens[i], "&&")))
+			return (syntax_error(tokens[i]));
+		else if (!tokens[i + 1] && (!smart_compare(tokens[i], ">")
+				|| !smart_compare(tokens[i], "<")
+				|| !smart_compare(tokens[i], ">>")
+				|| !smart_compare(tokens[i], "<<")))
+			return (syntax_error("newline"));
+		if (tokens[i + 1] && delim(tokens[i], 1) && delim(tokens[i + 1], 1)
 			&& check_consecutive(tokens[i], tokens[i + 1]))
 			return (1);
 	}

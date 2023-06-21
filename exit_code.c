@@ -6,11 +6,19 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 08:43:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 11:35:23 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/21 13:50:32 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Returns last exit code for $?.*/
+char	*get_exit_code(char *str1, char *str2)
+{
+	free(str1);
+	free(str2);
+	return (ft_itoa(update_exit_code(0, 0)));
+}
 
 /*Gets last exit code.
 If update flag is true, updates exit_code.*/
