@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/22 08:46:59 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:04:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	char_finder(char *str, char c)
 		if (str[i] == c)
 			return (i);
 	}
-	if (c == '\'' || c == '\"')
+	if (str[i] == c && (c == '\'' || c == '\"'))
 		printf("Found unclosed quotes: %s\n", str);
 	return (0);
 }
