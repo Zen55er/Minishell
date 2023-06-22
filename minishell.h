@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/22 10:32:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:41:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 # define ERROR_WRONG_COMMAND 127
 # define ERROR_EXIT_ARG 128
 # define CTRL_C 130
+# define CTRL_BS 131
 
 typedef struct s_cmds
 {

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 08:43:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 13:50:32 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:42:53 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	set_exit_code(int exit_code)
 		cancelled = 0;
 		return ;
 	}
-	if (exit_code == CTRL_C)
+	if (exit_code == CTRL_C || exit_code == CTRL_BS)
 		cancelled = 1;
 	update_exit_code(exit_code, 1);
 }
