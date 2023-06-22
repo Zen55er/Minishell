@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/22 15:19:13 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:49:58 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	pipeline(t_data *data)
 		fd_in = check_fd_in();
 		forking(data, pipefd, fd_in, data->cmd_st);
 		close(pipefd[1]);
-		if (exist prev command)
+		if (data->cmd_st->prev)
 			close(fd_in);
 		if (data->cmd_st->next)
 			data->cmd_st = data->cmd_st->next;
@@ -39,14 +39,18 @@ int	pipeline(t_data *data)
 
 void	child_exec_cmd(t_data *data, int pipefd[2], int in, t_cmd_st *node)
 {
+	int	i;
+
 	if (dup2(in, STDIN_FILENO) < 0)
-		/* error handling */;
+		error_handling();
 	close(pipefd[0]);
 	if (dup2(pipefd[1], STDOUT_FILENO) < 0)
-		/* error handling */;
+		error_handling();
 	close(pipefd[1]);
-	if (exist prev cmd)
+	if (data->cmd_st->prev)
 		close(in);
+	i = command_check(data->cmd_st->cmd);
+	command_call(?);
 	
 }
 

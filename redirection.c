@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:25 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/20 15:28:57 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:47:31 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_cmd_st	*add_cmd_st(char **cmd, int fdin, int fdout)
 		return (0);
 	}
 	new->next = NULL;
+	new->prev = NULL;
 	new->cmd = cmd;
 	new->redir_in = fdin;
 	new->redir_out = fdout;
@@ -42,6 +43,7 @@ void	data_cmd_st_add_back(t_cmd_st **lst, t_cmd_st *node)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = node;
+	node->prev = tmp;
 }
 
 t_cmd_st	*init_cmd_st_node(t_data *data, int j)
