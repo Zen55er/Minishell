@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/22 08:37:41 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 10:32:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define OK_EXIT 0
 # define ERROR_EXIT 1
 # define ERROR_MISUSE 2
-# define ERROR_CANT_EXECTUTE 126
+# define ERROR_EXECUTE_PERMISSIONS 126
 # define ERROR_WRONG_COMMAND 127
 # define ERROR_EXIT_ARG 128
 # define CTRL_C 130
@@ -83,6 +83,7 @@ typedef struct s_data
 	int			lastfdout;
 	t_cmd_st	*cmd_st;
 	int			logic_operator;
+	int			permission_flag;
 }			t_data;
 
 /*main.c*/
@@ -160,7 +161,7 @@ int		normal_command(t_data *data, int token);
 /*utils_normal_command.c*/
 int		awk_quotes(char *cmd, char c, int *i);
 int		awk_cmd(t_cmds **cmds, char *cmd);
-void	test_cmd(char **paths, t_cmds **cmds);
+void	test_cmd(t_data *data, char **paths, t_cmds **cmds);
 char	*get_full_var(char *var, char *value);
 int		check_path(char **paths, char *cmd);
 
@@ -206,6 +207,7 @@ int		unexpected_eof(char c);
 /*utils_free.c*/
 void	free_double(char **tokens);
 void	free_list(t_ll **list);
+void	free_child(t_cmds *cmds, char **env2d);
 void	free_all(char *input, t_data *data);
 
 /*utils_lists.c*/

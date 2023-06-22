@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:08:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/19 12:09:48 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 10:31:54 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,20 @@ void	free_list(t_ll **list)
 		free(*list);
 		*list = temp;
 	}
+}
+
+/*When there is an error in a child process,
+frees command struct and env2d*/
+void	free_child(t_cmds *cmds, char **env2d)
+{
+	if (cmds)
+	{
+		free_double(cmds->cmd_args);
+		free(cmds->cmd);
+		free(cmds);
+	}
+	if (env2d)
+		free_double(env2d);
 }
 
 /*Frees everything*/

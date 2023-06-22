@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 13:22:51 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 10:35:32 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_cmds	*get_cmd(t_data *data, int token)
 	}
 	else
 		cmds->cmd_args = prep_cmds(data, token, cmd);
-	test_cmd(data->path, &cmds);
+	test_cmd(data, data->path, &cmds);
 	return (cmds);
 }
 
@@ -99,18 +99,18 @@ void	child(t_data *data, int token)
 		ft_putendl_fd(str, STDERR_FILENO);
 		free(str);
 		ft_printf("Please ask your administrator.\n");
-		free_double(cmds->cmd_args);
-		free(cmds->cmd);
-		free(cmds);
+		free_child(cmds, 0);
+		if (data->permission_flag)
+		{
+			data->permission_flag = 0;
+			exit (ERROR_EXECUTE_PERMISSIONS);
+		}
 		exit (ERROR_WRONG_COMMAND);
 	}
 	env2d = get_env2d(data->env);
 	execve(cmds->cmd, cmds->cmd_args, env2d);
 	perror("execve failed.\n");
-	free_double(cmds->cmd_args);
-	free_double(env2d);
-	free(cmds->cmd);
-	free(cmds);
+	free_child(cmds, env2d);
 	exit (ERROR_EXIT);
 }
 

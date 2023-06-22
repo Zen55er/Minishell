@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 10:20:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 10:34:52 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	main(int ac, char **av, char **envp)
 	data.tokens = 0;
 	data.curr_dir = 0;
 	data.logic_operator = 0;
+	data.permission_flag = 0;
 	signal_global();
 	prep_env(&data, envp);
 	update_curr_prev(&data);
