@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 09:44:07 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:13:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int	count_tokens(t_data *data, char *str)
 	return (tok_num);
 }
 
-/*Places input tokens in 2d array for parser to analyse.
-Ignores whitepaces between tokens*/
+/*Places input tokens in 2d array for parser to analyze.
+Ignores whitespaces between tokens*/
 void	set_tokens(t_data *data, char **tokens, char *str)
 {
 	int		i;

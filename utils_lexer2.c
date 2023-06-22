@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/22 09:55:48 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:13:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ int	missing_input(char **input, char match)
 /*If input ends in |, || or &&, calls missing input to complete it.*/
 int	check_end(char **input, int i)
 {
-	if ((*input)[i] == '|' && (*input)[i] != '|')
+	if ((*input)[i] == '|' && (*input)[i + 1] != '|')
 		i++;
-	if ((*input)[i] == '|' && (*input)[i] == '|')
+	if ((*input)[i] == '|' && (*input)[i + 1] == '|')
 		i += 2;
-	if ((*input)[i] == '&' && (*input)[i] == '&')
+	if ((*input)[i] == '&' && (*input)[i + 1] == '&')
 		i += 2;
 	while ((*input)[i] && ft_isspace((*input)[i]))
 		i++;

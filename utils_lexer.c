@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/22 11:04:46 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:09:53 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	forbidden(char *str)
 		|| (str[0] == ')' && str[1] == ')')
 		|| (str[0] == '<' && str[1] == '(')
 		|| (str[0] == '$' && str[1] == '(')
-		|| (str[0] == ')' && str[1] == '$'))
+		|| (str[0] == ')' && str[1] == '$')
+		|| (str[0] == '&' && str[1] != '&'))
 	{
 		printf("Found forbidden character or character combination: %s\n", str);
 		return (1);
@@ -50,7 +51,7 @@ int	forbidden(char *str)
 
 /*Checks if character is a delimiter.
 When running executer (flag == 1), 
-avoids pasrenthesis from logical operator cases*/
+avoids parenthesis from logical operator cases*/
 int	delim(char *str, int flag)
 {
 	if (flag && (str[0] == '(' || str[0] == ')') && !str[1])
