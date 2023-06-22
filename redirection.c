@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:25 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/22 15:47:31 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/22 16:12:00 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ t_cmd_st	*init_cmd_st_node(t_data *data, int j)
 	int			fdin;
 	int			fdout;
 
-	fdin = 0;
-	fdout = 1;
+	fdin = STDIN_FILENO;
+	fdout = STDOUT_FILENO;
 	cmd = ft_calloc(count_args(data, j) + 1, sizeof(char *));
 	if (!cmd)
 		return (NULL);
@@ -65,9 +65,9 @@ t_cmd_st	*init_cmd_st_node(t_data *data, int j)
 	while (data->tokens[++c] && ft_strncmp(data->tokens[c], "|", 2))
 	{
 		if (!ft_strncmp(data->tokens[c], ">", 2)
-			|| !ft_strncmp(data->tokens[c], ">>", 2)
+			|| !ft_strncmp(data->tokens[c], ">>", 3)
 			|| !ft_strncmp(data->tokens[c], "<", 2)
-			|| !ft_strncmp(data->tokens[c], "<<", 2))
+			|| !ft_strncmp(data->tokens[c], "<<", 3))
 			c = c + 2;
 		if (data->tokens[c])
 			cmd[++d] = ft_strdup(data->tokens[c]);
