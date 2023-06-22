@@ -6,13 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/19 14:44:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 08:46:59 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Looks for c in str, if found returns how far from the start it is.*/
+/*Looks for c in str, if found returns how far from the start it is.
+If the char is not found, prints error message.*/
 int	char_finder(char *str, char c)
 {
 	int	i;
@@ -23,6 +24,8 @@ int	char_finder(char *str, char c)
 		if (str[i] == c)
 			return (i);
 	}
+	if (c == '\'' || c == '\"')
+		printf("Found unclosed quotes: %s\n", str);
 	return (0);
 }
 
@@ -79,7 +82,7 @@ int	quote_case(char *str)
 		find = '\"';
 	j = char_finder(str, find);
 	if (!j)
-		return (0);
+		return (-1);
 	return (j + 1);
 }
 

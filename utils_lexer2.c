@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/22 08:37:10 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 09:55:48 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	check_end(char **input, int i)
 
 /*Checks whether input is complete
 (no missing information after |, ||, && or ${).*/
-int	validate_input(char **input)
+int	validate_input(char **str)
 {
 	int		i;
 	int		exit;
@@ -68,17 +68,16 @@ int	validate_input(char **input)
 
 	exit = 0;
 	i = -1;
-	while ((*input)[++i])
+	while ((*str)[++i])
 	{
-		if ((*input)[i] == '\'' || (*input)[i] == '\"' || (*input)[i] == '('
-		|| ((*input)[i] == '$' && (*input)[i + 1] == '{'))
+		if ((*str)[i] == '(' || ((*str)[i] == '$' && (*str)[i + 1] == '{'))
 		{
-			match = get_match((*input)[i]);
-			exit = missing_input(input, match);
-			i += char_finder(*input + i, (*input)[i]);
+			match = get_match((*str)[i]);
+			exit = missing_input(str, match);
+			i += char_finder(*str + i, (*str)[i]);
 		}
-		else if (((*input)[i] == '|' || (*input)[i] == '&'))
-			exit = check_end(input, i);
+		else if (((*str)[i] == '|' || (*str)[i] == '&'))
+			exit = check_end(str, i);
 		if (exit)
 			return (exit);
 	}

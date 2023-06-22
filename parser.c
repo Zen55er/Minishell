@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 09:46:41 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 09:54:16 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*quotes(t_data *data, char *str)
 	len = ft_strlen(str);
 	new = ft_substr(str, 1, len - 2);
 	free (str);
-	if (flag)
+	if (flag && (new[0] == '$' || char_finder(new, '$')))
 	{
 		expand_new = expansion(data, new);
 		return (expand_new);
@@ -109,7 +109,7 @@ char	*quote_str(t_data *data, char *str)
 	while (str[i])
 	{
 		j = 0;
-		while (str[i + ++j] && str[i + j] != '\'' && str[i + j] != '\"')
+		while (str[i + ++j] && str[i + j] != str[i])
 			continue ;
 		section = get_section(data, str, i, j);
 		temp = new;
