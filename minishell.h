@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/20 13:50:42 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/22 14:38:30 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_data
 	t_cmd_st	*cmd_st;
 	int			last_exit;
 	int			logic_operator;
+	pid_t		*pid;
 }			t_data;
 
 /*main.c*/
@@ -122,7 +123,7 @@ int		command_check(char *input);
 void	executer(t_data *data);
 
 /*pipes*/
-int		pipeline(t_data *data, int i);
+int		pipeline(t_data *data);
 void	pipes(t_data *data, int i);
 
 /*redirection*/

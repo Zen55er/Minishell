@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/20 16:39:59 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:19:13 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,45 @@ int	pipeline(t_data *data)
 	{
 		if (data->cmd_st->next)
 			pipe(pipefd);
+		fd_in = check_fd_in();
 		forking(data, pipefd, fd_in, data->cmd_st);
-		close (pipefd[1]);
-		fd_in = /* check for heredoc ? */;
+		close(pipefd[1]);
+		if (exist prev command)
+			close(fd_in);
 		if (data->cmd_st->next)
 			data->cmd_st = data->cmd_st->next;
 		else
 			break ;
 	}
-	wait_pipes();/* ainda por criar */
+	wait_pipes();/*ainda por criar */
+	normal_command();
 	return (0);
 }
 
-void	forking(t_data *data, int *fds, int in, t_cmd_st *head)
+void	child_exec_cmd(t_data *data, int pipefd[2], int in, t_cmd_st *node)
 {
-	int	i;
-/* prototipo */
-	dup2(in, STDIN_FILENO);
-	close (fds[0]);
-	dup2(fds[1], STDOUT_FILENO);
-	close (fds[1]);
-	if (exist prev command)
-		close (in);
-	i = command_call();
-	data->last_exit = command_call();
+	if (dup2(in, STDIN_FILENO) < 0)
+		/* error handling */;
+	close(pipefd[0]);
+	if (dup2(pipefd[1], STDOUT_FILENO) < 0)
+		/* error handling */;
+	close(pipefd[1]);
+	if (exist prev cmd)
+		close(in);
+	
+}
+
+void	forking(t_data *data, int pipefd[2], int in, t_cmd_st *node)
+{
+	static int	i;
+
+	data->pid[i] = fork();
+	if (data->pid[i] < 0)
+		/* error handling */;
+	if (data->pid[i] == 0)
+		child_exec_cmd(data, pipefd, in, node);
+	i++;
+	return (0);
 }
 
 /* void	pipes(int fd)
