@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 14:42:13 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 08:37:41 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,8 @@ int		quote_case(char *str);
 int		special_dollar(char *str, int flag);
 
 /*utils_lexer2.c*/
-int		bad_substitution(char *str, int end);
-int		syntax_error(char *str);
-int		unexpected_eof(char c);
 int		missing_input(char **input, char match);
+int		check_end(char **input, int i);
 int		validate_input(char **input);
 
 /*utils_lexer3.c*/
@@ -201,6 +199,9 @@ void	signal_global(void);
 
 /*utils*/
 char	*get_end_cmd(char *str);
+int		bad_substitution(char *str, int end);
+int		syntax_error(char *str);
+int		unexpected_eof(char c);
 
 /*utils_free.c*/
 void	free_double(char **tokens);

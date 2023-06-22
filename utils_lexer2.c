@@ -6,35 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 10:17:10 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 08:37:10 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	bad_substitution(char *str, int end)
-{
-	char	*temp;
-
-	temp = ft_substr(str, 0, end);
-	printf("minishell: %s: bad substitution\n", temp);
-	free(temp);
-	return (-1);
-}
-
-int	syntax_error(char *str)
-{
-	printf("minishell: syntax error near unexpected token `%s'\n", str);
-	return (1);
-}
-
-int	unexpected_eof(char c)
-{
-	printf("minishell: unexpected EOF while looking for matching`%c'\n", c);
-	printf("minishell: syntax error: unexpected end of file\n");
-	return (ERROR_MISUSE);
-}
-
+/*Requests extra input from user and updates input string*/
 int	missing_input(char **input, char match)
 {
 	char	*temp;
@@ -64,13 +42,30 @@ int	missing_input(char **input, char match)
 	return (0);
 }
 
+/*If input ends in |, || or &&, calls missing input to complete it.*/
+int	check_end(char **input, int i)
+{
+	if ((*input)[i] == '|' && (*input)[i] != '|')
+		i++;
+	if ((*input)[i] == '|' && (*input)[i] == '|')
+		i += 2;
+	if ((*input)[i] == '&' && (*input)[i] == '&')
+		i += 2;
+	while ((*input)[i] && ft_isspace((*input)[i]))
+		i++;
+	if (!(*input)[i])
+		return (missing_input(input, '\n'));
+	return (0);
+}
+
+/*Checks whether input is complete
+(no missing information after |, ||, && or ${).*/
 int	validate_input(char **input)
 {
 	int		i;
 	int		exit;
 	char	match;
 
-	/*DO UNEXPECTED TOKENS*/
 	exit = 0;
 	i = -1;
 	while ((*input)[++i])
@@ -82,6 +77,8 @@ int	validate_input(char **input)
 			exit = missing_input(input, match);
 			i += char_finder(*input + i, (*input)[i]);
 		}
+		else if (((*input)[i] == '|' || (*input)[i] == '&'))
+			exit = check_end(input, i);
 		if (exit)
 			return (exit);
 	}
