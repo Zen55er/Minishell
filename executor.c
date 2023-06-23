@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 14:44:13 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/23 13:46:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	executor(t_data *data)
 	// redirection(data);
 	while (data->tokens[i])
 	{
-		if (delim(data->tokens[i], 1))
+		if (delim(data->tokens[i]))
 		{
 			i++;
 			continue ;
@@ -74,7 +74,7 @@ void	executor(t_data *data)
 		}
 		while (data->tokens[++i])
 		{
-			if (delim(data->tokens[i], 1) && ++i)
+			if (delim(data->tokens[i]) && ++i)
 				break ;
 		}
 	}

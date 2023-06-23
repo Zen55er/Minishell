@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/06 12:47:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:45:42 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*cd_cases(t_data *data, int token)
 {
 	char	*dir;
 
-	if (!data->tokens[token] || delim(data->tokens[token], 1)
+	if (!data->tokens[token] || delim(data->tokens[token])
 		|| !ft_strncmp(data->tokens[token], "~", 2))
 		dir = find_var(data->env, "HOME");
 	else if (!ft_strncmp(data->tokens[token], "-", 2))
@@ -82,8 +82,8 @@ int	cmd_cd(t_data *data, int token)
 	token++;
 	if (!data->tokens[token][1] || (data->tokens[token]
 		&& data->tokens[token + 1]
-		&& !delim(data->tokens[token], 1)
-		&& !delim(data->tokens[token + 1], 1)))
+		&& !delim(data->tokens[token])
+		&& !delim(data->tokens[token + 1])))
 	{
 		printf("cmd_cd: too many arguments\n");
 		return (ERROR_EXIT);

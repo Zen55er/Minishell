@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 10:40:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:44:15 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	cmd_echo(t_data *data, int tok)
 
 	n_flag = 0;
 	i = 0;
-	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1], 1))
+	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1]))
 		return (OK_EXIT);
 	while (data->tokens[++tok] && ++i)
 	{
-		if (delim(data->tokens[tok], 1))
+		if (delim(data->tokens[tok]))
 			break ;
 		if (i == 1 && !ft_strncmp(data->tokens[tok], "-n", 2)
 			&& !data->tokens[tok][2])
@@ -34,7 +34,7 @@ int	cmd_echo(t_data *data, int tok)
 		}
 		if (data->tokens[tok])
 			printf("%s", data->tokens[tok]);
-		if (data->tokens[tok + 1] && !delim(data->tokens[tok + 1], 1))
+		if (data->tokens[tok + 1] && !delim(data->tokens[tok + 1]))
 			printf(" ");
 	}
 	if (!n_flag)

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 18:34:49 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 09:45:38 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:46:28 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	logical_search(t_data *data, char *str)
 	{
 		if (is_cmd(data, &str[i]))
 			return (++data->logic_operator);
-		if (delim(&str[i], 0))
+		if (delim(&str[i]))
 			flag = 1;
 		else if (str[i] == ')')
 		{

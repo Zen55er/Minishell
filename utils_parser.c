@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 14:38:32 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/23 14:57:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,22 @@ calls check_consecutive to validate them.*/
 int	validate_tokens(char **tokens)
 {
 	int	i;
+	int	flag;
 
 	i = -1;
+	flag = 0;
 	while (tokens[++i])
 	{
+		/*KEEP FROM HERE!!!!*/
+		if (!smart_compare(tokens[i], "("))
+			flag++;
+		if (!smart_compare(tokens[i], ")"))
+		{
+			if (!flag)
+				syntax_error(tokens[i]);
+			else
+				flag = 0;
+		}
 		if (i == 0 && (!smart_compare(tokens[i], "|")
 				|| !smart_compare(tokens[i], "||")
 				|| !smart_compare(tokens[i], "&&")))
@@ -70,7 +82,7 @@ int	validate_tokens(char **tokens)
 				|| !smart_compare(tokens[i], ">>")
 				|| !smart_compare(tokens[i], "<<")))
 			return (syntax_error("newline"));
-		if (tokens[i + 1] && delim(tokens[i], 1) && delim(tokens[i + 1], 1)
+		if (tokens[i + 1] && delim(tokens[i]) && delim(tokens[i + 1])
 			&& check_consecutive(tokens[i], tokens[i + 1]))
 			return (1);
 	}
