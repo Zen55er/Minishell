@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/22 16:41:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/23 10:22:47 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <curses.h>
 # include <term.h>
 # include <errno.h>
+# include <limits.h>
 
 # define CMD_ECHO 3
 # define CMD_CD 4
@@ -150,7 +151,8 @@ int		redirection(t_data *data);
 /*commands.c*/
 int		cmd_echo(t_data *data, int tok);
 int		cmd_env(t_data *data);
-void	cmd_exit(t_data *data);
+unsigned char		check_exit_arg(char *token);
+int	cmd_exit(t_data *data, int token);
 
 /*normal_command.c*/
 char	**prep_cmds(t_data *data, int token, char *cmd);
@@ -204,6 +206,7 @@ char	*get_end_cmd(char *str);
 int		bad_substitution(char *str, int end);
 int		syntax_error(char *str);
 int		unexpected_eof(char c);
+unsigned long long	ft_atoull(const char *nptr);
 
 /*utils_free.c*/
 void	free_double(char **tokens);

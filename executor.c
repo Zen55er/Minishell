@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 13:24:39 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/23 10:23:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	command_call(t_data *data, int token, int command)
 	if (command == CMD_ENV)
 		return (cmd_env(data));
 	if (command == CMD_EXIT)
-		cmd_exit(data);
+		return (cmd_exit(data, token));
 	return (normal_command(data, token));
 }
 

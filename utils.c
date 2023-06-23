@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:48:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/21 16:38:58 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/23 10:28:18 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,16 @@ int	unexpected_eof(char c)
 	printf("minishell: unexpected EOF while looking for matching`%c'\n", c);
 	printf("minishell: syntax error: unexpected end of file\n");
 	return (ERROR_MISUSE);
+}
+
+unsigned long long	ft_atoull(const char *nptr)
+{
+	int					i;
+	unsigned long long	final;
+
+	i = -1;
+	final = 0;
+	while (ft_isdigit(nptr[++i]))
+		final = final * 10 + (nptr[i] - '0');
+	return (final);
 }
