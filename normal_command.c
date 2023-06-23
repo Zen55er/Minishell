@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/22 11:00:31 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:45:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**prep_cmds(t_data *data, int token, char *cmd)
 	temp = token;
 	while (data->tokens[temp])
 	{
-		if (delim(data->tokens[temp], 1))
+		if (delim(data->tokens[temp]))
 			break ;
 		i++;
 		temp++;
