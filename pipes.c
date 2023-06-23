@@ -6,15 +6,20 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/22 16:13:19 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/23 15:47:55 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_fd_in()
+int	check_fd_in(t_cmd_st *node)
 {
-	
+	int	i;
+
+	i = 0;
+	if (node->redir_in != 0)
+		i = node->redir_in;
+	return (i);
 }
 
 void	child_exec_cmd(t_data *data, int pipefd[2], int in, t_cmd_st *node)
@@ -27,7 +32,7 @@ void	child_exec_cmd(t_data *data, int pipefd[2], int in, t_cmd_st *node)
 	if (dup2(pipefd[1], STDOUT_FILENO) < 0)
 		error_handling();
 	close(pipefd[1]);
-	if (data->cmd_st->prev)
+	if (node->prev)
 		close(in);
 	/* fazer em conjunto cm gabriel deixar para ultimo */
 	i = command_check(data->cmd_st->cmd);
@@ -50,21 +55,23 @@ void	forking(t_data *data, int pipefd[2], int in, t_cmd_st *node)
 
 int	pipeline(t_data *data)
 {
-	int	pipefd[2];
-	int	fd_in;
+	int			pipefd[2];
+	int			fd_in;
+	t_cmd_st	*tmp;
 
 	fd_in = STDIN_FILENO;
-	while (data->cmd_st)
+	tmp = data->cmd_st;
+	while (tmp)
 	{
-		if (data->cmd_st->next)
+		if (tmp->next)
 			pipe(pipefd);
-		fd_in = check_fd_in();
-		forking(data, pipefd, fd_in, data->cmd_st);
+		fd_in = check_fd_in(tmp);
+		forking(data, pipefd, fd_in, tmp);
 		close(pipefd[1]);
-		if (data->cmd_st->prev)
+		if (tmp->prev)
 			close(fd_in);
-		if (data->cmd_st->next)
-			data->cmd_st = data->cmd_st->next;
+		if (tmp->next)
+			tmp = tmp->next;
 		else
 			break ;
 	}
