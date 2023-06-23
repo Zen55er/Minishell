@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/02 13:02:34 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/23 10:40:30 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,57 @@ int	cmd_env(t_data *data)
 	return (OK_EXIT);
 }
 
-/*Prints "exit", updates prompt, frees memory and exits program*/
-void	cmd_exit(t_data *data)
+/*Checks exit argument, it can't be non-numeric
+or greater than long long bounds.*/
+unsigned char	check_exit_arg(char *token)
 {
+	int					i;
+	long long			signal;
+	unsigned long long	check;
+
+	i = 0;
+	signal = 1;
+	if (token[i] == '+' || token[i] == '-')
+	{
+		if (token[i] == '-')
+			signal *= -1;
+		i++;
+	}
+	check = ft_atoull(&token[i]);
+	while (token[i])
+	{
+		if (!ft_isdigit(token[i]) || (check > LLONG_MAX && signal)
+			|| (check - 1 > LLONG_MAX && !signal))
+		{
+			printf("minishell: exit: %llu: numeric argument required\n", check);
+			return (ERROR_MISUSE);
+		}
+		i++;
+	}
+	return ((unsigned char)((long long)check * signal));
+}
+
+/*Prints "exit", updates prompt, frees memory and exits program.
+Can't have more than 1 argument and that argument needs to be numeric.*/
+int	cmd_exit(t_data *data, int token)
+{
+	int	flag;
+
 	printf("exit\n");
+	flag = 0;
+	if (data->tokens[token + 1])
+		flag = 1;
+	if (data->tokens[token + 1] && data->tokens[token + 2])
+	{
+		printf("minishell: exit: too many arguments\n");
+		return (ERROR_EXIT);
+	}
+	if (data->tokens[token + 1])
+		set_exit_code(check_exit_arg(data->tokens[token + 1]));
 	rl_clear_history();
 	free_all(0, data);
-	exit (OK_EXIT);
+	if (flag)
+		exit(update_exit_code(0, 0));
+	else
+		exit(OK_EXIT);
 }

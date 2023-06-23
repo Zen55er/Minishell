@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 12:46:45 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/24 12:47:24 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/09 09:48:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ void	list_ranking(t_ll *list)
 		temp2 = list;
 		while (temp2)
 		{
-			if (ft_strlen(temp->var) >= ft_strlen(temp2->var))
-				len = ft_strlen(temp->var);
-			else
-				len = ft_strlen(temp2->var);
+			len = len_compare(temp->var, temp2->var);
 			if (ft_strncmp(temp->var, temp2->var, len) > 0)
 				temp->rank++;
 			temp2 = temp2->next;

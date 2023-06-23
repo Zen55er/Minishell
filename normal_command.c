@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/05 17:29:58 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:00:31 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	**prep_cmds(t_data *data, int token, char *cmd)
 	return (cmds);
 }
 
+/*Returns cmds struct filled with necessary info for execve*/
 t_cmds	*get_cmd(t_data *data, int token)
 {
 	t_cmds	*cmds;
@@ -50,8 +51,6 @@ t_cmds	*get_cmd(t_data *data, int token)
 	cmd = data->tokens[token];
 	if (cmd[0] == '/' && check_path(data->path, cmd))
 		cmd = get_end_cmd(cmd);
-	else
-		cmd = 0;
 	cmds = (t_cmds *)malloc(sizeof(t_cmds));
 	cmds->cmd = 0;
 	if (ft_strncmp(cmd, "awk ", 4) == 0 || ft_strncmp(cmd, "sed ", 4) == 0)
@@ -61,10 +60,11 @@ t_cmds	*get_cmd(t_data *data, int token)
 	}
 	else
 		cmds->cmd_args = prep_cmds(data, token, cmd);
-	test_cmd(data->path, &cmds);
+	test_cmd(data, data->path, &cmds);
 	return (cmds);
 }
 
+/*Copies env to a char ** format for execve*/
 char	**get_env2d(t_ll *env)
 {
 	char	**env2d;
@@ -85,6 +85,7 @@ char	**get_env2d(t_ll *env)
 	return (env2d);
 }
 
+/*After getting commands and env, calls execve to execute command*/
 void	child(t_data *data, int token)
 {
 	t_cmds	*cmds;
@@ -93,20 +94,19 @@ void	child(t_data *data, int token)
 	cmds = get_cmd(data, token);
 	if (!cmds->cmd)
 	{
-		ft_printf("Command not found: %s\n", cmds->cmd_args[0]);
-		free_double(cmds->cmd_args);
-		free(cmds->cmd);
-		free(cmds);
+		ft_printf("%s: command not found\n", cmds->cmd_args[0]);
+		free_child(cmds, 0);
+		if (data->permission_flag)
+		{
+			data->permission_flag = 0;
+			exit (ERROR_EXECUTE_PERMISSIONS);
+		}
 		exit (ERROR_WRONG_COMMAND);
-
 	}
 	env2d = get_env2d(data->env);
 	execve(cmds->cmd, cmds->cmd_args, env2d);
 	perror("execve failed.\n");
-	free_double(cmds->cmd_args);
-	free_double(env2d);
-	free(cmds->cmd);
-	free(cmds);
+	free_child(cmds, env2d);
 	exit (ERROR_EXIT);
 }
 
@@ -116,6 +116,7 @@ int	normal_command(t_data *data, int token)
 	pid_t	new_fork;
 	int		status;
 
+	signal_cmd();
 	new_fork = fork();
 	if (new_fork < 0)
 	{
@@ -125,5 +126,6 @@ int	normal_command(t_data *data, int token)
 	else if (new_fork == 0)
 		child(data, token);
 	waitpid(new_fork, &status, 0);
+	signal_global();
 	return (WEXITSTATUS(status));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lists.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:46:39 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/05/22 15:57:48 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/10 09:29:17 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_ll	*list_last(t_ll *list)
 	return (list);
 }
 
+/*Self explanatory*/
 int	list_size(t_ll *list)
 {
 	int	n;

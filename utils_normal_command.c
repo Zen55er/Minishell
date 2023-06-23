@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:16:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/05 16:58:26 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 10:28:39 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	awk_cmd(t_cmds **cmds, char *cmd)
 }
 
 /*Tests commands against path*/
-void	test_cmd(char **paths, t_cmds **cmds)
+void	test_cmd(t_data *data, char **paths, t_cmds **cmds)
 {
 	int		i;
 	char	*test;
@@ -60,16 +60,25 @@ void	test_cmd(char **paths, t_cmds **cmds)
 	while (paths[++i])
 	{
 		test = ft_strjoin(paths[i], (*cmds)->cmd_args[0]);
-		if (!access(test, F_OK & X_OK) && !(*cmds)->cmd)
+		if (!access(test, F_OK))
+		{
 			(*cmds)->cmd = test;
+			if (access(test, X_OK))
+			{
+				printf("minishell: %s: Permission denied\n", test);
+				free((*cmds)->cmd);
+				(*cmds)->cmd = 0;
+				data->permission_flag = 1;
+			}
+			break ;
+		}
 		else
 			free(test);
-		if ((*cmds)->cmd)
-			break ;
 	}
 	return ;
 }
 
+/*Returns string with "var=value" format*/
 char	*get_full_var(char *var, char *value)
 {
 	char	*temp1;

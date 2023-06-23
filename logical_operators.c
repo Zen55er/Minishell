@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 18:34:49 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/05 15:55:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/21 09:45:38 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,17 @@ based on preceding logic operator and the previous command exit value*/
 int	logical_choice(t_data *data, int token)
 {
 	if (!token || (ft_strncmp(data->tokens[token - 1], "&&", 3)
-			&& (ft_strncmp(data->tokens[token - 1], "||", 3))))
+			|| (ft_strncmp(data->tokens[token - 1], "||", 3))))
 		return (1);
-	if ((!ft_strncmp(data->tokens[token - 1], "&&", 3) && !data->last_exit)
-		|| (!ft_strncmp(data->tokens[token - 1], "||", 3) && data->last_exit))
+	if ((!ft_strncmp(data->tokens[token - 1], "&&", 3)
+			&& !update_exit_code(0, 0))
+		|| (!ft_strncmp(data->tokens[token - 1], "||", 3)
+			&& update_exit_code(0, 0)))
 		return (1);
 	return (0);
 }
 
+/*Test if str can be accessed as a command*/
 int	check_single_cmd(t_data *data, char *cmd)
 {
 	int		i;
@@ -45,6 +48,7 @@ int	check_single_cmd(t_data *data, char *cmd)
 	return (0);
 }
 
+/*Checks if first word is a valid command*/
 int	is_cmd(t_data *data, char *str)
 {
 	int		i;

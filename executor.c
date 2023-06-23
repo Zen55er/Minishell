@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer.c                                         :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/20 13:38:15 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/23 14:44:13 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	command_call(t_data *data, int token, int command)
 	if (command == CMD_ENV)
 		return (cmd_env(data));
 	if (command == CMD_EXIT)
-		cmd_exit(data);
+		return (cmd_exit(data, token));
 	return (normal_command(data, token));
 }
 
@@ -53,12 +53,13 @@ int	command_check(char *input)
 }
 
 /*Iterates through tokens and executes commands*/
-void	executer(t_data *data)
+void	executor(t_data *data)
 {
 	int	i;
 	int	command;
 
 	i = 0;
+	// redirection(data);
 	while (data->tokens[i])
 	{
 		if (delim(data->tokens[i], 1))
@@ -69,7 +70,7 @@ void	executer(t_data *data)
 		else if (logical_choice(data, i))
 		{
 			command = command_check(data->tokens[i]);
-			data->last_exit = command_call(data, i, command);
+			set_exit_code(command_call(data, i, command));
 		}
 		while (data->tokens[++i])
 		{

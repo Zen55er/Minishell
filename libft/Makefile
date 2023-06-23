@@ -6,7 +6,7 @@
 #    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/03 15:28:37 by gacorrei          #+#    #+#              #
-#    Updated: 2023/05/19 14:42:53 by gacorrei         ###   ########.fr        #
+#    Updated: 2023/06/19 12:38:46 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,11 +21,11 @@ FUNCTIONS =		ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_is
 				ft_putnbr_fd.c ft_putstr_fd.c ft_split.c ft_strchr.c ft_strdup.c \
 				ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c \
 				ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c \
-				ft_substr.c ft_tolower.c ft_toupper.c ft_atoi.c \
+				ft_substr.c ft_tolower.c ft_toupper.c ft_atoi.c len_compare.c\
 				ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
 				ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c \
 				get_next_line.c get_next_line_utils.c get_next_line_bonus.c \
-				ft_printf.c
+				ft_printf.c smart_compare.c
 OUTFILES = $(FUNCTIONS:.c=.o)
 FOUTFILES = *.o
 

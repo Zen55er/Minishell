@@ -6,12 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:48:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/05 17:04:26 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/23 10:28:18 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*In cases where input for a command comes in a path (e.g. user/bin/ls),
+returns only the end of the string (after the last '/).*/
 char	*get_end_cmd(char *str)
 {
 	char	*cmd;
@@ -27,61 +29,37 @@ char	*get_end_cmd(char *str)
 	return (cmd);
 }
 
-/*Returns length of largest string*/
-int	len_compare(char *str1, char *str2)
+int	bad_substitution(char *str, int end)
 {
-	int	len1;
-	int	len2;
+	char	*temp;
 
-	len1 = ft_strlen(str1);
-	len2 = ft_strlen(str2);
-	if (len1 >= len2)
-		return (len1);
-	else
-		return (len2);
+	temp = ft_substr(str, 0, end);
+	printf("minishell: %s: bad substitution\n", temp);
+	free(temp);
+	return (-1);
 }
 
-/*Frees char***/
-void	free_double(char **array)
+int	syntax_error(char *str)
 {
-	int	i;
+	printf("minishell: syntax error near unexpected token `%s'\n", str);
+	return (1);
+}
+
+int	unexpected_eof(char c)
+{
+	printf("minishell: unexpected EOF while looking for matching`%c'\n", c);
+	printf("minishell: syntax error: unexpected end of file\n");
+	return (ERROR_MISUSE);
+}
+
+unsigned long long	ft_atoull(const char *nptr)
+{
+	int					i;
+	unsigned long long	final;
 
 	i = -1;
-	while (array[++i])
-	{
-		if (array[i])
-			free(array[i]);
-	}
-	free(array);
-}
-
-/*Fress linked list*/
-void	free_list(t_ll **list)
-{
-	t_ll	*temp;
-
-	while (*list)
-	{
-		temp = (*list)->next;
-		free((*list)->var);
-		free((*list)->value);
-		free(*list);
-		*list = temp;
-	}
-}
-
-/*Frees everything*/
-void	free_all(char *input, t_data *data)
-{
-	if (input)
-		free(input);
-	if (data && data->path)
-		free_double(data->path);
-	if (data && data->tokens)
-		free_double(data->tokens);
-	if (data && data->env)
-		free_list(&data->env);
-	if (data && data->exp)
-		free_list(&data->exp);
-	return ;
+	final = 0;
+	while (ft_isdigit(nptr[++i]))
+		final = final * 10 + (nptr[i] - '0');
+	return (final);
 }

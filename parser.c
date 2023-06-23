@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/20 14:05:14 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/23 14:41:14 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,19 @@
 
 /*Joins test to val if it exists after expanding variable
 or if it is just text*/
-char	*update_expansion(t_data *data, char *val, char **test)
+char	*update_expansion(t_data *data, char *val, char *test)
 {
 	char	*temp;
 	char	*temp_val;
 
-	if (!ft_strncmp(*test, "$?", ft_strlen(*test)))
+	if (!ft_strncmp(test, "$?", ft_strlen(test)))
+		return (get_exit_code(val, test));
+	if (test[0] == '$')
 	{
-		free(val);
-		free(*test);
-		return (ft_itoa(data->last_exit));
-	}
-	if (*test[0] == '$')
-	{
-		temp = find_var(data->env, *test + 1);
+		if (test[1] == '{')
+			temp = find_var(data->env, test + 2);
+		else
+			temp = find_var(data->env, test + 1);
 		if (!temp)
 			temp = ft_strdup("");
 		temp_val = val;
@@ -37,15 +36,15 @@ char	*update_expansion(t_data *data, char *val, char **test)
 	else
 	{
 		temp_val = val;
-		val = ft_strjoin(temp_val, *test);
+		val = ft_strjoin(temp_val, test);
 	}
-	free(*test);
+	free(test);
 	free(temp_val);
 	return (val);
 }
 
 /*Returns variable value, if it exists*/
-char	*expansion(t_data *data, char	*str)
+char	*expansion(t_data *data, char	*s)
 {
 	int		i;
 	int		j;
@@ -54,20 +53,23 @@ char	*expansion(t_data *data, char	*str)
 
 	i = 0;
 	val = ft_strdup("");
-	while (str[i])
+	while (s[i])
 	{
 		j = i;
-		if (str[i] == '$')
+		if (s[i] == '$')
 			j++;
-		while (str[j] && str[j] != '$' && str[j] != '\'' && str[j] != '\"')
+		while (s[j] && s[j] != '$' && s[j] != '}'
+			&& s[j] != '\'' && s[j] != '\"')
 			j++;
-		if (j == i && str[j] && (str[j] != '\'' || str[j] != '\"'))
+		if (j == i && s[j] && s[j] != '}' && s[j] != '\'' && s[j] != '\"')
 			j++;
-		test = ft_substr(str, i, j - i);
-		val = update_expansion(data, val, &test);
+		test = ft_substr(s, i, j - i);
+		val = update_expansion(data, val, test);
 		i = j;
+		if (s[i] == '}')
+			i++;
 	}
-	free(str);
+	free(s);
 	return (val);
 }
 
@@ -83,10 +85,9 @@ char	*quotes(t_data *data, char *str)
 	if (str[0] == '\"')
 		flag = 1;
 	len = ft_strlen(str);
-	/*REMOVE FROM "AAA"BBB*/
 	new = ft_substr(str, 1, len - 2);
 	free (str);
-	if (flag)
+	if (flag && (new[0] == '$' || char_finder(new, '$')))
 	{
 		expand_new = expansion(data, new);
 		return (expand_new);
@@ -94,29 +95,57 @@ char	*quotes(t_data *data, char *str)
 	return (new);
 }
 
-/*Parses cases with $ and quotes*/
-void	parser(t_data	*data)
+/*Iterates through string to remove quotes and expand variables*/
+char	*quote_str(t_data *data, char *str)
 {
-	int	i;
+	char	*new;
+	char	*section;
+	char	*temp;
+	int		i;
+	int		j;
 
+	i = 0;
+	new = ft_strdup("");
+	while (str[i])
+	{
+		j = 0;
+		while (str[i + ++j] && str[i + j] != str[i])
+			continue ;
+		section = get_section(data, str, i, j);
+		temp = new;
+		new = ft_strjoin(new, section);
+		free(temp);
+		free(section);
+		if (str[i] == '\'' || str[i] == '\"' )
+			j++;
+		i += j;
+	}
+	free(str);
+	return (new);
+}
+
+/*Parses cases with $ and quotes*/
+int	parser(t_data	*data)
+{
+	int		i;
+
+	if (validate_tokens(data->tokens))
+		return (1);
 	i = -1;
 	while (data->tokens[++i])
 	{
-		// printf("Starting str: %s\n", data->tokens[i]);
-		if (data->tokens[i][0] == '\'' || data->tokens[i][0] == '\"')
-			data->tokens[i] = quotes(data, data->tokens[i]);
-		else
+		if (data->tokens[i][0] == '\'' || data->tokens[i][0] == '\"'
+			|| char_finder(data->tokens[i], '\'')
+			|| char_finder(data->tokens[i], '\"'))
+			data->tokens[i] = quote_str(data, data->tokens[i]);
+		else if (data->tokens[i][0] == '$'
+			|| char_finder(data->tokens[i], '$'))
 			data->tokens[i] = expansion(data, data->tokens[i]);
-		// printf("Replaced str: %s\n", data->tokens[i]);
+		else if (data->tokens[i][0] == '*'
+			|| char_finder(data->tokens[i], '*'))
+			fix_tokens_wc(data, &i);
 	}
-	redirection(data);
-	/* if (redirection(data))
-	{
-		destroy_cmd_st();
-		return ();
-	} */
-	/* for (t_cmd_st *tmp = data->cmd_st; tmp; tmp = tmp->next)
-	{
-		printf("")
-	} */
+	for (int i = 0; data->tokens[i]; i++)
+		printf("Token %i: :%s:\n", i, data->tokens[i]);
+	return (0);
 }

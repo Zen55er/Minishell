@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/06 09:37:36 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:09:53 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,26 @@ int	char_finder(char *str, char c)
 		if (str[i] == c)
 			return (i);
 	}
-	if (c == '\'' || c == '\"')
+	if (str[i] == c && (c == '\'' || c == '\"'))
 		printf("Found unclosed quotes: %s\n", str);
-	else if (c == ')' || c == '}')
-		printf("Found unclosed parenthesis: %s\n", str);
 	return (0);
-}
-
-/*Sets find value*/
-void	get_find(char *str, char *find)
-{
-	if (str[0] == '\'' || str[0] == '\"')
-		*find = str[0];
-	else if (str[0] == '(')
-		*find = ')';
-	else if (str[0] == '{')
-		*find = '}';
 }
 
 /*Checks for characters that should not be interpreted*/
 int	forbidden(char *str)
 {
-	if (str[0] == '\\' || str[0] == ';' || str[0] == '[' || str[0] == ']'
-		|| str[0] == '^' || str[0] == '#')
+	if (str[0] == '\\' || str[0] == '[' || str[0] == ']'
+		|| str[0] == ';' || str[0] == '^' || str[0] == '#'
+		|| str[0] == '`'
+		|| (str[0] == '(' && str[1] == '(')
+		|| (str[0] == '(' && str[1] == ')')
+		|| (str[0] == ')' && str[1] == ')')
+		|| (str[0] == '<' && str[1] == '(')
+		|| (str[0] == '$' && str[1] == '(')
+		|| (str[0] == ')' && str[1] == '$')
+		|| (str[0] == '&' && str[1] != '&'))
 	{
-		printf("Found forbidden character: %s\n", str);
+		printf("Found forbidden character or character combination: %s\n", str);
 		return (1);
 	}
 	return (0);
@@ -56,7 +51,7 @@ int	forbidden(char *str)
 
 /*Checks if character is a delimiter.
 When running executer (flag == 1), 
-avoids pasrenthesis from logical operator cases*/
+avoids parenthesis from logical operator cases*/
 int	delim(char *str, int flag)
 {
 	if (flag && (str[0] == '(' || str[0] == ')') && !str[1])
@@ -73,8 +68,8 @@ int	delim(char *str, int flag)
 	return (0);
 }
 
-/*If str[i] is a quote or parenthesis, calls char_finder to check
-if it is closed correctly. Also checks for unopened parenthesis.*/
+/*If str[i] is a quote, calls char_finder to check
+if it is closed correctly.*/
 int	quote_case(char *str)
 {
 	int		j;
@@ -82,18 +77,39 @@ int	quote_case(char *str)
 
 	find = 0;
 	j = 0;
-	if (str[0] == '\'' || str[0] == '\"' || str[0] == '(' || str[0] == '{')
-	{
-		get_find(str, &find);
-		j = char_finder(str, find);
-		if (!j)
-			return (-1);
-		return (++j);
-	}
-	if (str[0] == ')' || str[0] == '}')
-	{
-		printf("Found unopened parenthesis: %s\n", str);
+	if (str[0] == '\'')
+		find = '\'';
+	else
+		find = '\"';
+	j = char_finder(str, find);
+	if (!j)
 		return (-1);
+	return (j + 1);
+}
+
+int	special_dollar(char *str, int flag)
+{
+	int		bad_sub;
+	int		found;
+	int		i;
+
+	bad_sub = 0;
+	found = 0;
+	i = -1;
+	while (str[++i])
+	{
+		if (!flag && forbidden(&str[i]))
+			return (-1);
+		if (ft_isspace(str[i]) && !found)
+			bad_sub = i;
+		if (str[i] == '}')
+			found = i;
+		if (found && str[i] == '{')
+			found = 0;
 	}
-	return (0);
+	if (found && bad_sub)
+		return (bad_substitution(str, found + 1));
+	else if (bad_sub)
+		return (bad_sub);
+	return (i);
 }
