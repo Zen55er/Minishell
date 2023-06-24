@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	check_fd_in(t_cmd_st *node)
+/* int	check_fd_in(t_cmd_st *node)
 {
 	int	i;
 
@@ -20,9 +20,9 @@ int	check_fd_in(t_cmd_st *node)
 	if (node->redir_in != 0)
 		i = node->redir_in;
 	return (i);
-}
+} */
 
-void	child_exec_cmd(t_data *data, int pipefd[2], int in, t_cmd_st *node)
+/* void	child_exec_cmd(t_data *data, int pipefd[2], int in, t_cmd_st *node)
 {
 	int	i;
 
@@ -34,26 +34,26 @@ void	child_exec_cmd(t_data *data, int pipefd[2], int in, t_cmd_st *node)
 	close(pipefd[1]);
 	if (node->prev)
 		close(in);
-	/* fazer em conjunto cm gabriel deixar para ultimo */
-	i = command_check(data->cmd_st->cmd);
+	// fazer em conjunto cm gabriel deixar para ultimo
+	i = command_check(data->cmd_st->cmd[0]);
 	command_call(data, 0);
-	
-}
+	return ;
+} */
 
-void	forking(t_data *data, int pipefd[2], int in, t_cmd_st *node)
+/* void	forking(t_data *data, int pipefd[2], int in, t_cmd_st *node)
 {
 	static int	i;
 
 	data->pid[i] = fork();
 	if (data->pid[i] < 0)
-		/* error handling */;
+		error handling
 	if (data->pid[i] == 0)
 		child_exec_cmd(data, pipefd, in, node);
 	i++;
-	return (0);
-}
+	return ;
+} */
 
-int	pipeline(t_data *data)
+/* int	pipeline(t_data *data)
 {
 	int			pipefd[2];
 	int			fd_in;
@@ -75,7 +75,7 @@ int	pipeline(t_data *data)
 		else
 			break ;
 	}
-	wait_pipes();/*ainda por criar */
-	normal_command();
+	wait_pipes();ainda por criar
+	// normal_command();
 	return (0);
-}
+} */
