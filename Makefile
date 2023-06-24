@@ -21,7 +21,8 @@ SRC			= main.c lexer.c signals.c utils.c utils_lexer.c utils_lists.c \
 			directories.c utils_normal_command.c utils_directories.c \
 			redirection.c pipes.c redirection_utils.c \
 			logical_operators.c executor.c wildcards.c utils_wildcards.c \
-			utils_parser.c utils_lexer2.c utils_lexer3.c utils_free.c exit_code.c
+			utils_parser.c utils_lexer2.c utils_lexer3.c utils_free.c exit_code.c \
+			subshell.c
 
 CC			= @cc
 LIBFT		= libft/libft.a

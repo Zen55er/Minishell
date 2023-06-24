@@ -53,24 +53,24 @@ void	add_to_exp(t_data *data, int tok, int i)
 }
 
 /*Checks for argument formatting and updates exp*/
-int	export_arg(t_data *data, int tok)
+int	export_arg(t_data *data, char **tokens, int tok)
 {
 	int	i;
 
-	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1]))
+	if (!tokens[tok + 1] || delim(tokens[tok + 1]))
 		return (0);
-	while (data->tokens[++tok])
+	while (tokens[++tok])
 	{
-		if (delim(data->tokens[tok]))
+		if (delim(tokens[tok]))
 			break ;
-		if (!ft_isalpha(data->tokens[tok][0]) && data->tokens[tok][0] != '_')
+		if (!ft_isalpha(tokens[tok][0]) && tokens[tok][0] != '_')
 		{
 			printf("export: '%c': not a valid identifier\n",
-				data->tokens[tok][0]);
+				tokens[tok][0]);
 			return (ERROR_EXIT);
 		}
-		i = char_finder(data->tokens[tok], '=');
-		if ((data->tokens[tok][0] == '_' && !data->tokens[tok][1])
+		i = char_finder(tokens[tok], '=');
+		if ((tokens[tok][0] == '_' && !tokens[tok][1])
 			|| check_entry(data, data->env, tok, i)
 			|| check_entry(data, data->exp, tok, i))
 			continue ;
@@ -81,9 +81,9 @@ int	export_arg(t_data *data, int tok)
 
 /*With no arguments simply prints env alphabetically,
 otherwise updates env with new args or new arg values*/
-int	cmd_export(t_data *data, int token)
+int	cmd_export(t_data *data, char **tokens, int token)
 {
-	if (export_arg(data, token))
+	if (export_arg(data, tokens, token))
 		return (ERROR_EXIT);
 	list_ranking(data->env);
 	list_ranking(data->exp);

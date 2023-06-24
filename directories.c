@@ -54,41 +54,41 @@ char	*find_var(t_ll *list, char *str)
 - goes to previous directory while writing that directory in terminal,
 ~- goes to previous directory whithout writing it,
 otherwise, goes to path in input*/
-char	*cd_cases(t_data *data, int token)
+char	*cd_cases(t_data *data, char **tokens, int token)
 {
 	char	*dir;
 
-	if (!data->tokens[token] || delim(data->tokens[token])
-		|| !ft_strncmp(data->tokens[token], "~", 2))
+	if (!tokens[token] || delim(tokens[token])
+		|| !ft_strncmp(tokens[token], "~", 2))
 		dir = find_var(data->env, "HOME");
-	else if (!ft_strncmp(data->tokens[token], "-", 2))
+	else if (!ft_strncmp(tokens[token], "-", 2))
 	{
 		dir = ft_strdup(data->prev_dir);
 		printf("%s\n", dir);
 	}
-	else if (!ft_strncmp(data->tokens[token], "~-", 3))
+	else if (!ft_strncmp(tokens[token], "~-", 3))
 		dir = ft_strdup(data->prev_dir);
 	else
-		dir = ft_strdup(data->tokens[token]);
+		dir = ft_strdup(tokens[token]);
 	return (dir);
 }
 
 /*Changes directory and calls update_curr_prev*/
-int	cmd_cd(t_data *data, int token)
+int	cmd_cd(t_data *data, char **tokens, int token)
 {
 	int		out;
 	char	*dir;
 
 	token++;
-	if (!data->tokens[token][1] || (data->tokens[token]
-		&& data->tokens[token + 1]
-		&& !delim(data->tokens[token])
-		&& !delim(data->tokens[token + 1])))
+	if (!tokens[token][1] || (tokens[token]
+		&& tokens[token + 1]
+		&& !delim(tokens[token])
+		&& !delim(tokens[token + 1])))
 	{
 		printf("cmd_cd: too many arguments\n");
 		return (ERROR_EXIT);
 	}
-	dir = cd_cases(data, token);
+	dir = cd_cases(data, tokens, token);
 	out = chdir(dir);
 	free(dir);
 	if (out)

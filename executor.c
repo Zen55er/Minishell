@@ -13,23 +13,23 @@
 #include "minishell.h"
 
 /*Calls function to execute according to input*/
-int	command_call(t_data *data, int token, int command)
+int	command_call(t_data *data, char **tokens, int tok, int cmd)
 {
-	if (command == CMD_ECHO)
-		return (cmd_echo(data, token));
-	if (command == CMD_CD)
-		return (cmd_cd(data, token));
-	if (command == CMD_PWD)
+	if (cmd == CMD_ECHO)
+		return (cmd_echo(tokens, tok));
+	if (cmd == CMD_CD)
+		return (cmd_cd(data, tokens, tok));
+	if (cmd == CMD_PWD)
 		return (cmd_pwd(data));
-	if (command == CMD_EXPORT)
-		return (cmd_export(data, token));
-	if (command == CMD_UNSET)
-		return (cmd_unset(data, token));
-	if (command == CMD_ENV)
+	if (cmd == CMD_EXPORT)
+		return (cmd_export(data, tokens, tok));
+	if (cmd == CMD_UNSET)
+		return (cmd_unset(data, tokens, tok));
+	if (cmd == CMD_ENV)
 		return (cmd_env(data));
-	if (command == CMD_EXIT)
-		return (cmd_exit(data, token));
-	return (normal_command(data, token));
+	if (cmd == CMD_EXIT)
+		return (cmd_exit(data, tokens, tok));
+	return (normal_command(data, tokens, tok));
 }
 
 /*Checks if input matches specific functions*/
@@ -53,28 +53,30 @@ int	command_check(char *input)
 }
 
 /*Iterates through tokens and executes commands*/
-void	executor(t_data *data)
+void	executor(t_data *data, char **tokens)
 {
 	int	i;
 	int	command;
 
 	i = 0;
 	// redirection(data);
-	while (data->tokens[i])
+	while (tokens[i])
 	{
-		if (delim(data->tokens[i]))
+		if (delim(tokens[i]))
 		{
+			if (!smart_compare(tokens[i], "("))
+				subshell(data, &i);
 			i++;
 			continue ;
 		}
 		else if (logical_choice(data, i))
 		{
-			command = command_check(data->tokens[i]);
-			set_exit_code(command_call(data, i, command));
+			command = command_check(tokens[i]);
+			set_exit_code(command_call(data, tokens, i, command));
 		}
-		while (data->tokens[++i])
+		while (tokens[++i])
 		{
-			if (delim(data->tokens[i]) && ++i)
+			if (delim(tokens[i]) && ++i)
 				break ;
 		}
 	}

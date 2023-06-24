@@ -77,6 +77,7 @@ typedef struct cmd_st
 typedef struct s_data
 {
 	char		**tokens;
+	char		**sub_tokens;
 	t_ll		*env;
 	t_ll		*exp;
 	char		**path;
@@ -141,9 +142,9 @@ int					check_consecutive(char *tok1, char *tok2);
 int					validate_tokens(char **tokens);
 
 /*executor.c*/
-int					command_call(t_data *data, int token, int command);
+int					command_call(t_data *data, char **tokens, int tok, int cmd);
 int					command_check(char *input);
-void				executor(t_data *data);
+void				executor(t_data *data, char **tokens);
 
 /*pipes*/
 int					pipeline(t_data *data);
@@ -158,17 +159,17 @@ int					count_args(t_data *data, int j);
 void				get_fds(char **tokens, int *fdin, int *fdout, int c);
 
 /*commands.c*/
-int					cmd_echo(t_data *data, int tok);
+int					cmd_echo(char **tokens, int tok);
 int					cmd_env(t_data *data);
 unsigned char		check_exit_arg(char *token);
-int					cmd_exit(t_data *data, int token);
+int					cmd_exit(t_data *data, char **tokens, int token);
 
 /*normal_command.c*/
-char				**prep_cmds(t_data *data, int token, char *cmd);
-t_cmds				*get_cmd(t_data *data, int token);
+char				**prep_cmds(char **tokens, int token, char *cmd);
+t_cmds				*get_cmd(t_data *data, char **tokens, int token);
 char				**get_env2d(t_ll *env);
-void				child(t_data *data, int token);
-int					normal_command(t_data *data, int token);
+void				child(t_data *data, char **tokens, int token);
+int					normal_command(t_data *data, char **tokens, int token);
 
 /*utils_normal_command.c*/
 int					awk_quotes(char *cmd, char c, int *i);
@@ -180,8 +181,8 @@ int					check_path(char **paths, char *cmd);
 /*directories*/
 void				update_curr_prev(t_data *data);
 char				*find_var(t_ll *list, char *str);
-char				*cd_cases(t_data *data, int token);
-int					cmd_cd(t_data *data, int token);
+char				*cd_cases(t_data *data, char **tokens, int token);
+int					cmd_cd(t_data *data, char **tokens, int token);
 int					cmd_pwd(t_data *data);
 
 /*utils_directories.c*/
@@ -191,13 +192,13 @@ void				update_env_dir(t_data *data, char *dir, char *new_dir);
 /*export.c*/
 int					check_entry(t_data *data, t_ll *list, int tok, int i);
 void				add_to_exp(t_data *data, int tok, int i);
-int					export_arg(t_data *data, int tok);
-int					cmd_export(t_data *data, int token);
+int					export_arg(t_data *data, char **tokens, int tok);
+int					cmd_export(t_data *data, char **tokens, int token);
 
 /*unset.c*/
 int					unset_var(t_ll **list, int count);
 int					check_unset(t_data *data, t_ll **list, int token);
-int					cmd_unset(t_data *data, int tok);
+int					cmd_unset(t_data *data, char **tokens, int tok);
 
 /*utils_export.c*/
 void				rank_reset(t_ll *env);
@@ -247,5 +248,8 @@ int					final_wc_check(int i, char *token);
 char				*get_exit_code(char *str1, char *str2);
 int					update_exit_code(int error_code, int update);
 void				set_exit_code(int exit_code);
+
+/*subshell.c*/
+void				subshell(t_data *data, int *token);
 
 #endif

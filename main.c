@@ -79,6 +79,7 @@ int	main(int ac, char **av, char **envp)
 	data.exp = 0;
 	data.path = 0;
 	data.tokens = 0;
+	data.sub_tokens = 0;
 	data.curr_dir = 0;
 	data.logic_operator = 0;
 	data.cmd_st = 0;
@@ -108,7 +109,7 @@ int	main(int ac, char **av, char **envp)
 		if (data.tokens)
 		{
 			if (!parser(&data))
-				executor(&data);
+				executor(&data, data.tokens);
 			free_double(data.tokens);
 		}
 		data.tokens = 0;

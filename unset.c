@@ -67,21 +67,21 @@ int	check_unset(t_data *data, t_ll **list, int token)
 
 /*If given an argument, checks if it is a variable in env or exp
 and deletes that node*/
-int	cmd_unset(t_data *data, int tok)
+int	cmd_unset(t_data *data, char **tokens, int tok)
 {
-	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1]))
+	if (!tokens[tok + 1] || delim(tokens[tok + 1]))
 		return (OK_EXIT);
-	while (data->tokens[++tok])
+	while (tokens[++tok])
 	{
-		if (delim(data->tokens[tok]))
+		if (delim(tokens[tok]))
 			break ;
-		if (!ft_isalpha(data->tokens[tok][0]) && data->tokens[tok][0] != '_')
+		if (!ft_isalpha(tokens[tok][0]) && tokens[tok][0] != '_')
 		{
 			printf("unset: '%c': not a valid identifier\n",
-				data->tokens[tok][0]);
+				tokens[tok][0]);
 			continue ;
 		}
-		if ((data->tokens[tok][0] == '_' && !data->tokens[tok][1])
+		if ((tokens[tok][0] == '_' && !tokens[tok][1])
 			|| check_unset(data, &data->env, tok)
 			|| check_unset(data, &data->exp, tok))
 			continue ;

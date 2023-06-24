@@ -68,5 +68,7 @@ void	free_all(char *input, t_data *data)
 		free_list(&data->env);
 	if (data && data->exp)
 		free_list(&data->exp);
+	if (data && data->sub_tokens)
+		free(data->sub_tokens);
 	return ;
 }
