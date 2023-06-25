@@ -21,7 +21,10 @@ int	cmd_echo(char **tokens, int tok)
 	n_flag = 0;
 	i = 0;
 	if (!tokens[tok + 1] || delim(tokens[tok + 1]))
+	{
+		printf("\n");
 		return (OK_EXIT);
+	}
 	while (tokens[++tok] && ++i)
 	{
 		if (delim(tokens[tok]))

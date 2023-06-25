@@ -63,7 +63,6 @@ int	validate_tokens(char **tokens)
 	flag = 0;
 	while (tokens[++i])
 	{
-		/*KEEP FROM HERE!!!!*/
 		if (!smart_compare(tokens[i], "("))
 			flag++;
 		if (!smart_compare(tokens[i], ")"))
