@@ -33,6 +33,8 @@ int	check_single_cmd(t_data *data, char *cmd)
 	int		i;
 	char	*test;
 
+	if (command_check(cmd))
+		return (1);
 	i = -1;
 	while (data->path[++i])
 	{
