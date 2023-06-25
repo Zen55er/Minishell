@@ -47,14 +47,16 @@ int	check_consecutive(char *tok1, char *tok2)
 		|| ((!ft_strncmp(tok1, "|", 2) || !ft_strncmp(tok1, "||", 2)
 				|| !ft_strncmp(tok1, "&&", 2))
 			&& (!ft_strncmp(tok2, "|", 2) || !ft_strncmp(tok2, "||", 2)
-				|| !ft_strncmp(tok2, "&&", 2))))
+				|| !ft_strncmp(tok2, "&&", 2)))
+		|| (!ft_strncmp(tok2, "(", 2) && (!ft_strncmp(tok1, ">>", 2) || !ft_strncmp(tok1, "<<", 2)
+		|| !ft_strncmp(tok1, ">", 2) || !ft_strncmp(tok1, "<", 2))))
 		return (syntax_error(tok2));
 	return (0);
 }
 
 /*If the current and next tokens are delimiters,
 calls check_consecutive to validate them.*/
-int	validate_tokens(char **tokens)
+int	validate_tokens(t_data *data, char **tokens)
 {
 	int	i;
 	int	flag;
@@ -64,7 +66,13 @@ int	validate_tokens(char **tokens)
 	while (tokens[++i])
 	{
 		if (!smart_compare(tokens[i], "("))
+		{
+			if (i > 0 && !delim(tokens[i - 1]))
+				return (syntax_error(tokens[i]));
+			if (!check_single_cmd(data, tokens[i + 1]))
+				return (syntax_error(tokens[i + 1]));
 			flag++;
+		}
 		if (!smart_compare(tokens[i], ")"))
 		{
 			if (!flag)

@@ -139,7 +139,7 @@ int					parser(t_data *data);
 char				*get_section(t_data *data, char *str, int i, int j);
 void				fix_tokens_wc(t_data *data, int *i);
 int					check_consecutive(char *tok1, char *tok2);
-int					validate_tokens(char **tokens);
+int					validate_tokens(t_data *data, char **tokens);
 
 /*executor.c*/
 int					command_call(t_data *data, char **tokens, int tok, int cmd);

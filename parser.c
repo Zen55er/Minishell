@@ -129,7 +129,7 @@ int	parser(t_data	*data)
 {
 	int		i;
 
-	if (validate_tokens(data->tokens))
+	if (validate_tokens(data, data->tokens))
 		return (1);
 	i = -1;
 	while (data->tokens[++i])
