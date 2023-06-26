@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 12:27:20 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:37:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ int	validate_tokens(t_data *data, char **tokens)
 		if (!smart_compare(tokens[i], ")"))
 		{
 			if (!flag)
-				syntax_error(tokens[i]);
+				return (syntax_error(tokens[i]));
 			else
-				flag = 0;
+				flag--;
 		}
 		if (i == 0 && (!smart_compare(tokens[i], "|")
 				|| !smart_compare(tokens[i], "||")
