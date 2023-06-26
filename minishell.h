@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 13:42:38 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/26 08:52:59 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct cmd_st
 typedef struct s_data
 {
 	char		**tokens;
-	char		**sub_tokens;
 	t_ll		*env;
 	t_ll		*exp;
 	char		**path;
@@ -144,7 +143,7 @@ int					validate_tokens(t_data *data, char **tokens);
 /*executor.c*/
 int					command_call(t_data *data, char **tokens, int tok, int cmd);
 int					command_check(char *input);
-void				executor(t_data *data, char **tokens);
+void				executor(t_data *data, char **tokens, int flag);
 
 /*pipes*/
 int					pipeline(t_data *data);

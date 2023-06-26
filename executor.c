@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 13:46:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/26 09:03:08 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ int	command_check(char *input)
 	return (0);
 }
 
-/*Iterates through tokens and executes commands*/
-void	executor(t_data *data, char **tokens)
+/*Iterates through tokens and executes commands.
+flag determines if function is called from main (0) or from subshell (1).*/
+void	executor(t_data *data, char **tokens, int flag)
 {
 	int	i;
 	int	command;
@@ -80,5 +81,11 @@ void	executor(t_data *data, char **tokens)
 				break ;
 		}
 	}
-	return ;
+	if (flag)
+	{
+		set_exit_code(update_exit_code(0, 0));
+		exit (update_exit_code(0, 0));
+	}
+	else
+		return ;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 14:43:58 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/26 08:53:05 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	main(int ac, char **av, char **envp)
 	data.exp = 0;
 	data.path = 0;
 	data.tokens = 0;
-	data.sub_tokens = 0;
 	data.curr_dir = 0;
 	data.logic_operator = 0;
 	data.cmd_st = 0;
@@ -109,7 +108,7 @@ int	main(int ac, char **av, char **envp)
 		if (data.tokens)
 		{
 			if (!parser(&data))
-				executor(&data, data.tokens);
+				executor(&data, data.tokens, 0);
 			free_double(data.tokens);
 		}
 		data.tokens = 0;
