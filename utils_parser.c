@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 14:57:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:27:20 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,16 @@ void	fix_tokens_wc(t_data *data, int *i)
 /*Checks if the two consecutive delimiters are allowed*/
 int	check_consecutive(char *tok1, char *tok2)
 {
-	if (!ft_strncmp(tok1, tok2, 2)
+	if ((!ft_strncmp(tok1, tok2, 2) && smart_compare(tok1, "(") && smart_compare(tok1, ")"))
 		|| !ft_strncmp(tok1, ">>", 2) || !ft_strncmp(tok1, "<<", 2)
 		|| !ft_strncmp(tok1, ">", 2) || !ft_strncmp(tok1, "<", 2)
 		|| ((!ft_strncmp(tok1, "|", 2) || !ft_strncmp(tok1, "||", 2)
 				|| !ft_strncmp(tok1, "&&", 2))
 			&& (!ft_strncmp(tok2, "|", 2) || !ft_strncmp(tok2, "||", 2)
 				|| !ft_strncmp(tok2, "&&", 2)))
-		|| (!ft_strncmp(tok2, "(", 2) && (!ft_strncmp(tok1, ">>", 2) || !ft_strncmp(tok1, "<<", 2)
-		|| !ft_strncmp(tok1, ">", 2) || !ft_strncmp(tok1, "<", 2))))
+		|| (!ft_strncmp(tok2, "(", 2) && (!ft_strncmp(tok1, ">>", 2)
+				|| !ft_strncmp(tok1, "<<", 2)
+				|| !ft_strncmp(tok1, ">", 2) || !ft_strncmp(tok1, "<", 2))))
 		return (syntax_error(tok2));
 	return (0);
 }

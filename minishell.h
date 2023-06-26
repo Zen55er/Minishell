@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 08:52:59 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/26 11:55:19 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ typedef struct s_data
 	int			fdout;
 	int			lastfdout;
 	t_cmd_st	*cmd_st;
-	int			last_exit;
 	pid_t		*pid;
 	int			logic_operator;
 	int			permission_flag;
@@ -121,11 +120,8 @@ char				get_match(char c);
 void				update_input(char **input, char *extra);
 
 /*logical_operators.c*/
-int					logical_choice(t_data *data, int token);
+int					logical_choice(char **tokens, int token);
 int					check_single_cmd(t_data *data, char *cmd);
-int					is_cmd(t_data *data, char *str);
-int					logical_search(t_data *data, char *str);
-int					check_and_or(t_data *data, char *str);
 
 /*parser.c*/
 char				*update_expansion(t_data *data, char *val, char *test);
@@ -143,6 +139,7 @@ int					validate_tokens(t_data *data, char **tokens);
 /*executor.c*/
 int					command_call(t_data *data, char **tokens, int tok, int cmd);
 int					command_check(char *input);
+int					skip_commands(char **tokens, int i);
 void				executor(t_data *data, char **tokens, int flag);
 
 /*pipes*/

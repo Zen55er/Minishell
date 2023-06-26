@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 09:03:08 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:21:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,24 @@ int	command_check(char *input)
 	return (0);
 }
 
+int	skip_commands(char **tokens, int i)
+{
+	while (tokens[++i])
+	{
+		if (!smart_compare(tokens[i], "("))
+			while (tokens[i] && smart_compare(tokens[i], ")"))
+				i++;
+		if (delim(tokens[i]))
+		{
+			if (smart_compare(tokens[i], "&&")
+				&& smart_compare(tokens[i], "||"))
+				i++;
+			break ;
+		}
+	}
+	return (i);
+}
+
 /*Iterates through tokens and executes commands.
 flag determines if function is called from main (0) or from subshell (1).*/
 void	executor(t_data *data, char **tokens, int flag)
@@ -63,23 +81,26 @@ void	executor(t_data *data, char **tokens, int flag)
 	// redirection(data);
 	while (tokens[i])
 	{
-		if (delim(tokens[i]))
+		if (!smart_compare(tokens[i], "&&") || !smart_compare(tokens[i], "||"))
+		{
+			if (!logical_choice(tokens, i))
+			{
+				i = skip_commands(tokens, i);
+				continue ;
+			}
+			i++;
+		}
+		if (delim(tokens[i]) && smart_compare(tokens[i], "&&")
+			&& smart_compare(tokens[i], "||"))
 		{
 			if (!smart_compare(tokens[i], "("))
 				subshell(data, &i);
 			i++;
 			continue ;
 		}
-		else if (logical_choice(data, i))
-		{
-			command = command_check(tokens[i]);
-			set_exit_code(command_call(data, tokens, i, command));
-		}
-		while (tokens[++i])
-		{
-			if (delim(tokens[i]) && ++i)
-				break ;
-		}
+		command = command_check(tokens[i]);
+		set_exit_code(command_call(data, tokens, i, command));
+		i = skip_commands(tokens, i);
 	}
 	if (flag)
 	{

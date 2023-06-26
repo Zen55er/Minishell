@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 14:03:36 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/26 09:53:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ int	count_tokens(t_data *data, char *str)
 			break ;
 		if (forbidden(str))
 			return (0);
-		/* if ((str[i] == '(' || str[i] == ')') && check_and_or(data, &str[i]))
-			j = 1; */
 		else
 			j = tok_len(str, i, 0);
 		if (j < 0)
@@ -98,8 +96,6 @@ void	set_tokens(t_data *data, char **tokens, char *str)
 			i++;
 		if (!str[i])
 			break ;
-		/* if ((str[i] == '(' || str[i] == ')') && check_and_or(data, &str[i]))
-			j = 1; */
 		else
 			j = tok_len(str, i, 1);
 		if (!j && ++i)
