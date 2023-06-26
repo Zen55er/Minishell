@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+         #
+#    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2023/06/23 14:43:28 by mpatrao          ###   ########.fr        #
+#    Updated: 2023/06/26 09:47:44 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,13 +27,13 @@ SRC			= main.c lexer.c signals.c utils.c utils_lexer.c utils_lists.c \
 CC			= @cc
 LIBFT		= libft/libft.a
 LIBFT_DIR	= libft
-CFLAGS		= -Wall -Wextra -Werror -g -lreadline
+CFLAGS		= -Wall -Wextra -Werror -g3 -lreadline
 
 all:		$(NAME)
 
 $(NAME):	$(SRC)
 			@$(MAKE) --no-print-directory -C $(LIBFT_DIR)
-			$(CC) $(CFLAGS) $(^) -o $(@) $(LIBFT) -fsanitize=address
+			$(CC) $(CFLAGS) $(^) -o $(@) $(LIBFT) -fsanitize=address,undefined
 
 clean:
 			@$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean
