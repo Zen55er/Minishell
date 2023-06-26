@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 14:41:14 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/26 14:00:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int	parser(t_data	*data)
 			|| char_finder(data->tokens[i], '*'))
 			fix_tokens_wc(data, &i);
 	}
-	for (int i = 0; data->tokens[i]; i++)
-		printf("Token %i: :%s:\n", i, data->tokens[i]);
+	// for (int i = 0; data->tokens[i]; i++)
+	// 	printf("Token %i: :%s:\n", i, data->tokens[i]);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 12:21:14 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:20:55 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	executor(t_data *data, char **tokens, int flag)
 			&& smart_compare(tokens[i], "||"))
 		{
 			if (!smart_compare(tokens[i], "("))
-				subshell(data, &i);
+				subshell(data, tokens, &i);
 			i++;
 			continue ;
 		}

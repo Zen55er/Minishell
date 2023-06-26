@@ -6,24 +6,24 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:55:19 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 12:57:53 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:24:10 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_sub_tokens(t_data *data, int token)
+int	count_sub_tokens(char **tokens, int token)
 {
 	int	i;
 	int	flag;
 
 	i = 0;
 	flag = 0;
-	while (data->tokens[++token])
+	while (tokens[++token])
 	{
-		if (!smart_compare(data->tokens[token], "("))
+		if (!smart_compare(tokens[token], "("))
 			flag++;
-		else if (!smart_compare(data->tokens[token], ")"))
+		else if (!smart_compare(tokens[token], ")"))
 		{
 			if (flag)
 				flag--;
@@ -35,42 +35,42 @@ int	count_sub_tokens(t_data *data, int token)
 	return (i);
 }
 
-void	assign_sub_tokens(t_data *data, char **sub_tokens, int *token)
+void	assign_subs(char **tokens, char **sub_tokens, int *token)
 {
 	int	i;
 	int	flag;
 
 	flag = 0;
 	i = -1;
-	while (data->tokens[++(*token)])
+	while (tokens[++(*token)])
 	{
-		if (!smart_compare(data->tokens[*token], "("))
+		if (!smart_compare(tokens[*token], "("))
 			flag++;
-		else if (!smart_compare(data->tokens[*token], ")"))
+		else if (!smart_compare(tokens[*token], ")"))
 		{
 			if (flag)
 				flag--;
 			else
 				break ;
 		}
-		sub_tokens[++i] = data->tokens[*token];
+		sub_tokens[++i] = tokens[*token];
 	}
 	return ;
 }
 
 /*Copies tokens that are inside parentheses and sends them to executor.*/
-void	subshell(t_data *data, int *token)
+void	subshell(t_data *data, char **tokens, int *token)
 {
 	int		i;
 	pid_t	pid;
 	int		status;
 	char	**sub_tokens;
 
-	i = count_sub_tokens(data, *token);
+	i = count_sub_tokens(tokens, *token);
 	sub_tokens = (char **)ft_calloc(sizeof(char *), (i + 1));
 	if (!sub_tokens)
 		return ;
-	assign_sub_tokens(data, sub_tokens, token);
+	assign_subs(tokens, sub_tokens, token);
 	pid = fork();
 	if (pid == -1)
 		return ;

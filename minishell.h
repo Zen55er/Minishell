@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 11:55:19 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:22:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,6 @@ int					update_exit_code(int error_code, int update);
 void				set_exit_code(int exit_code);
 
 /*subshell.c*/
-void				subshell(t_data *data, int *token);
+void				subshell(t_data *data, char **tokens, int *token);
 
 #endif
