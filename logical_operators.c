@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 18:34:49 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 11:01:27 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:14:59 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_single_cmd(t_data *data, char *cmd)
 	while (data->path[++i])
 	{
 		test = ft_strjoin(data->path[i], cmd);
-		if (!access(test, F_OK & X_OK))
+		if (!access(test, X_OK))
 		{
 			free(test);
 			return (1);

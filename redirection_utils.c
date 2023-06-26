@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:52:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/20 14:10:29 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/26 15:15:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	open_fds(char *redir, char *file)
 		i = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
 	else if (!ft_strncmp(redir, "<", 2))
 	{
-		if (!access(file, F_OK & R_OK))
+		if (!access(file, R_OK))
 			i = open(file, O_RDONLY);
 		else
 			i = -1;
