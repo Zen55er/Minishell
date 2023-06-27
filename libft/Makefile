@@ -6,7 +6,7 @@
 #    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/03 15:28:37 by gacorrei          #+#    #+#              #
-#    Updated: 2023/06/19 12:38:46 by gacorrei         ###   ########.fr        #
+#    Updated: 2023/06/26 15:39:35 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ FUNCTIONS =		ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_is
 				ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
 				ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c \
 				get_next_line.c get_next_line_utils.c get_next_line_bonus.c \
-				ft_printf.c smart_compare.c
+				ft_printf.c ft_strcmp smart_compare.c
 OUTFILES = $(FUNCTIONS:.c=.o)
 FOUTFILES = *.o
 

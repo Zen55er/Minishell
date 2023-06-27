@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:00:02 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/19 12:39:42 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:39:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlen(const char *s);
 int		len_compare(char *str1, char *str2);
+int		ft_strcmp(const char *str1, const char *str2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		smart_compare(char *str1, char *str2);
 char	*ft_strnstr(const char *big, const char	*little, size_t len);
