@@ -19,12 +19,14 @@ char	*update_expansion(t_data *data, char *val, char *test)
 	char	*temp;
 	char	*temp_val;
 
-	if (!ft_strcmp(test, "$?"))
-		return (get_exit_code(val, test));
+	/* if (!ft_strcmp(test, "$?"))
+		return (get_exit_code(val, test)); */
 	if (test[0] == '$')
 	{
 		if (test[1] == '{')
 			temp = find_var(data->env, test + 2);
+		else if (test[1] == '?')
+			temp = ft_itoa(update_exit_code(0, 0));
 		else
 			temp = find_var(data->env, test + 1);
 		if (!temp)
@@ -60,7 +62,11 @@ char	*expansion(t_data *data, char	*s)
 			j++;
 		while (s[j] && s[j] != '$' && s[j] != '}'
 			&& s[j] != '\'' && s[j] != '\"')
+		{
 			j++;
+			if (s[j - 1] == '?' && j == i + 2)
+				break ;
+		}
 		if (j == i && s[j] && s[j] != '}' && s[j] != '\'' && s[j] != '\"')
 			j++;
 		test = ft_substr(s, i, j - i);

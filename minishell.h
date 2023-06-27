@@ -241,7 +241,6 @@ void				return_to_previous(int *i, int *j, int *prev_wc, int *back);
 int					final_wc_check(int i, char *token);
 
 /*exit_code.c*/
-char				*get_exit_code(char *str1, char *str2);
 int					update_exit_code(int error_code, int update);
 void				set_exit_code(int exit_code);
 
