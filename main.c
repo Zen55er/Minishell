@@ -18,7 +18,6 @@ void	update_path(t_data *data)
 {
 	t_ll	*temp;
 	char	*temp2;
-	int		len;
 	int		i;
 
 	if (data->path)
@@ -27,8 +26,7 @@ void	update_path(t_data *data)
 	temp = data->env;
 	while (temp)
 	{
-		len = len_compare(temp->var, "PATH");
-		if (!ft_strncmp(temp->var, "PATH", len))
+		if (!ft_strcmp(temp->var, "PATH"))
 			data->path = ft_split(temp->value, ':');
 		temp = temp->next;
 	}

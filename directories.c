@@ -16,14 +16,12 @@
 void	update_curr_prev(t_data *data)
 {
 	char	*temp;
-	int		len;
 
 	if (data->curr_dir)
 	{
 		temp = 0;
 		temp = getcwd(temp, 0);
-		len = len_compare(temp, data->curr_dir);
-		if (ft_strncmp(temp, data->curr_dir, len))
+		if (ft_strcmp(temp, data->curr_dir))
 		{
 			update_env_dir(data, "OLDPWD", data->curr_dir);
 			update_env_dir(data, "PWD", temp);
@@ -38,12 +36,9 @@ void	update_curr_prev(t_data *data)
 /*Returns value of var from list, if it exists*/
 char	*find_var(t_ll *list, char *str)
 {
-	int		len;
-
 	while (list)
 	{
-		len = len_compare(list->var, str);
-		if (!ft_strncmp(list->var, str, len))
+		if (!ft_strcmp(list->var, str))
 			return (ft_strdup(list->value));
 		list = list->next;
 	}
@@ -59,14 +54,14 @@ char	*cd_cases(t_data *data, char **tokens, int token)
 	char	*dir;
 
 	if (!tokens[token] || delim(tokens[token])
-		|| !ft_strncmp(tokens[token], "~", 2))
+		|| !ft_strcmp(tokens[token], "~"))
 		dir = find_var(data->env, "HOME");
-	else if (!ft_strncmp(tokens[token], "-", 2))
+	else if (!ft_strcmp(tokens[token], "-"))
 	{
 		dir = ft_strdup(data->prev_dir);
 		printf("%s\n", dir);
 	}
-	else if (!ft_strncmp(tokens[token], "~-", 3))
+	else if (!ft_strcmp(tokens[token], "~-"))
 		dir = ft_strdup(data->prev_dir);
 	else
 		dir = ft_strdup(tokens[token]);

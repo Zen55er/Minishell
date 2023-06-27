@@ -18,8 +18,8 @@ int	logical_choice(char **tokens, int token)
 {
 	if (!token)
 		return (1);
-	if ((!smart_compare(tokens[token], "&&") && !update_exit_code(0, 0))
-		|| (!smart_compare(tokens[token], "||") && update_exit_code(0, 0)))
+	if ((!ft_strcmp(tokens[token], "&&") && !update_exit_code(0, 0))
+		|| (!ft_strcmp(tokens[token], "||") && update_exit_code(0, 0)))
 		return (2);
 	return (0);
 }

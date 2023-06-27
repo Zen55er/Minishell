@@ -28,7 +28,6 @@ void	rank_reset(t_ll *list)
 /*Sets ranks for each entry in list for export function*/
 void	list_ranking(t_ll *list)
 {
-	int		len;
 	t_ll	*temp;
 	t_ll	*temp2;
 
@@ -39,8 +38,7 @@ void	list_ranking(t_ll *list)
 		temp2 = list;
 		while (temp2)
 		{
-			len = len_compare(temp->var, temp2->var);
-			if (ft_strncmp(temp->var, temp2->var, len) > 0)
+			if (ft_strcmp(temp->var, temp2->var) > 0)
 				temp->rank++;
 			temp2 = temp2->next;
 		}

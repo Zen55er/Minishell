@@ -21,9 +21,9 @@ int	count_sub_tokens(char **tokens, int token)
 	flag = 0;
 	while (tokens[++token])
 	{
-		if (!smart_compare(tokens[token], "("))
+		if (!ft_strcmp(tokens[token], "("))
 			flag++;
-		else if (!smart_compare(tokens[token], ")"))
+		else if (!ft_strcmp(tokens[token], ")"))
 		{
 			if (flag)
 				flag--;
@@ -44,9 +44,9 @@ void	assign_subs(char **tokens, char **sub_tokens, int *token)
 	i = -1;
 	while (tokens[++(*token)])
 	{
-		if (!smart_compare(tokens[*token], "("))
+		if (!ft_strcmp(tokens[*token], "("))
 			flag++;
-		else if (!smart_compare(tokens[*token], ")"))
+		else if (!ft_strcmp(tokens[*token], ")"))
 		{
 			if (flag)
 				flag--;

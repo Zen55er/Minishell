@@ -47,7 +47,6 @@ before calling unset_var*/
 int	check_unset(t_data *data, t_ll **list, int token)
 {
 	t_ll	*temp;
-	int		len;
 	int		count;
 
 	if (!(*list))
@@ -56,8 +55,7 @@ int	check_unset(t_data *data, t_ll **list, int token)
 	count = 0;
 	while (temp)
 	{
-		len = len_compare(data->tokens[token], temp->var);
-		if (!ft_strncmp(data->tokens[token], temp->var, len))
+		if (!ft_strcmp(data->tokens[token], temp->var))
 			return (unset_var(list, count));
 		temp = temp->next;
 		count++;

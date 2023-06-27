@@ -19,7 +19,7 @@ char	*update_expansion(t_data *data, char *val, char *test)
 	char	*temp;
 	char	*temp_val;
 
-	if (!ft_strncmp(test, "$?", ft_strlen(test)))
+	if (!ft_strcmp(test, "$?"))
 		return (get_exit_code(val, test));
 	if (test[0] == '$')
 	{

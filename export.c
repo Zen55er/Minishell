@@ -16,18 +16,13 @@
 int	check_entry(t_data *data, t_ll *list, int tok, int i)
 {
 	t_ll	*temp;
-	int		len;
 
 	temp = list;
 	while (temp)
 	{
 		if (!i)
 			i = ft_strlen(data->tokens[tok]);
-		if (i >= (int)ft_strlen(temp->var))
-			len = i;
-		else
-			len = (int)ft_strlen(temp->var);
-		if (!ft_strncmp(temp->var, data->tokens[tok], len))
+		if (!ft_strcmp(temp->var, data->tokens[tok]))
 		{
 			if (temp->value)
 				free(temp->value);

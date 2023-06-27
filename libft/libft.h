@@ -47,7 +47,6 @@ size_t	ft_strlen(const char *s);
 int		len_compare(char *str1, char *str2);
 int		ft_strcmp(const char *str1, const char *str2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-int		smart_compare(char *str1, char *str2);
 char	*ft_strnstr(const char *big, const char	*little, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);

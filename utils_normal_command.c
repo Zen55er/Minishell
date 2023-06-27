@@ -100,7 +100,7 @@ int	check_path(char **paths, char *cmd)
 		return (0);
 	while (paths[++i])
 	{
-		if (ft_strncmp(paths[i], cmd, ft_strlen(paths[i])) == 0)
+		if (!ft_strcmp(paths[i], cmd))
 			return (1);
 	}
 	return (0);

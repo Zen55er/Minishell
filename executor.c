@@ -35,19 +35,19 @@ int	command_call(t_data *data, char **tokens, int tok, int cmd)
 /*Checks if input matches specific functions*/
 int	command_check(char *input)
 {
-	if (!ft_strncmp(input, "echo", ft_strlen("echo") + 1))
+	if (!ft_strcmp(input, "echo"))
 		return (CMD_ECHO);
-	if (!ft_strncmp(input, "cd", ft_strlen("cd") + 1))
+	if (!ft_strcmp(input, "cd"))
 		return (CMD_CD);
-	if (!ft_strncmp(input, "pwd", ft_strlen("pwd") + 1))
+	if (!ft_strcmp(input, "pwd"))
 		return (CMD_PWD);
-	if (!ft_strncmp(input, "export", ft_strlen("export") + 1))
+	if (!ft_strcmp(input, "export"))
 		return (CMD_EXPORT);
-	if (!ft_strncmp(input, "unset", ft_strlen("unset") + 1))
+	if (!ft_strcmp(input, "unset"))
 		return (CMD_UNSET);
-	if (!ft_strncmp(input, "env", ft_strlen("env") + 1))
+	if (!ft_strcmp(input, "env"))
 		return (CMD_ENV);
-	if (!ft_strncmp(input, "exit", ft_strlen("exit") + 1))
+	if (!ft_strcmp(input, "exit"))
 		return (CMD_EXIT);
 	return (0);
 }
@@ -56,13 +56,13 @@ int	skip_commands(char **tokens, int i)
 {
 	while (tokens[++i])
 	{
-		if (!smart_compare(tokens[i], "("))
-			while (tokens[i] && smart_compare(tokens[i], ")"))
+		if (!ft_strcmp(tokens[i], "("))
+			while (tokens[i] && ft_strcmp(tokens[i], ")"))
 				i++;
 		if (delim(tokens[i]))
 		{
-			if (smart_compare(tokens[i], "&&")
-				&& smart_compare(tokens[i], "||"))
+			if (ft_strcmp(tokens[i], "&&")
+				&& ft_strcmp(tokens[i], "||"))
 				i++;
 			break ;
 		}
@@ -81,7 +81,7 @@ void	executor(t_data *data, char **tokens, int flag)
 	// redirection(data);
 	while (tokens[i])
 	{
-		if (!smart_compare(tokens[i], "&&") || !smart_compare(tokens[i], "||"))
+		if (!ft_strcmp(tokens[i], "&&") || !ft_strcmp(tokens[i], "||"))
 		{
 			if (!logical_choice(tokens, i))
 			{
@@ -90,10 +90,10 @@ void	executor(t_data *data, char **tokens, int flag)
 			}
 			i++;
 		}
-		if (delim(tokens[i]) && smart_compare(tokens[i], "&&")
-			&& smart_compare(tokens[i], "||"))
+		if (delim(tokens[i]) && ft_strcmp(tokens[i], "&&")
+			&& ft_strcmp(tokens[i], "||"))
 		{
-			if (!smart_compare(tokens[i], "("))
+			if (!ft_strcmp(tokens[i], "("))
 				subshell(data, tokens, &i);
 			i++;
 			continue ;

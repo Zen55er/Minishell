@@ -41,16 +41,16 @@ void	fix_tokens_wc(t_data *data, int *i)
 /*Checks if the two consecutive delimiters are allowed*/
 int	check_consecutive(char *tok1, char *tok2)
 {
-	if ((!ft_strncmp(tok1, tok2, 2) && smart_compare(tok1, "(") && smart_compare(tok1, ")"))
-		|| !ft_strncmp(tok1, ">>", 2) || !ft_strncmp(tok1, "<<", 2)
-		|| !ft_strncmp(tok1, ">", 2) || !ft_strncmp(tok1, "<", 2)
-		|| ((!ft_strncmp(tok1, "|", 2) || !ft_strncmp(tok1, "||", 2)
-				|| !ft_strncmp(tok1, "&&", 2))
-			&& (!ft_strncmp(tok2, "|", 2) || !ft_strncmp(tok2, "||", 2)
-				|| !ft_strncmp(tok2, "&&", 2)))
-		|| (!ft_strncmp(tok2, "(", 2) && (!ft_strncmp(tok1, ">>", 2)
-				|| !ft_strncmp(tok1, "<<", 2)
-				|| !ft_strncmp(tok1, ">", 2) || !ft_strncmp(tok1, "<", 2))))
+	if ((!ft_strcmp(tok1, tok2) && ft_strcmp(tok1, "(") && ft_strcmp(tok1, ")"))
+		|| !ft_strcmp(tok1, ">>") || !ft_strcmp(tok1, "<<")
+		|| !ft_strcmp(tok1, ">") || !ft_strcmp(tok1, "<")
+		|| ((!ft_strcmp(tok1, "|") || !ft_strcmp(tok1, "||")
+				|| !ft_strcmp(tok1, "&&"))
+			&& (!ft_strcmp(tok2, "|") || !ft_strcmp(tok2, "||")
+				|| !ft_strcmp(tok2, "&&")))
+		|| (!ft_strcmp(tok2, "(") && (!ft_strcmp(tok1, ">>")
+				|| !ft_strcmp(tok1, "<<")
+				|| !ft_strcmp(tok1, ">") || !ft_strcmp(tok1, "<"))))
 		return (syntax_error(tok2));
 	return (0);
 }
@@ -66,7 +66,7 @@ int	validate_tokens(t_data *data, char **tokens)
 	flag = 0;
 	while (tokens[++i])
 	{
-		if (!smart_compare(tokens[i], "("))
+		if (!ft_strcmp(tokens[i], "("))
 		{
 			if (i > 0 && !delim(tokens[i - 1]))
 				return (syntax_error(tokens[i]));
@@ -74,21 +74,21 @@ int	validate_tokens(t_data *data, char **tokens)
 				return (syntax_error(tokens[i + 1]));
 			flag++;
 		}
-		if (!smart_compare(tokens[i], ")"))
+		if (!ft_strcmp(tokens[i], ")"))
 		{
 			if (!flag)
 				return (syntax_error(tokens[i]));
 			else
 				flag--;
 		}
-		if (i == 0 && (!smart_compare(tokens[i], "|")
-				|| !smart_compare(tokens[i], "||")
-				|| !smart_compare(tokens[i], "&&")))
+		if (i == 0 && (!ft_strcmp(tokens[i], "|")
+				|| !ft_strcmp(tokens[i], "||")
+				|| !ft_strcmp(tokens[i], "&&")))
 			return (syntax_error(tokens[i]));
-		else if (!tokens[i + 1] && (!smart_compare(tokens[i], ">")
-				|| !smart_compare(tokens[i], "<")
-				|| !smart_compare(tokens[i], ">>")
-				|| !smart_compare(tokens[i], "<<")))
+		else if (!tokens[i + 1] && (!ft_strcmp(tokens[i], ">")
+				|| !ft_strcmp(tokens[i], "<")
+				|| !ft_strcmp(tokens[i], ">>")
+				|| !ft_strcmp(tokens[i], "<<")))
 			return (syntax_error("newline"));
 		if (tokens[i + 1] && delim(tokens[i]) && delim(tokens[i + 1])
 			&& check_consecutive(tokens[i], tokens[i + 1]))

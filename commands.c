@@ -29,7 +29,7 @@ int	cmd_echo(char **tokens, int tok)
 	{
 		if (delim(tokens[tok]))
 			break ;
-		if (i == 1 && !ft_strncmp(tokens[tok], "-n", 2)
+		if (i == 1 && !ft_strcmp(tokens[tok], "-n")
 			&& !tokens[tok][2])
 		{
 			n_flag = 1;

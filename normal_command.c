@@ -53,7 +53,7 @@ t_cmds	*get_cmd(t_data *data, char **tokens, int token)
 		cmd = get_end_cmd(cmd);
 	cmds = (t_cmds *)malloc(sizeof(t_cmds));
 	cmds->cmd = 0;
-	if (ft_strncmp(cmd, "awk ", 4) == 0 || ft_strncmp(cmd, "sed ", 4) == 0)
+	if (ft_strcmp(cmd, "awk ") == 0 || ft_strcmp(cmd, "sed ") == 0)
 	{
 		if (awk_cmd(&cmds, cmd))
 			return (cmds);
