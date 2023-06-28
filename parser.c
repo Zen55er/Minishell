@@ -144,10 +144,10 @@ int	parser(t_data	*data)
 			|| char_finder(data->tokens[i], '\'')
 			|| char_finder(data->tokens[i], '\"'))
 			data->tokens[i] = quote_str(data, data->tokens[i]);
-		else if (data->tokens[i][0] == '$'
+		if (data->tokens[i][0] == '$'
 			|| char_finder(data->tokens[i], '$'))
 			data->tokens[i] = expansion(data, data->tokens[i]);
-		else if (data->tokens[i][0] == '*'
+		if (data->tokens[i][0] == '*'
 			|| char_finder(data->tokens[i], '*'))
 			fix_tokens_wc(data, &i);
 	}

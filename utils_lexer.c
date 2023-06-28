@@ -24,7 +24,7 @@ int	char_finder(char *str, char c)
 		if (str[i] == c)
 			return (i);
 	}
-	if (str[i] == c && (c == '\'' || c == '\"'))
+	if (str[0] == c && (c == '\'' || c == '\"'))
 		printf("Found unclosed quotes: %s\n", str);
 	return (0);
 }
@@ -81,7 +81,7 @@ int	quote_case(char *str)
 	j = char_finder(str, find);
 	if (!j)
 		return (-1);
-	return (j + 1);
+	return (j);
 }
 
 int	special_dollar(char *str)

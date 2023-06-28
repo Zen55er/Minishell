@@ -99,9 +99,9 @@ char				*build_prompt(t_data *data);
 /*lexer.c*/
 int					other(char *str);
 int					tok_len(char *str, int i);
-int					count_tokens(t_data *data, char *str);
-void				set_tokens(t_data *data, char **tokens, char *str);
-char				**lexer(t_data *data, char **input);
+int					count_tokens(char *str);
+void				set_tokens(char **tokens, char *str);
+char				**lexer(char **input);
 
 /*utils_lexer.c*/
 int					char_finder(char *str, char c);

@@ -12,27 +12,25 @@
 
 #include "minishell.h"
 
-/*Checks for length of remaining characters, excluding forbidden values,
-delimiters, quotes and parentheses.*/
+/*Checks for length of remaining characters.*/
 int	other(char *str)
 {
 	int	i;
+	int	j;
 
 	i = -1;
 	while (str[++i])
 	{
+		j = 0;
 		if (!str[i] || ft_isspace(str[i]) || delim(&str[i]))
 			break ;
-		if (str[i] == '$' && str[i + 1] == '{')
-		{
-			i += special_dollar(str);
-			continue ;
-		}
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			i += quote_case(&str[i]);
-			continue ;
-		}
+		else if (str[i] == '$' && str[i + 1] == '{')
+			j = special_dollar(str);
+		else if (str[i] == '\'' || str[i] == '\"')
+			j = quote_case(&str[i]);
+		if (j == -1)
+			return (j);
+		i += j;
 	}
 	return (i);
 }
@@ -50,13 +48,12 @@ int	tok_len(char *str, int i)
 }
 
 /*Counts tokens in input, accounts for delimiters, quotes and parentheses*/
-int	count_tokens(t_data *data, char *str)
+int	count_tokens(char *str)
 {
 	int		i;
 	int		j;
 	int		tok_num;
 
-	(void)data;
 	i = 0;
 	tok_num = 0;
 	while (str[i])
@@ -77,13 +74,12 @@ int	count_tokens(t_data *data, char *str)
 
 /*Places input tokens in 2d array for parser to analyze.
 Ignores whitespaces between tokens*/
-void	set_tokens(t_data *data, char **tokens, char *str)
+void	set_tokens(char **tokens, char *str)
 {
 	int		i;
 	int		j;
 	int		k;
 
-	(void)data;
 	i = 0;
 	k = -1;
 	while (str[i])
@@ -104,7 +100,7 @@ void	set_tokens(t_data *data, char **tokens, char *str)
 }
 
 /*Calls functions to count and set tokens to send to parser.*/
-char	**lexer(t_data *data, char **input)
+char	**lexer(char **input)
 {
 	char	**tokens;
 	int		tok_num;
@@ -116,11 +112,11 @@ char	**lexer(t_data *data, char **input)
 		update_exit_code(exit, 1);
 		return (0);
 	}
-	tok_num = count_tokens(data, *input);
+	tok_num = count_tokens(*input);
 	if (tok_num <= 0)
 		return (0);
 	tokens = (char **)malloc(sizeof(char *) * (tok_num + 1));
-	set_tokens(data, tokens, *input);
+	set_tokens(tokens, *input);
 	for (int i = 0; tokens[i]; i++)
 		printf("Token %i: :%s:\n", i, tokens[i]);
 	return (tokens);
