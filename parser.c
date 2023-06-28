@@ -151,7 +151,7 @@ int	parser(t_data	*data)
 			|| char_finder(data->tokens[i], '*'))
 			fix_tokens_wc(data, &i);
 	}
-	// for (int i = 0; data->tokens[i]; i++)
-	// 	printf("Token %i: :%s:\n", i, data->tokens[i]);
+	for (int i = 0; data->tokens[i]; i++)
+		printf("Token %i: :%s:\n", i, data->tokens[i]);
 	return (0);
 }

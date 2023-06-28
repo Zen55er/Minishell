@@ -70,7 +70,9 @@ int	validate_input(char **str)
 	i = -1;
 	while ((*str)[++i])
 	{
-		if ((*str)[i] == '(' || ((*str)[i] == '$' && (*str)[i + 1] == '{'))
+		if (forbidden(&(*str)[i]))
+			return (1);
+		else if ((*str)[i] == '(' || ((*str)[i] == '$' && (*str)[i + 1] == '{'))
 		{
 			match = get_match((*str)[i]);
 			if (!char_finder(*str, match))

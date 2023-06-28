@@ -14,40 +14,38 @@
 
 /*Checks for length of remaining characters, excluding forbidden values,
 delimiters, quotes and parentheses.*/
-int	other(char *str, int flag)
+int	other(char *str)
 {
 	int	i;
 
 	i = -1;
 	while (str[++i])
 	{
-		if (!flag && forbidden(&str[i]))
-			return (-1);
 		if (!str[i] || ft_isspace(str[i]) || delim(&str[i]))
 			break ;
 		if (str[i] == '$' && str[i + 1] == '{')
 		{
-			i = special_dollar(str, flag);
-			break ;
+			i += special_dollar(str);
+			continue ;
 		}
 		if (str[i] == '\'' || str[i] == '\"')
 		{
-			i = quote_case(&str[i]);
-			break ;
+			i += quote_case(&str[i]);
+			continue ;
 		}
 	}
 	return (i);
 }
 
 /*Finds length of current token after determining its type*/
-int	tok_len(char *str, int i, int flag)
+int	tok_len(char *str, int i)
 {
 	int	j;
 
 	j = delim(&str[i]);
 	if (j)
 		return (j);
-	j = other(&str[i], flag);
+	j = other(&str[i]);
 	return (j);
 }
 
@@ -67,10 +65,8 @@ int	count_tokens(t_data *data, char *str)
 			i++;
 		if (!str[i])
 			break ;
-		if (forbidden(str))
-			return (0);
 		else
-			j = tok_len(str, i, 0);
+			j = tok_len(str, i);
 		if (j < 0)
 			return (0);
 		tok_num++;
@@ -97,7 +93,7 @@ void	set_tokens(t_data *data, char **tokens, char *str)
 		if (!str[i])
 			break ;
 		else
-			j = tok_len(str, i, 1);
+			j = tok_len(str, i);
 		if (!j && ++i)
 			continue ;
 		else

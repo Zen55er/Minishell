@@ -97,8 +97,8 @@ void				prep_env(t_data *data, char **envp);
 char				*build_prompt(t_data *data);
 
 /*lexer.c*/
-int					other(char *str, int flag);
-int					tok_len(char *str, int i, int flag);
+int					other(char *str);
+int					tok_len(char *str, int i);
 int					count_tokens(t_data *data, char *str);
 void				set_tokens(t_data *data, char **tokens, char *str);
 char				**lexer(t_data *data, char **input);
@@ -108,7 +108,7 @@ int					char_finder(char *str, char c);
 int					forbidden(char *str);
 int					delim(char *str);
 int					quote_case(char *str);
-int					special_dollar(char *str, int flag);
+int					special_dollar(char *str);
 
 /*utils_lexer2.c*/
 int					missing_input(char **input, char match);

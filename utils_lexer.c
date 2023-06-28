@@ -35,9 +35,7 @@ int	forbidden(char *str)
 	if (str[0] == '\\' || str[0] == '[' || str[0] == ']'
 		|| str[0] == ';' || str[0] == '^' || str[0] == '#'
 		|| str[0] == '`'
-		// || (str[0] == '(' && str[1] == '(')
 		|| (str[0] == '(' && str[1] == ')')
-		// || (str[0] == ')' && str[1] == ')')
 		|| (str[0] == '<' && str[1] == '(')
 		|| (str[0] == '$' && str[1] == '(')
 		|| (str[0] == ')' && str[1] == '$')
@@ -86,7 +84,7 @@ int	quote_case(char *str)
 	return (j + 1);
 }
 
-int	special_dollar(char *str, int flag)
+int	special_dollar(char *str)
 {
 	int		bad_sub;
 	int		found;
@@ -97,8 +95,6 @@ int	special_dollar(char *str, int flag)
 	i = -1;
 	while (str[++i])
 	{
-		if (!flag && forbidden(&str[i]))
-			return (-1);
 		if (ft_isspace(str[i]) && !found)
 			bad_sub = i;
 		if (str[i] == '}')
