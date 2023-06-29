@@ -62,12 +62,12 @@ t_cmd_st	*init_cmd_st_node(t_data *data, int j)
 	c = j - 1;
 	d = -1;
 	get_fds(data->tokens, &fdin, &fdout, c + 1);
-	while (data->tokens[++c] && ft_strncmp(data->tokens[c], "|", 2))
+	while (data->tokens[++c] && ft_strcmp(data->tokens[c], "|"))
 	{
-		if (!ft_strncmp(data->tokens[c], ">", 2)
-			|| !ft_strncmp(data->tokens[c], ">>", 3)
-			|| !ft_strncmp(data->tokens[c], "<", 2)
-			|| !ft_strncmp(data->tokens[c], "<<", 3))
+		if (!ft_strcmp(data->tokens[c], ">")
+			|| !ft_strcmp(data->tokens[c], ">>")
+			|| !ft_strcmp(data->tokens[c], "<")
+			|| !ft_strcmp(data->tokens[c], "<<"))
 			c = c + 2;
 		if (data->tokens[c])
 			cmd[++d] = ft_strdup(data->tokens[c]);
@@ -85,7 +85,7 @@ int	redirection(t_data *data)
 	j = 0;
 	while (data->tokens[i])
 	{
-		if (!ft_strncmp(data->tokens[i], "|", 2) || !data->tokens[i + 1])
+		if (!ft_strcmp(data->tokens[i], "|") || !data->tokens[i + 1])
 		{
 			node = init_cmd_st_node(data, j);
 			if (!node)

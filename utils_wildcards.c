@@ -21,19 +21,19 @@ void	double_increment(int *i, int *j)
 }
 
 /*Needed for norminette in compare_wc.*/
-void	found_wildcard(int *i, int *j, int *prev_wc, int *backtrack)
+void	found_wildcard(int *i, int *j, int *prev_wc, int *back)
 {
 	(*i)++;
 	*prev_wc = *i;
-	*backtrack = *j;
+	*back = *j;
 	return ;
 }
 
 /*Needed for norminette in compare_wc.*/
-void	return_to_previous(int *i, int *j, int *prev_wc, int *backtrack)
+void	return_to_previous(int *i, int *j, int *prev_wc, int *back)
 {
 	*i = *prev_wc;
-	*j = (*backtrack)++;
+	*j = (*back)++;
 }
 
 /*Needed for norminette in compare_wc.

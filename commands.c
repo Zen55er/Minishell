@@ -6,35 +6,38 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 10:40:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:44:15 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*Prints arguments of echo, if -n flag is present, does not write newline*/
-int	cmd_echo(t_data *data, int tok)
+int	cmd_echo(char **tokens, int tok)
 {
 	int	n_flag;
 	int	i;
 
 	n_flag = 0;
 	i = 0;
-	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1], 1))
-		return (OK_EXIT);
-	while (data->tokens[++tok] && ++i)
+	if (!tokens[tok + 1] || delim(tokens[tok + 1]))
 	{
-		if (delim(data->tokens[tok], 1))
+		printf("\n");
+		return (OK_EXIT);
+	}
+	while (tokens[++tok] && ++i)
+	{
+		if (delim(tokens[tok]))
 			break ;
-		if (i == 1 && !ft_strncmp(data->tokens[tok], "-n", 2)
-			&& !data->tokens[tok][2])
+		if (i == 1 && !ft_strcmp(tokens[tok], "-n")
+			&& !tokens[tok][2])
 		{
 			n_flag = 1;
 			continue ;
 		}
-		if (data->tokens[tok])
-			printf("%s", data->tokens[tok]);
-		if (data->tokens[tok + 1] && !delim(data->tokens[tok + 1], 1))
+		if (tokens[tok])
+			printf("%s", tokens[tok]);
+		if (tokens[tok + 1] && !delim(tokens[tok + 1]))
 			printf(" ");
 	}
 	if (!n_flag)
@@ -102,21 +105,21 @@ unsigned char	check_exit_arg(char *token)
 
 /*Prints "exit", updates prompt, frees memory and exits program.
 Can't have more than 1 argument and that argument needs to be numeric.*/
-int	cmd_exit(t_data *data, int token)
+int	cmd_exit(t_data *data, char **tokens, int token)
 {
 	int	flag;
 
 	printf("exit\n");
 	flag = 0;
-	if (data->tokens[token + 1])
+	if (tokens[token + 1])
 		flag = 1;
-	if (data->tokens[token + 1] && data->tokens[token + 2])
+	if (tokens[token + 1] && tokens[token + 2])
 	{
 		printf("minishell: exit: too many arguments\n");
 		return (ERROR_EXIT);
 	}
-	if (data->tokens[token + 1])
-		set_exit_code(check_exit_arg(data->tokens[token + 1]));
+	if (tokens[token + 1])
+		set_exit_code(check_exit_arg(tokens[token + 1]));
 	rl_clear_history();
 	free_all(0, data);
 	if (flag)

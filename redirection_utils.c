@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:52:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/20 14:10:29 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/26 15:15:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	here_doc(char *limiter)
 	{
 		write(1, "here_doc>", 9);
 		buf = get_next_line(STDIN_FILENO);
-		if (!buf || (!ft_strncmp(buf, limiter, ft_strlen(limiter))
+		if (!buf || (!ft_strcmp(buf, limiter)
 				&& buf[ft_strlen(limiter)] == '\n'))
 			break ;
 		write(doc, buf, ft_strlen(buf));
@@ -63,35 +63,35 @@ int	open_fds(char *redir, char *file)
 	int	i;
 
 	i = -1;
-	if (!ft_strncmp(redir, ">", 2))
+	if (!ft_strcmp(redir, ">"))
 		i = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	else if (!ft_strncmp(redir, ">>", 2))
+	else if (!ft_strcmp(redir, ">>"))
 		i = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
-	else if (!ft_strncmp(redir, "<", 2))
+	else if (!ft_strcmp(redir, "<"))
 	{
-		if (!access(file, F_OK & R_OK))
+		if (!access(file, R_OK))
 			i = open(file, O_RDONLY);
 		else
 			i = -1;
 	}
-	else if (!ft_strncmp(redir, "<<", 2))
+	else if (!ft_strcmp(redir, "<<"))
 		i = here_doc(file);
 	return (i);
 }
 
 void	get_fds(char **tokens, int *fdin, int *fdout, int c)
 {
-	while (tokens[c] && !ft_strncmp(tokens[c], "|", 2))
+	while (tokens[c] && !ft_strcmp(tokens[c], "|"))
 	{
-		if (!ft_strncmp(tokens[c], ">", 2)
-			|| !ft_strncmp(tokens[c], ">>", 2))
+		if (!ft_strcmp(tokens[c], ">")
+			|| !ft_strcmp(tokens[c], ">>"))
 		{
 			if (*fdout)
 				close(*fdout);
 			*fdout = open_fds(tokens[c], tokens[c + 1]);
 		}
-		else if (!ft_strncmp(tokens[c], "<", 2)
-			|| !ft_strncmp(tokens[c], "<<", 2))
+		else if (!ft_strcmp(tokens[c], "<")
+			|| !ft_strcmp(tokens[c], "<<"))
 		{
 			if (*fdin)
 				close(*fdin);

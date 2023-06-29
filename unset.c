@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 09:27:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/02 12:59:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:44:55 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ before calling unset_var*/
 int	check_unset(t_data *data, t_ll **list, int token)
 {
 	t_ll	*temp;
-	int		len;
 	int		count;
 
 	if (!(*list))
@@ -56,8 +55,7 @@ int	check_unset(t_data *data, t_ll **list, int token)
 	count = 0;
 	while (temp)
 	{
-		len = len_compare(data->tokens[token], temp->var);
-		if (!ft_strncmp(data->tokens[token], temp->var, len))
+		if (!ft_strcmp(data->tokens[token], temp->var))
 			return (unset_var(list, count));
 		temp = temp->next;
 		count++;
@@ -67,21 +65,21 @@ int	check_unset(t_data *data, t_ll **list, int token)
 
 /*If given an argument, checks if it is a variable in env or exp
 and deletes that node*/
-int	cmd_unset(t_data *data, int tok)
+int	cmd_unset(t_data *data, char **tokens, int tok)
 {
-	if (!data->tokens[tok + 1] || delim(data->tokens[tok + 1], 1))
+	if (!tokens[tok + 1] || delim(tokens[tok + 1]))
 		return (OK_EXIT);
-	while (data->tokens[++tok])
+	while (tokens[++tok])
 	{
-		if (delim(data->tokens[tok], 1))
+		if (delim(tokens[tok]))
 			break ;
-		if (!ft_isalpha(data->tokens[tok][0]) && data->tokens[tok][0] != '_')
+		if (!ft_isalpha(tokens[tok][0]) && tokens[tok][0] != '_')
 		{
 			printf("unset: '%c': not a valid identifier\n",
-				data->tokens[tok][0]);
+				tokens[tok][0]);
 			continue ;
 		}
-		if ((data->tokens[tok][0] == '_' && !data->tokens[tok][1])
+		if ((tokens[tok][0] == '_' && !tokens[tok][1])
 			|| check_unset(data, &data->env, tok)
 			|| check_unset(data, &data->exp, tok))
 			continue ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 14:43:58 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/26 08:53:05 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	update_path(t_data *data)
 {
 	t_ll	*temp;
 	char	*temp2;
-	int		len;
 	int		i;
 
 	if (data->path)
@@ -27,8 +26,7 @@ void	update_path(t_data *data)
 	temp = data->env;
 	while (temp)
 	{
-		len = len_compare(temp->var, "PATH");
-		if (!ft_strncmp(temp->var, "PATH", len))
+		if (!ft_strcmp(temp->var, "PATH"))
 			data->path = ft_split(temp->value, ':');
 		temp = temp->next;
 	}
@@ -108,7 +106,7 @@ int	main(int ac, char **av, char **envp)
 		if (data.tokens)
 		{
 			if (!parser(&data))
-				executor(&data);
+				executor(&data, data.tokens, 0);
 			free_double(data.tokens);
 		}
 		data.tokens = 0;

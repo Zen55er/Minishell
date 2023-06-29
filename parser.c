@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 14:41:14 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/26 14:00:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ char	*update_expansion(t_data *data, char *val, char *test)
 	char	*temp;
 	char	*temp_val;
 
-	if (!ft_strncmp(test, "$?", ft_strlen(test)))
-		return (get_exit_code(val, test));
+	/* if (!ft_strcmp(test, "$?"))
+		return (get_exit_code(val, test)); */
 	if (test[0] == '$')
 	{
 		if (test[1] == '{')
 			temp = find_var(data->env, test + 2);
+		else if (test[1] == '?')
+			temp = ft_itoa(update_exit_code(0, 0));
 		else
 			temp = find_var(data->env, test + 1);
 		if (!temp)
@@ -60,7 +62,11 @@ char	*expansion(t_data *data, char	*s)
 			j++;
 		while (s[j] && s[j] != '$' && s[j] != '}'
 			&& s[j] != '\'' && s[j] != '\"')
+		{
 			j++;
+			if (s[j - 1] == '?' && j == i + 2)
+				break ;
+		}
 		if (j == i && s[j] && s[j] != '}' && s[j] != '\'' && s[j] != '\"')
 			j++;
 		test = ft_substr(s, i, j - i);
@@ -129,7 +135,7 @@ int	parser(t_data	*data)
 {
 	int		i;
 
-	if (validate_tokens(data->tokens))
+	if (validate_tokens(data, data->tokens))
 		return (1);
 	i = -1;
 	while (data->tokens[++i])
@@ -145,7 +151,7 @@ int	parser(t_data	*data)
 			|| char_finder(data->tokens[i], '*'))
 			fix_tokens_wc(data, &i);
 	}
-	for (int i = 0; data->tokens[i]; i++)
-		printf("Token %i: :%s:\n", i, data->tokens[i]);
+	// for (int i = 0; data->tokens[i]; i++)
+	// 	printf("Token %i: :%s:\n", i, data->tokens[i]);
 	return (0);
 }

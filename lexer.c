@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/22 11:13:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/26 09:53:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	other(char *str, int flag)
 	{
 		if (!flag && forbidden(&str[i]))
 			return (-1);
-		if (!str[i] || ft_isspace(str[i]) || delim(&str[i], 0))
+		if (!str[i] || ft_isspace(str[i]) || delim(&str[i]))
 			break ;
 		if (str[i] == '$' && str[i + 1] == '{')
 		{
@@ -44,7 +44,7 @@ int	tok_len(char *str, int i, int flag)
 {
 	int	j;
 
-	j = delim(&str[i], 0);
+	j = delim(&str[i]);
 	if (j)
 		return (j);
 	j = other(&str[i], flag);
@@ -58,6 +58,7 @@ int	count_tokens(t_data *data, char *str)
 	int		j;
 	int		tok_num;
 
+	(void)data;
 	i = 0;
 	tok_num = 0;
 	while (str[i])
@@ -68,8 +69,6 @@ int	count_tokens(t_data *data, char *str)
 			break ;
 		if (forbidden(str))
 			return (0);
-		if ((str[i] == '(' || str[i] == ')') && check_and_or(data, &str[i]))
-			j = 1;
 		else
 			j = tok_len(str, i, 0);
 		if (j < 0)
@@ -88,6 +87,7 @@ void	set_tokens(t_data *data, char **tokens, char *str)
 	int		j;
 	int		k;
 
+	(void)data;
 	i = 0;
 	k = -1;
 	while (str[i])
@@ -96,8 +96,6 @@ void	set_tokens(t_data *data, char **tokens, char *str)
 			i++;
 		if (!str[i])
 			break ;
-		if ((str[i] == '(' || str[i] == ')') && check_and_or(data, &str[i]))
-			j = 1;
 		else
 			j = tok_len(str, i, 1);
 		if (!j && ++i)

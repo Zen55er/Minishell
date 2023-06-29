@@ -16,13 +16,11 @@
 char	*get_dir(t_data *data, char *dir)
 {
 	t_ll	*temp;
-	int		len;
 
 	temp = data->env;
 	while (temp)
 	{
-		len = len_compare(temp->var, dir);
-		if (!ft_strncmp(temp->var, dir, len))
+		if (!ft_strcmp(temp->var, dir))
 			return (temp->value);
 		temp = temp->next;
 	}
@@ -33,13 +31,11 @@ char	*get_dir(t_data *data, char *dir)
 void	update_env_dir(t_data *data, char *dir, char *new_dir)
 {
 	t_ll	*temp;
-	int		len;
 
 	temp = data->env;
 	while (temp)
 	{
-		len = len_compare(temp->var, dir);
-		if (!ft_strncmp(temp->var, dir, len))
+		if (!ft_strcmp(temp->var, dir))
 		{
 			free(temp->value);
 			temp->value = ft_strdup(new_dir);

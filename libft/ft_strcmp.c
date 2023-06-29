@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   smart_compare.c                                    :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/19 12:31:34 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/20 12:32:43 by gacorrei         ###   ########.fr       */
+/*   Created: 2023/06/26 15:33:57 by gacorrei          #+#    #+#             */
+/*   Updated: 2023/06/26 15:38:26 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	smart_compare(char *str1, char *str2)
+int	ft_strcmp(const char *str1, const char *str2)
 {
-	int		len;
+	int	i;
 
-	len = len_compare(str1, str2);
-	return (ft_strncmp(str1, str2, len));
+	i = -1;
+	while (str1[++i])
+		if (str1[i] != str2[i])
+			break ;
+	return ((unsigned char)str1[i] - (unsigned char)str2[i]);
 }

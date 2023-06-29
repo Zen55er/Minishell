@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/06 12:47:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:45:42 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@
 void	update_curr_prev(t_data *data)
 {
 	char	*temp;
-	int		len;
 
 	if (data->curr_dir)
 	{
 		temp = 0;
 		temp = getcwd(temp, 0);
-		len = len_compare(temp, data->curr_dir);
-		if (ft_strncmp(temp, data->curr_dir, len))
+		if (ft_strcmp(temp, data->curr_dir))
 		{
 			update_env_dir(data, "OLDPWD", data->curr_dir);
 			update_env_dir(data, "PWD", temp);
@@ -38,12 +36,9 @@ void	update_curr_prev(t_data *data)
 /*Returns value of var from list, if it exists*/
 char	*find_var(t_ll *list, char *str)
 {
-	int		len;
-
 	while (list)
 	{
-		len = len_compare(list->var, str);
-		if (!ft_strncmp(list->var, str, len))
+		if (!ft_strcmp(list->var, str))
 			return (ft_strdup(list->value));
 		list = list->next;
 	}
@@ -54,41 +49,41 @@ char	*find_var(t_ll *list, char *str)
 - goes to previous directory while writing that directory in terminal,
 ~- goes to previous directory whithout writing it,
 otherwise, goes to path in input*/
-char	*cd_cases(t_data *data, int token)
+char	*cd_cases(t_data *data, char **tokens, int token)
 {
 	char	*dir;
 
-	if (!data->tokens[token] || delim(data->tokens[token], 1)
-		|| !ft_strncmp(data->tokens[token], "~", 2))
+	if (!tokens[token] || delim(tokens[token])
+		|| !ft_strcmp(tokens[token], "~"))
 		dir = find_var(data->env, "HOME");
-	else if (!ft_strncmp(data->tokens[token], "-", 2))
+	else if (!ft_strcmp(tokens[token], "-"))
 	{
 		dir = ft_strdup(data->prev_dir);
 		printf("%s\n", dir);
 	}
-	else if (!ft_strncmp(data->tokens[token], "~-", 3))
+	else if (!ft_strcmp(tokens[token], "~-"))
 		dir = ft_strdup(data->prev_dir);
 	else
-		dir = ft_strdup(data->tokens[token]);
+		dir = ft_strdup(tokens[token]);
 	return (dir);
 }
 
 /*Changes directory and calls update_curr_prev*/
-int	cmd_cd(t_data *data, int token)
+int	cmd_cd(t_data *data, char **tokens, int token)
 {
 	int		out;
 	char	*dir;
 
 	token++;
-	if (!data->tokens[token][1] || (data->tokens[token]
-		&& data->tokens[token + 1]
-		&& !delim(data->tokens[token], 1)
-		&& !delim(data->tokens[token + 1], 1)))
+	if (!tokens[token][1] || (tokens[token]
+		&& tokens[token + 1]
+		&& !delim(tokens[token])
+		&& !delim(tokens[token + 1])))
 	{
 		printf("cmd_cd: too many arguments\n");
 		return (ERROR_EXIT);
 	}
-	dir = cd_cases(data, token);
+	dir = cd_cases(data, tokens, token);
 	out = chdir(dir);
 	free(dir);
 	if (out)

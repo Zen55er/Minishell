@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:16:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/22 10:28:39 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:25:17 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	check_path(char **paths, char *cmd)
 		return (0);
 	while (paths[++i])
 	{
-		if (ft_strncmp(paths[i], cmd, ft_strlen(paths[i])) == 0)
+		if (!ft_strcmp(paths[i], cmd))
 			return (1);
 	}
 	return (0);
