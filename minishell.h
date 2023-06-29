@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 14:40:54 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/29 15:22:26 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,10 @@ void	executor(t_data *data);
 
 /*pipes*/
 int		pipeline(t_data *data);
-void	pipes(t_data *data, int i);
+
+/*pipes_utils*/
+int		check_fd_in(t_cmd_st *node, int pipefd[2], int j);
+int		check_fd_out(t_cmd_st *node, int pipefd[2]);
 
 /*redirection*/
 int		redirection(t_data *data);
