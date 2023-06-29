@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:52:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/26 15:15:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/29 16:15:23 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	open_fds(char *redir, char *file)
 	}
 	else if (!ft_strcmp(redir, "<<"))
 		i = here_doc(file);
+	if (i == -1)
+		return (-1);
 	return (i);
 }
 
