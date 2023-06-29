@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 14:20:55 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/29 16:39:05 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,17 @@ int	skip_commands(char **tokens, int i)
 	return (i);
 }
 
+int	check_pipe(char **tokens)
+{
+	int	i;
+
+	i = -1;
+	while (tokens[++i])
+		if (!ft_strcmp(tokens[i], "|"))
+			return (1);
+	return (0);
+}
+
 /*Iterates through tokens and executes commands.
 flag determines if function is called from main (0) or from subshell (1).*/
 void	executor(t_data *data, char **tokens, int flag)
@@ -78,9 +89,17 @@ void	executor(t_data *data, char **tokens, int flag)
 	int	command;
 
 	i = 0;
-	// redirection(data);
 	while (tokens[i])
 	{
+		if (check_pipe(tokens))
+		{
+			redirection(data);
+			data->nodenmb = st_size(data->cmd_st);
+			data->pid = (pid_t *)malloc(sizeof(pid_t) * data->nodenmb);
+			pipeline(data);
+			free(data->pid);
+			return ;
+		}
 		if (!ft_strcmp(tokens[i], "&&") || !ft_strcmp(tokens[i], "||"))
 		{
 			if (!logical_choice(tokens, i))

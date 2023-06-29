@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/29 16:11:19 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/29 16:34:52 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_data
 	int			fdin;
 	int			fdout;
 	int			lastfdout;
+	int			nodenmb;
 	t_cmd_st	*cmd_st;
 	pid_t		*pid;
 	int			logic_operator;
