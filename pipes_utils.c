@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:19:52 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/29 15:22:03 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/06/29 16:01:08 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,19 @@ int	check_fd_out(t_cmd_st *node, int pipefd[2])
 		close(pipefd[1]);
 	}
 	return (i);
+}
+
+int	st_size(t_cmd_st *list)
+{
+	int	n;
+
+	if (!list)
+		return (0);
+	n = 0;
+	while (list)
+	{
+		list = list->next;
+		n++;
+	}
+	return (n);
 }
