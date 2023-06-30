@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/30 15:11:49 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/30 17:49:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,19 @@ char	*update_expansion(t_data *data, char *val, char *test)
 	char	*temp;
 	char	*temp_val;
 
-	if (test[0] == '$')
-	{
-		if (test[1] == '{')
-			temp = find_var(data->env, test + 2);
-		else if (!test[1] || test[1] == '\'' || test[1] == '\"')
-			temp = 0;
-		else if (test[1] == '?')
-			temp = ft_itoa(update_exit_code(0, 0));
-		else
-			temp = find_var(data->env, test + 1);
-		if (!temp)
-			temp = ft_strdup("");
-		temp_val = val;
-		val = ft_strjoin(temp_val, temp);
-		free(temp);
-	}
-	/*NOT NEEDED SINCE CHANGE? MAKE SURE*/
-	/* else
-	{
-		temp_val = val;
-		val = ft_strjoin(temp_val, test);
-	} */
+	if (test[1] == '{')
+		temp = find_var(data->env, test + 2);
+	else if (!test[1] || test[1] == '\'' || test[1] == '\"')
+		temp = 0;
+	else if (test[1] == '?')
+		temp = ft_itoa(update_exit_code(0, 0));
+	else
+		temp = find_var(data->env, test + 1);
+	if (!temp)
+		temp = ft_strdup("");
+	temp_val = val;
+	val = ft_strjoin(temp_val, temp);
+	free(temp);
 	free(test);
 	free(temp_val);
 	return (val);
