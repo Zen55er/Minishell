@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/30 17:49:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/30 18:39:32 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ or if it is just text*/
 char	*update_expansion(t_data *data, char *val, char *test)
 {
 	char	*temp;
-	char	*temp_val;
+	char	*new_val;
 
 	if (test[1] == '{')
 		temp = find_var(data->env, test + 2);
@@ -29,12 +29,20 @@ char	*update_expansion(t_data *data, char *val, char *test)
 		temp = find_var(data->env, test + 1);
 	if (!temp)
 		temp = ft_strdup("");
-	temp_val = val;
-	val = ft_strjoin(temp_val, temp);
+	new_val = ft_strjoin(val, temp);
 	free(temp);
 	free(test);
-	free(temp_val);
-	return (val);
+	free(val);
+	return (new_val);
+}
+
+/*Needed for norm in expansion function.
+Updates val string and i.*/
+int	expansion_join(char	**val, char *s, int *i, int *j)
+{
+	*val = ft_strjoin_free(*val, ft_substr(s, *i, *j));
+	*i += *j;
+	return (1);
 }
 
 /*Returns variable value, if it exists*/
@@ -42,8 +50,6 @@ char	*expansion(t_data *data, char *s)
 {
 	int		i;
 	int		j;
-	char	*test;
-	char	*temp;
 	char	*val;
 
 	i = 0;
@@ -54,23 +60,14 @@ char	*expansion(t_data *data, char *s)
 		while (s[i + ++j] && (s[i + j] != '$' || (s[i + j] == '$'
 					&& (s[i + j + 1] == '$' || s[i + j + 1] == '}'))))
 			continue ;
-		if (j)
-		{
-			test = ft_substr(s, i, j);
-			temp = val;
-			val = ft_strjoin(temp, test);
-			free(temp);
-			free(test);
-			i += j;
+		if (j && expansion_join(&val, s, &i, &j))
 			continue ;
-		}
 		j = i + 1;
-		while (s[j] && s[j] != '$' && s[j] != '}'
-			&& s[j] != '\'' && s[j] != '\"' && j++)
+		while (s[j] && s[j] != '$' && s[j] != '}' && s[j] != '\''
+			&& s[j] != '\"' && j++)
 			if (s[j - 1] == '?' && j == i + 2)
 				break ;
-		test = ft_substr(s, i, j - i);
-		val = update_expansion(data, val, test);
+		val = update_expansion(data, val, ft_substr(s, i, j - i));
 		i = j;
 		if (s[i] == '}')
 			i++;
@@ -95,8 +92,6 @@ char	*token_parser(t_data *data, char *token)
 	int		i;
 	int		j;
 	char	*new_token;
-	char	*section;
-	char	*temp;
 
 	new_token = ft_strdup("");
 	i = 0;
@@ -111,11 +106,7 @@ char	*token_parser(t_data *data, char *token)
 				break ;
 			continue ;
 		}
-		section = get_section(data, token, i, j);
-		temp = new_token;
-		new_token = ft_strjoin(temp, section);
-		free(temp);
-		free(section);
+		new_token = ft_strjoin_free(new_token, get_section(data, token, i, j));
 		if (token[i] == '\'' || token[i] == '\"')
 			j++;
 		i += j;

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 13:44:15 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/30 17:53:30 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,8 @@ int	cmd_echo(char **tokens, int tok)
 
 	n_flag = 0;
 	i = 0;
-	if (!tokens[tok + 1] || delim(tokens[tok + 1]))
-	{
-		printf("\n");
+	if ((!tokens[tok + 1] || delim(tokens[tok + 1])) && printf("\n"))
 		return (OK_EXIT);
-	}
 	while (tokens[++tok] && ++i)
 	{
 		if (delim(tokens[tok]))
