@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 14:22:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/30 09:38:52 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,8 @@ int					check_single_cmd(t_data *data, char *cmd);
 
 /*parser.c*/
 char				*update_expansion(t_data *data, char *val, char *test);
-char				*expansion(t_data *data, char	*str);
-char				*quotes(t_data *data, char *str);
-char				*quote_str(t_data *data, char *str);
+char				*expansion(t_data *data, char *str);
+char				*quotes(char *str);
 int					parser(t_data *data);
 
 /*utils_parser.c*/

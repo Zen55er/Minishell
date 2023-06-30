@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 14:37:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/06/30 14:46:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,20 @@
 char	*get_section(t_data *data, char *str, int i, int j)
 {
 	char	*section;
+	char	*temp;
 
 	if (str[i] == '\'' || str[i] == '\"' )
-		section = quotes(data, ft_substr(str, i, j + 1));
+		section = ft_substr(str, i, j + 1);
 	else
 		section = ft_substr(str, i, j);
+	if (section[0] != '\'' && (section[0] == '$' || char_finder(section, '$')))
+	{
+		temp = section;
+		section = expansion(data, section);
+		free(temp);
+	}
+	if (section[0] == '\'' || section[0] == '\"')
+		section = quotes(section);
 	return (section);
 }
 
