@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/29 17:05:24 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/04 13:18:16 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	forking(t_data *data, t_cmd_st *node, int in, int out)
 	static int	i;
 
 	data->pid[i] = fork();
-	printf("pid %d: %d\n", i, data->pid[i]);
+	/* printf("pid %d: %d\n", i, data->pid[i]); */
 	if (data->pid[i] < 0)
 		return (1);
 	if (data->pid[i] == 0)
@@ -78,7 +78,7 @@ int	pipeline(t_data *data)
 		else
 			break ;
 	}
-	waiting(data);
+	/* waiting(data); */
 	return (0);
 }
 

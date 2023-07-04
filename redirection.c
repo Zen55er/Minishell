@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:25 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/29 16:15:52 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/04 14:08:03 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,13 @@ t_cmd_st	*init_cmd_st_node(t_data *data, int j)
 		return (NULL);
 	while (data->tokens[++c] && ft_strncmp(data->tokens[c], "|", 2))
 	{
-		if (!ft_strcmp(data->tokens[c], ">")
+		if (!ft_strcmp(data->tokens[c], ">") 
 			|| !ft_strcmp(data->tokens[c], ">>")
 			|| !ft_strcmp(data->tokens[c], "<")
 			|| !ft_strcmp(data->tokens[c], "<<"))
 			c = c + 2;
+		if (!data->tokens[c])
+			break ;
 		if (data->tokens[c])
 			cmd[++d] = ft_strdup(data->tokens[c]);
 	}

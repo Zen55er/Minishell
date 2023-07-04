@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:52:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/06/29 16:15:23 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/04 14:49:45 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,20 +83,20 @@ int	open_fds(char *redir, char *file)
 
 void	get_fds(char **tokens, int *fdin, int *fdout, int c)
 {
-	while (tokens[c] && !ft_strcmp(tokens[c], "|"))
+	while (tokens[c] && ft_strcmp(tokens[c], "|"))
 	{
 		if (!ft_strcmp(tokens[c], ">")
 			|| !ft_strcmp(tokens[c], ">>"))
 		{
-			if (*fdout)
-				close(*fdout);
+			/* if (*fdout)
+				close(*fdout); */
 			*fdout = open_fds(tokens[c], tokens[c + 1]);
 		}
 		else if (!ft_strcmp(tokens[c], "<")
 			|| !ft_strcmp(tokens[c], "<<"))
 		{
-			if (*fdin)
-				close(*fdin);
+			/* if (*fdin)
+				close(*fdin); */
 			*fdin = open_fds(tokens[c], tokens[c + 1]);
 		}
 		c++;
