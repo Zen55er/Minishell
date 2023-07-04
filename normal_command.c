@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   normal_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 13:45:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/04 16:19:02 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	child(t_data *data, char **tokens, int token)
 	char	**env2d;
 
 	cmds = get_cmd(data, tokens, token);
+	printf("teste1 :%s\n", cmds->cmd_args[0]);
 	if (!cmds->cmd)
 	{
 		ft_printf("%s: command not found\n", cmds->cmd_args[0]);
