@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/30 17:53:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/04 12:47:43 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ unsigned char	check_exit_arg(char *token)
 		if (!ft_isdigit(token[i]) || (check > LLONG_MAX && signal)
 			|| (check - 1 > LLONG_MAX && !signal))
 		{
-			printf("minishell: exit: %llu: numeric argument required\n", check);
+			printf("minishell: exit: %s: numeric argument required\n", token);
 			return (ERROR_MISUSE);
 		}
 		i++;

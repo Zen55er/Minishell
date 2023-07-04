@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 13:45:42 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/04 12:46:29 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	cmd_cd(t_data *data, char **tokens, int token)
 		&& !delim(tokens[token])
 		&& !delim(tokens[token + 1])))
 	{
-		printf("cmd_cd: too many arguments\n");
+		printf("minishell: cd: too many arguments\n");
 		return (ERROR_EXIT);
 	}
 	dir = cd_cases(data, tokens, token);
