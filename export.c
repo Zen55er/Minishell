@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 13:44:35 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/04 10:33:45 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	export_arg(t_data *data, char **tokens, int tok)
 		{
 			printf("export: '%c': not a valid identifier\n",
 				tokens[tok][0]);
-			return (ERROR_EXIT);
+			return (1);
 		}
 		i = char_finder(tokens[tok], '=');
 		if ((tokens[tok][0] == '_' && !tokens[tok][1])
@@ -71,7 +71,7 @@ int	export_arg(t_data *data, char **tokens, int tok)
 			continue ;
 		add_to_exp(data, tok, i);
 	}
-	return (OK_EXIT);
+	return (0);
 }
 
 /*With no arguments simply prints env alphabetically,
@@ -82,6 +82,8 @@ int	cmd_export(t_data *data, char **tokens, int token)
 		return (ERROR_EXIT);
 	list_ranking(data->env);
 	list_ranking(data->exp);
+	if (tokens[token + 1] && !delim(tokens[token + 1]))
+		return (OK_EXIT);
 	print_ordered(data->env);
 	print_ordered(data->exp);
 	return (OK_EXIT);
