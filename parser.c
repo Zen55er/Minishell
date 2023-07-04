@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/30 18:39:32 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/04 10:19:53 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*update_expansion(t_data *data, char *val, char *test)
 
 	if (test[1] == '{')
 		temp = find_var(data->env, test + 2);
+	else if (!test[1])
+		temp = ft_strdup("$");
 	else if (!test[1] || test[1] == '\'' || test[1] == '\"')
 		temp = 0;
 	else if (test[1] == '?')
@@ -63,7 +65,7 @@ char	*expansion(t_data *data, char *s)
 		if (j && expansion_join(&val, s, &i, &j))
 			continue ;
 		j = i + 1;
-		while (s[j] && s[j] != '$' && s[j] != '}' && s[j] != '\''
+		while (s[j] && s[j] != '$' && s[j] != '}' && s[j] != '\'' && s[j] != ' '
 			&& s[j] != '\"' && j++)
 			if (s[j - 1] == '?' && j == i + 2)
 				break ;
@@ -102,7 +104,8 @@ char	*token_parser(t_data *data, char *token)
 		{
 			if (((token[i] == '\'' || token[i] == '\"')
 					&& token[i + j] == token[i])
-				|| token[i + j] == '\'' || token[i + j] == '\"')
+				|| (token[i] != '\'' && token[i] != '\"'
+					&& (token[i + j] == '\'' || token[i + j] == '\"')))
 				break ;
 			continue ;
 		}
