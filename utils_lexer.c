@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/04 09:43:18 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/04 10:32:18 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ When running executer (flag == 1),
 avoids parenthesis from logical operator cases*/
 int	delim(char *str)
 {
+	if (!str)
+		return (0);
 	if ((str[0] == '|' && str[1] != '|')
 		|| (str[0] == '>' && str[1] != '>')
 		|| (str[0] == '<' && str[1] != '<')
