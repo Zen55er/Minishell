@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/04 10:33:45 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/04 11:47:53 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,13 @@ int	export_arg(t_data *data, char **tokens, int tok)
 	{
 		if (delim(tokens[tok]))
 			break ;
-		if (!ft_isalpha(tokens[tok][0]) && tokens[tok][0] != '_')
+		i = -1;
+		while (tokens[tok][++i])
 		{
-			printf("export: '%c': not a valid identifier\n",
-				tokens[tok][0]);
-			return (1);
+			if ((!i && !ft_isalpha(tokens[tok][i]) && tokens[tok][i] != '_')
+				|| (i && !ft_isalnum(tokens[tok][i]) && tokens[tok][i] != '='))
+				return (printf("export: `%s': not a valid identifier\n"
+						, tokens[tok]));
 		}
 		i = char_finder(tokens[tok], '=');
 		if ((tokens[tok][0] == '_' && !tokens[tok][1])
