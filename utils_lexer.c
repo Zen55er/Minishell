@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 12:24:27 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/04 09:43:18 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	char_finder(char *str, char c)
 {
 	int	i;
 
+	if (!str || !str[0])
+		return (0);
 	i = 0;
 	while (str[++i])
 	{
