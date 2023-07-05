@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/22 11:30:11 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/05 08:46:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,18 @@ int	check_end(char **input, int i)
 	return (0);
 }
 
+/*Returns index of next matching quote (or end of str).
+If there is no matching quote and the string ends, returns the index
+of the previous character to avoid a heap overflow in validate_input.*/
+int	jump_quotes(char *str, int i, char quote)
+{
+	while (str[++i] && str[i] != quote)
+		continue ;
+	if (!str[i])
+		return (i - 1);
+	return (i);
+}
+
 /*Checks whether input is complete
 (no missing information after |, ||, && or ${).*/
 int	validate_input(char **str)
@@ -70,6 +82,8 @@ int	validate_input(char **str)
 	i = -1;
 	while ((*str)[++i])
 	{
+		if ((*str)[i] == '\'' || (*str)[i] == '\"')
+			i = jump_quotes(*str, i, (*str)[i]);
 		if (forbidden(&(*str)[i]))
 			return (1);
 		else if ((*str)[i] == '(' || ((*str)[i] == '$' && (*str)[i + 1] == '{'))

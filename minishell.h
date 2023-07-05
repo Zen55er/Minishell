@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/30 09:38:52 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/05 08:56:18 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int					special_dollar(char *str);
 /*utils_lexer2.c*/
 int					missing_input(char **input, char match);
 int					check_end(char **input, int i);
+int					jump_quotes(char *str, int i, char quote);
 int					validate_input(char **input);
 
 /*utils_lexer3.c*/
@@ -154,6 +155,7 @@ int					count_args(t_data *data, int j);
 void				get_fds(char **tokens, int *fdin, int *fdout, int c);
 
 /*commands.c*/
+int					delim_tok(char *token);
 int					cmd_echo(char **tokens, int tok);
 int					cmd_env(t_data *data);
 unsigned char		check_exit_arg(char *token);

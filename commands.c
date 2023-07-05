@@ -6,11 +6,23 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/04 12:47:43 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/05 08:59:38 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Checks if token is a delimiter*/
+int	delim_tok(char *token)
+{
+	if (!ft_strcmp(token, "|") || !ft_strcmp(token, "||")
+		|| !ft_strcmp(token, "<") || !ft_strcmp(token, ">")
+		|| !ft_strcmp(token, "<<") || !ft_strcmp(token, ">>")
+		|| !ft_strcmp(token, "(") || !ft_strcmp(token, ")")
+		|| !ft_strcmp(token, "&&"))
+		return (1);
+	return (0);
+}
 
 /*Prints arguments of echo, if -n flag is present, does not write newline*/
 int	cmd_echo(char **tokens, int tok)
@@ -20,11 +32,11 @@ int	cmd_echo(char **tokens, int tok)
 
 	n_flag = 0;
 	i = 0;
-	if ((!tokens[tok + 1] || delim(tokens[tok + 1])) && printf("\n"))
+	if ((!tokens[tok + 1] || delim_tok(tokens[tok + 1])) && printf("\n"))
 		return (OK_EXIT);
 	while (tokens[++tok] && ++i)
 	{
-		if (delim(tokens[tok]))
+		if (delim_tok(tokens[tok]))
 			break ;
 		if (i == 1 && !ft_strcmp(tokens[tok], "-n")
 			&& !tokens[tok][2])
@@ -34,7 +46,7 @@ int	cmd_echo(char **tokens, int tok)
 		}
 		if (tokens[tok])
 			printf("%s", tokens[tok]);
-		if (tokens[tok + 1] && !delim(tokens[tok + 1]))
+		if (tokens[tok + 1] && !delim_tok(tokens[tok + 1]))
 			printf(" ");
 	}
 	if (!n_flag)
