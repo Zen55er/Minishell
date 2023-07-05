@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 08:59:38 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/05 10:14:44 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,6 @@ int	cmd_env(t_data *data)
 	t_ll	*temp;
 
 	temp = data->env;
-	while (temp)
-	{
-		printf("%s=", temp->var);
-		printf("%s\n", temp->value);
-		temp = temp->next;
-	}
-	temp = data->exp;
 	while (temp)
 	{
 		if (!temp->value)

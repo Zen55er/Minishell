@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 08:53:05 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/05 10:15:32 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	main(int ac, char **av, char **envp)
 	(void) ac;
 	(void) av;
 	data.env = 0;
-	data.exp = 0;
 	data.path = 0;
 	data.tokens = 0;
 	data.curr_dir = 0;

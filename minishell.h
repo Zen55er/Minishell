@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 08:56:18 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/05 10:15:36 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ typedef struct s_data
 {
 	char		**tokens;
 	t_ll		*env;
-	t_ll		*exp;
 	char		**path;
 	char		*curr_dir;
 	char		*prev_dir;
@@ -188,7 +187,7 @@ void				update_env_dir(t_data *data, char *dir, char *new_dir);
 
 /*export.c*/
 int					check_entry(t_data *data, t_ll *list, int tok, int i);
-void				add_to_exp(t_data *data, int tok, int i);
+void				add_to_env(t_data *data, int tok, int i);
 int					export_arg(t_data *data, char **tokens, int tok);
 int					cmd_export(t_data *data, char **tokens, int token);
 

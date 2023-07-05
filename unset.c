@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 09:27:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 13:44:55 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/05 10:15:00 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ int	check_unset(t_data *data, t_ll **list, int token)
 	return (0);
 }
 
-/*If given an argument, checks if it is a variable in env or exp
-and deletes that node*/
+/*If given an argument, checks if it is a variable in env and deletes node*/
 int	cmd_unset(t_data *data, char **tokens, int tok)
 {
 	if (!tokens[tok + 1] || delim(tokens[tok + 1]))
@@ -80,8 +79,7 @@ int	cmd_unset(t_data *data, char **tokens, int tok)
 			continue ;
 		}
 		if ((tokens[tok][0] == '_' && !tokens[tok][1])
-			|| check_unset(data, &data->env, tok)
-			|| check_unset(data, &data->exp, tok))
+			|| check_unset(data, &data->env, tok))
 			continue ;
 	}
 	return (OK_EXIT);
