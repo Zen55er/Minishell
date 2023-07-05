@@ -6,11 +6,29 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 08:43:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 08:59:58 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:51:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Formats and prints error message to STDERR.*/
+int	print_error(char *source, char *culprit, char *error)
+{
+	char	*temp1;
+	char	*temp2;
+
+	temp1 = ft_strjoin("minishell: ", source);
+	temp2 = ft_strjoin(temp1, ": `");
+	free(temp1);
+	temp1 = ft_strjoin(culprit, "': ");
+	temp1 = ft_strjoin_free(temp2, temp1);
+	temp2 = ft_strjoin(error, "\n");
+	temp1 = ft_strjoin_free(temp1, temp2);
+	ft_putstr_fd(temp1, STDERR_FILENO);
+	free(temp1);
+	return (1);
+}
 
 /*Gets last exit code.
 If update flag is true, updates exit_code.*/
