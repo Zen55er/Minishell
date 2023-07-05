@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 18:34:49 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 15:14:59 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:13:08 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	check_single_cmd(t_data *data, char *cmd)
 	int		i;
 	char	*test;
 
-	if (command_check(cmd) || (cmd[0] == '/' && check_path(data->path, cmd)))
+	if (command_check(data, cmd, 1)
+		|| (cmd[0] == '/' && check_path(data->path, cmd)))
 		return (1);
 	i = -1;
 	while (data->path[++i])

@@ -6,11 +6,28 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 14:20:55 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:13:31 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Checks if input is a directory.*/
+int	check_dir(char *input)
+{
+	if (!input[0])
+		return (IS_DIR_FAIL);
+	if (!access(input, F_OK))
+	{
+		if (access(input, X_OK))
+			printf("minishell: %s: Permission denied\n", input);
+		else
+			printf("minishell: %s: Is a directory\n", input);
+		return (ERROR_EXECUTE_PERMISSIONS);
+	}
+	printf("minishell: %s: No such file or directory\n", input);
+	return (ERROR_WRONG_COMMAND);
+}
 
 /*Calls function to execute according to input*/
 int	command_call(t_data *data, char **tokens, int tok, int cmd)
@@ -29,12 +46,20 @@ int	command_call(t_data *data, char **tokens, int tok, int cmd)
 		return (cmd_env(data));
 	if (cmd == CMD_EXIT)
 		return (cmd_exit(data, tokens, tok));
+	if (cmd == ERROR_EXECUTE_PERMISSIONS)
+		return (ERROR_EXECUTE_PERMISSIONS);
+	if (cmd == ERROR_WRONG_COMMAND)
+		return (ERROR_WRONG_COMMAND);
+	if (cmd == IS_DIR_FAIL)
+		return (OK_EXIT);
 	return (normal_command(data, tokens, tok));
 }
 
 /*Checks if input matches specific functions*/
-int	command_check(char *input)
+int	command_check(t_data *data, char *input, int flag)
 {
+	int	dir;
+
 	if (!ft_strcmp(input, "echo"))
 		return (CMD_ECHO);
 	if (!ft_strcmp(input, "cd"))
@@ -49,11 +74,24 @@ int	command_check(char *input)
 		return (CMD_ENV);
 	if (!ft_strcmp(input, "exit"))
 		return (CMD_EXIT);
+	if (flag)
+		return (0);
+	if (check_single_cmd(data, input))
+		return (0);
+	dir = check_dir(input);
+	if (dir == IS_DIR_FAIL)
+		return (IS_DIR_FAIL);
+	else if (dir == ERROR_EXECUTE_PERMISSIONS)
+		return (ERROR_EXECUTE_PERMISSIONS);
+	else if (dir == ERROR_WRONG_COMMAND)
+		return (ERROR_WRONG_COMMAND);
 	return (0);
 }
 
-int	skip_commands(char **tokens, int i)
+int	skip_commands(char **tokens, int i, int command)
 {
+	if (command == IS_DIR_FAIL)
+		return (++i);
 	while (tokens[++i])
 	{
 		if (!ft_strcmp(tokens[i], "("))
@@ -85,7 +123,7 @@ void	executor(t_data *data, char **tokens, int flag)
 		{
 			if (!logical_choice(tokens, i))
 			{
-				i = skip_commands(tokens, i);
+				i = skip_commands(tokens, i, 0);
 				continue ;
 			}
 			i++;
@@ -98,9 +136,9 @@ void	executor(t_data *data, char **tokens, int flag)
 			i++;
 			continue ;
 		}
-		command = command_check(tokens[i]);
+		command = command_check(data, tokens[i], 0);
 		set_exit_code(command_call(data, tokens, i, command));
-		i = skip_commands(tokens, i);
+		i = skip_commands(tokens, i, command);
 	}
 	if (flag)
 	{

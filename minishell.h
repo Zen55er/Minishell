@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 10:15:36 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:13:01 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define CMD_UNSET 7
 # define CMD_ENV 8
 # define CMD_EXIT 9
+# define IS_DIR 10
+# define IS_DIR_FAIL 11
 
 # define OK_EXIT 0
 # define ERROR_EXIT 1
@@ -136,9 +138,10 @@ int					check_consecutive(char *tok1, char *tok2);
 int					validate_tokens(t_data *data, char **tokens);
 
 /*executor.c*/
+int					check_dir(char *input);
 int					command_call(t_data *data, char **tokens, int tok, int cmd);
-int					command_check(char *input);
-int					skip_commands(char **tokens, int i);
+int					command_check(t_data *data, char *input, int flag);
+int					skip_commands(char **tokens, int i, int command);
 void				executor(t_data *data, char **tokens, int flag);
 
 /*pipes*/
