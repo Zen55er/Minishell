@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 10:14:44 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/05 10:27:59 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,15 +94,15 @@ unsigned char	check_exit_arg(char *token)
 	check = ft_atoull(&token[i]);
 	while (token[i])
 	{
-		if (!ft_isdigit(token[i]) || (check > LLONG_MAX && signal)
-			|| (check - 1 > LLONG_MAX && !signal))
+		if (!ft_isdigit(token[i]) || (check > LLONG_MAX && signal == 1)
+			|| (check - 1 > LLONG_MAX && signal == -1))
 		{
 			printf("minishell: exit: %s: numeric argument required\n", token);
 			return (ERROR_MISUSE);
 		}
 		i++;
 	}
-	return ((unsigned char)((long long)check * signal));
+	return ((unsigned char)((long long)check));
 }
 
 /*Prints "exit", updates prompt, frees memory and exits program.
