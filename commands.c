@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/06 08:56:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/06 10:07:18 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ unsigned char	check_exit_arg(char *token)
 		if (!ft_isdigit(token[i]) || (check > LLONG_MAX && signal == 1)
 			|| (check - 1 > LLONG_MAX && signal == -1))
 		{
-			printf("minishell: exit: %s: numeric argument required\n", token);
+			print_error("exit", token, "numeric argument required", 0);
 			return (ERROR_MISUSE);
 		}
 		i++;
@@ -117,7 +117,7 @@ int	cmd_exit(t_data *data, char **tokens, int token)
 		flag = 1;
 	if (tokens[token + 1] && tokens[token + 2])
 	{
-		printf("minishell: exit: too many arguments\n");
+		print_error("exit", 0, "too many arguments", 0);
 		return (ERROR_EXIT);
 	}
 	if (tokens[token + 1])

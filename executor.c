@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 12:13:31 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/06 11:26:38 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	check_dir(char *input)
 	if (!access(input, F_OK))
 	{
 		if (access(input, X_OK))
-			printf("minishell: %s: Permission denied\n", input);
+			print_error(input, 0, "Permission denied", 0);
 		else
-			printf("minishell: %s: Is a directory\n", input);
+			print_error(input, 0, "Is a directory", 0);
 		return (ERROR_EXECUTE_PERMISSIONS);
 	}
-	printf("minishell: %s: No such file or directory\n", input);
+	print_error(input, 0, "No such file or directory", 0);
 	return (ERROR_WRONG_COMMAND);
 }
 
@@ -78,6 +78,8 @@ int	command_check(t_data *data, char *input, int flag)
 		return (0);
 	if (check_single_cmd(data, input))
 		return (0);
+	if (!((input[0] == '.' && input[1] == '/') || input[0] == '/'))
+		return (0);
 	dir = check_dir(input);
 	if (dir == IS_DIR_FAIL)
 		return (IS_DIR_FAIL);
@@ -119,6 +121,8 @@ void	executor(t_data *data, char **tokens, int flag)
 	// redirection(data);
 	while (tokens[i])
 	{
+		if ((!tokens[i] || !tokens[i][0]) && ++i)
+			continue ;
 		if (!ft_strcmp(tokens[i], "&&") || !ft_strcmp(tokens[i], "||"))
 		{
 			if (!logical_choice(tokens, i))

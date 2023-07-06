@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 13:45:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/06 11:23:28 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	child(t_data *data, char **tokens, int token)
 	cmds = get_cmd(data, tokens, token);
 	if (!cmds->cmd)
 	{
-		ft_printf("%s: command not found\n", cmds->cmd_args[0]);
+		print_error(cmds->cmd_args[0], 0, "command not found", 0);
 		free_child(cmds, 0);
 		if (data->permission_flag)
 		{

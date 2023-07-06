@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 15:52:03 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/06 10:04:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,8 @@ void				return_to_previous(int *i, int *j, int *prev_wc, int *back);
 int					final_wc_check(int i, char *token);
 
 /*exit_code.c*/
-int					print_error(char *source, char *culprit, char *error);
+char				*format_str(char *str, int flag);
+int					print_error(char *src, char *str, char *err, int flag);
 int					update_exit_code(int error_code, int update);
 void				set_exit_code(int exit_code);
 

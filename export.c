@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/06 08:33:55 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/06 09:59:17 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	export_arg(t_data *data, char **tokens, int tok)
 			if ((!i && !ft_isalpha(tokens[tok][i]) && tokens[tok][i] != '_')
 				|| (i && !ft_isalnum(tokens[tok][i]) && tokens[tok][i] != '_'))
 				return (print_error("export", tokens[tok]
-						, "not a valid identifier"));
+						, "not a valid identifier", 1));
 		}
 		i = char_finder(tokens[tok], '=');
 		if ((tokens[tok][0] == '_' && !tokens[tok][1])

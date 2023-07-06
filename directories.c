@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/06 08:38:46 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/06 10:04:24 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*find_var(t_ll *list, char *str)
 
 /*Special cases for cd, ~ goes to $HOME, / goes 1 level above $HOME,
 - goes to previous directory while writing that directory in terminal,
-~- goes to previous directory whithout writing it,
+~- goes to previous directory without writing it,
 otherwise, goes to path in input*/
 char	*cd_cases(t_data *data, char **tokens, int token)
 {
@@ -80,7 +80,7 @@ int	cmd_cd(t_data *data, char **tokens, int token)
 		&& !delim(tokens[token])
 		&& !delim(tokens[token + 1])))
 	{
-		printf("minishell: cd: too many arguments\n");
+		print_error("cd", 0, "too many arguments", 0);
 		return (ERROR_EXIT);
 	}
 	dir = cd_cases(data, tokens, token);
