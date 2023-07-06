@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 15:54:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/06 08:33:55 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ int	export_arg(t_data *data, char **tokens, int tok)
 		if (delim(tokens[tok]))
 			break ;
 		i = -1;
-		while (tokens[tok][++i] && tokens[tok][i] != '=')
+		while (tokens[tok][++i])
 		{
+			if (i && tokens[tok][i] == '=')
+				break ;
 			if ((!i && !ft_isalpha(tokens[tok][i]) && tokens[tok][i] != '_')
 				|| (i && !ft_isalnum(tokens[tok][i]) && tokens[tok][i] != '_'))
 				return (print_error("export", tokens[tok]
