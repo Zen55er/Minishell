@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:11:48 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/19 15:14:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/06 15:01:37 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,16 @@ void	update_input(char **input, char *extra)
 	*input = ft_strjoin(*input, extra);
 	free(temp);
 	free(extra);
+}
+
+/*Returns new string with text formatted without edge quotes*/
+char	*quotes(char *str)
+{
+	int		len;
+	char	*new;
+
+	len = ft_strlen(str);
+	new = ft_substr(str, 1, len - 2);
+	free (str);
+	return (new);
 }

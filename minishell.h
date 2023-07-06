@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/06 14:50:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/06 15:03:44 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int					validate_input(char **input);
 /*utils_lexer3.c*/
 char				get_match(char c);
 void				update_input(char **input, char *extra);
+char				*quotes(char *str);
 
 /*logical_operators.c*/
 int					logical_choice(char **tokens, int token);
@@ -128,8 +129,9 @@ int					check_single_cmd(t_data *data, char *cmd);
 
 /*parser.c*/
 char				*update_expansion(t_data *data, char *val, char *test);
+int					expansion_join(char	**val, char *s, int *i, int *j);
 char				*expansion(t_data *data, char *str);
-char				*quotes(char *str);
+char				*token_parser(t_data *data, char *token);
 int					parser(t_data *data);
 
 /*utils_parser.c*/

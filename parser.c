@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 15:56:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/06 15:01:34 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,6 @@ char	*expansion(t_data *data, char *s)
 			i++;
 	}
 	return (val);
-}
-
-/*Returns new string with text formatted without edge quotes*/
-char	*quotes(char *str)
-{
-	int		len;
-	char	*new;
-
-	len = ft_strlen(str);
-	new = ft_substr(str, 1, len - 2);
-	free (str);
-	return (new);
 }
 
 char	*token_parser(t_data *data, char *token)

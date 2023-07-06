@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/30 14:46:46 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/06 15:07:31 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,11 @@ int	validate_tokens(t_data *data, char **tokens)
 			else
 				flag--;
 		}
-		if (i == 0 && (!ft_strcmp(tokens[i], "|")
-				|| !ft_strcmp(tokens[i], "||")
+		if (i == 0 && (!ft_strcmp(tokens[i], "|") || !ft_strcmp(tokens[i], "||")
 				|| !ft_strcmp(tokens[i], "&&")))
 			return (syntax_error(tokens[i]));
 		else if (!tokens[i + 1] && (!ft_strcmp(tokens[i], ">")
-				|| !ft_strcmp(tokens[i], "<")
-				|| !ft_strcmp(tokens[i], ">>")
+				|| !ft_strcmp(tokens[i], "<") || !ft_strcmp(tokens[i], ">>")
 				|| !ft_strcmp(tokens[i], "<<")))
 			return (syntax_error("newline"));
 		if (tokens[i + 1] && delim(tokens[i]) && delim(tokens[i + 1])
