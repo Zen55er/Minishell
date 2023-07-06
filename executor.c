@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/06 11:26:38 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/06 14:50:34 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	check_dir(char *input)
 {
 	if (!input[0])
-		return (IS_DIR_FAIL);
+		return (OK_EXIT);
 	if (!access(input, F_OK))
 	{
 		if (access(input, X_OK))
@@ -46,20 +46,14 @@ int	command_call(t_data *data, char **tokens, int tok, int cmd)
 		return (cmd_env(data));
 	if (cmd == CMD_EXIT)
 		return (cmd_exit(data, tokens, tok));
-	if (cmd == ERROR_EXECUTE_PERMISSIONS)
-		return (ERROR_EXECUTE_PERMISSIONS);
-	if (cmd == ERROR_WRONG_COMMAND)
-		return (ERROR_WRONG_COMMAND);
-	if (cmd == IS_DIR_FAIL)
-		return (OK_EXIT);
+	if (cmd == CMD_DIR)
+		return (check_dir(tokens[tok]));
 	return (normal_command(data, tokens, tok));
 }
 
 /*Checks if input matches specific functions*/
-int	command_check(t_data *data, char *input, int flag)
+int	command_check(char *input, int flag)
 {
-	int	dir;
-
 	if (!ft_strcmp(input, "echo"))
 		return (CMD_ECHO);
 	if (!ft_strcmp(input, "cd"))
@@ -74,19 +68,8 @@ int	command_check(t_data *data, char *input, int flag)
 		return (CMD_ENV);
 	if (!ft_strcmp(input, "exit"))
 		return (CMD_EXIT);
-	if (flag)
-		return (0);
-	if (check_single_cmd(data, input))
-		return (0);
-	if (!((input[0] == '.' && input[1] == '/') || input[0] == '/'))
-		return (0);
-	dir = check_dir(input);
-	if (dir == IS_DIR_FAIL)
-		return (IS_DIR_FAIL);
-	else if (dir == ERROR_EXECUTE_PERMISSIONS)
-		return (ERROR_EXECUTE_PERMISSIONS);
-	else if (dir == ERROR_WRONG_COMMAND)
-		return (ERROR_WRONG_COMMAND);
+	if (!flag && (!ft_strncmp(input, "./", 2) || input[0] == '/'))
+		return (CMD_DIR);
 	return (0);
 }
 
@@ -140,7 +123,7 @@ void	executor(t_data *data, char **tokens, int flag)
 			i++;
 			continue ;
 		}
-		command = command_check(data, tokens[i], 0);
+		command = command_check(tokens[i], 0);
 		set_exit_code(command_call(data, tokens, i, command));
 		i = skip_commands(tokens, i, command);
 	}
