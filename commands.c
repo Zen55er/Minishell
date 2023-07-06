@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 10:27:59 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/06 08:56:29 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ unsigned char	check_exit_arg(char *token)
 		}
 		i++;
 	}
-	return ((unsigned char)((long long)check));
+	return ((unsigned char)((long long)(check * signal)));
 }
 
 /*Prints "exit", updates prompt, frees memory and exits program.
