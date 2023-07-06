@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/04 12:46:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/06 08:38:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	update_curr_prev(t_data *data)
 		{
 			update_env_dir(data, "OLDPWD", data->curr_dir);
 			update_env_dir(data, "PWD", temp);
-			free(temp);
 		}
+		free(temp);
 	}
 	data->curr_dir = get_dir(data, "PWD");
 	data->prev_dir = get_dir(data, "OLDPWD");
