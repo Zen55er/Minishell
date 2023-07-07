@@ -6,28 +6,11 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 09:09:18 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 10:40:55 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*Checks if input is a directory.*/
-int	check_dir(char *input)
-{
-	if (!input[0])
-		return (OK_EXIT);
-	if (!access(input, F_OK))
-	{
-		if (access(input, X_OK))
-			print_error(input, 0, "Permission denied", 0);
-		else
-			print_error(input, 0, "Is a directory", 0);
-		return (ERROR_EXECUTE_PERMISSIONS);
-	}
-	print_error(input, 0, "No such file or directory", 0);
-	return (ERROR_WRONG_COMMAND);
-}
 
 /*Calls function to execute according to input*/
 int	command_call(t_data *data, char **tokens, int tok, int cmd)
@@ -75,7 +58,7 @@ int	command_check(char *input, int flag)
 
 int	skip_commands(char **tokens, int i, int command)
 {
-	if (command == IS_DIR_FAIL)
+	if (command == CMD_DIR && !update_exit_code(0, 0))
 		return (++i);
 	while (tokens[++i])
 	{
@@ -93,6 +76,27 @@ int	skip_commands(char **tokens, int i, int command)
 	return (i);
 }
 
+/*Tests if next command should be skipped, if yes,updates index.*/
+int	check_skip(t_data *data, char **tokens, int *i)
+{
+	if (!tokens[*i] || !tokens[*i][0])
+		return (++(*i));
+	if ((!ft_strcmp(tokens[*i], "&&") || !ft_strcmp(tokens[*i], "||"))
+		&& !logical_choice(tokens, *i))
+	{
+		*i = skip_commands(tokens, *i, 0);
+		return (*i);
+	}
+	if (delim_tok(tokens[*i]))
+	{
+		if (!ft_strcmp(tokens[*i], "("))
+			subshell(data, tokens, i);
+		(*i)++;
+		return (*i);
+	}
+	return (0);
+}
+
 /*Iterates through tokens and executes commands.
 flag determines if function is called from main (0) or from subshell (1).*/
 void	executor(t_data *data, char **tokens, int flag)
@@ -104,25 +108,8 @@ void	executor(t_data *data, char **tokens, int flag)
 	// redirection(data);
 	while (tokens[i])
 	{
-		if ((!tokens[i] || !tokens[i][0]) && ++i)
+		if (check_skip(data, tokens, &i))
 			continue ;
-		if (!ft_strcmp(tokens[i], "&&") || !ft_strcmp(tokens[i], "||"))
-		{
-			if (!logical_choice(tokens, i))
-			{
-				i = skip_commands(tokens, i, 0);
-				continue ;
-			}
-			i++;
-		}
-		if (delim(tokens[i]) && ft_strcmp(tokens[i], "&&")
-			&& ft_strcmp(tokens[i], "||"))
-		{
-			if (!ft_strcmp(tokens[i], "("))
-				subshell(data, tokens, &i);
-			i++;
-			continue ;
-		}
 		command = command_check(tokens[i], 0);
 		set_exit_code(command_call(data, tokens, i, command));
 		i = skip_commands(tokens, i, command);

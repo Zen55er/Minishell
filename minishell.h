@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 09:06:58 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 10:41:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,10 +143,10 @@ int					validate_tokens2(char **tokens, int i);
 int					validate_tokens(t_data *data, char **tokens);
 
 /*executor.c*/
-int					check_dir(char *input);
 int					command_call(t_data *data, char **tokens, int tok, int cmd);
 int					command_check(char *input, int flag);
 int					skip_commands(char **tokens, int i, int command);
+int					check_skip(t_data *data, char **tokens, int *i);
 void				executor(t_data *data, char **tokens, int flag);
 
 /*pipes*/
@@ -192,6 +192,7 @@ int					cmd_pwd(t_data *data);
 /*utils_directories.c*/
 char				*get_dir(t_data *data, char *dir);
 void				update_env_dir(t_data *data, char *dir, char *new_dir);
+int					check_dir(char *input);
 
 /*export.c*/
 int					check_entry(t_data *data, t_ll *list, int tok, int i);

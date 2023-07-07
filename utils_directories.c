@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 11:16:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/06 12:48:55 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 10:40:59 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,21 @@ void	update_env_dir(t_data *data, char *dir, char *new_dir)
 		temp = temp->next;
 	}
 	return ;
+}
+
+/*Checks if input is a directory.*/
+int	check_dir(char *input)
+{
+	if (!input[0])
+		return (OK_EXIT);
+	if (!access(input, F_OK))
+	{
+		if (access(input, X_OK))
+			print_error(input, 0, "Permission denied", 0);
+		else
+			print_error(input, 0, "Is a directory", 0);
+		return (ERROR_EXECUTE_PERMISSIONS);
+	}
+	print_error(input, 0, "No such file or directory", 0);
+	return (ERROR_WRONG_COMMAND);
 }
