@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 13:30:03 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:52:24 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int	cmd_cd(t_data *data, char **tokens, int token)
 	char	*dir;
 
 	token++;
+	if (!tokens[token] || !tokens[token][0])
+		return (OK_EXIT);
 	if ((tokens[token] && !tokens[token][0]) || (tokens[token]
 			&& tokens[token + 1]
 			&& !delim_tok(tokens[token])
