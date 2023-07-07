@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 12:58:20 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:13:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ int					check_dir(char *input);
 /*export.c*/
 int					check_entry(t_data *data, t_ll *list, int tok, int i);
 void				add_to_env(t_data *data, int tok, int i);
+int					validate_var(char **tokens, int tok);
 int					export_arg(t_data *data, char **tokens, int tok);
 int					cmd_export(t_data *data, char **tokens, int token);
 
