@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 08:45:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 11:02:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,15 @@ int	lexer(t_data *data, char **input)
 	if (exit)
 	{
 		update_exit_code(exit, 1);
+		free(*input);
 		return (1);
 	}
 	tok_num = count_tokens(*input);
 	if (tok_num <= 0)
+	{
+		free(*input);
 		return (1);
+	}
 	data->tokens = (char **)malloc(sizeof(char *) * (tok_num + 1));
 	set_tokens(data->tokens, *input);
 	free(*input);
