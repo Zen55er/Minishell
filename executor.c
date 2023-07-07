@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 10:52:19 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 12:59:19 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	command_call(t_data *data, char **tokens, int tok, int cmd)
 }
 
 /*Checks if input matches specific functions*/
-int	command_check(char *input, int flag)
+int	command_check(t_data *data, char *input, int flag)
 {
 	if (!ft_strcmp(input, "echo"))
 		return (CMD_ECHO);
@@ -51,7 +51,8 @@ int	command_check(char *input, int flag)
 		return (CMD_ENV);
 	if (!ft_strcmp(input, "exit"))
 		return (CMD_EXIT);
-	if (!flag && (!ft_strncmp(input, "./", 2) || input[0] == '/'))
+	if (!flag && !check_single_cmd(data, input)
+		&& (!ft_strncmp(input, "./", 2) || input[0] == '/'))
 		return (CMD_DIR);
 	return (0);
 }
@@ -110,7 +111,7 @@ void	executor(t_data *data, char **tokens, int flag)
 	{
 		if (check_skip(data, tokens, &i))
 			continue ;
-		command = command_check(tokens[i], 0);
+		command = command_check(data, tokens[i], 0);
 		set_exit_code(command_call(data, tokens, i, command));
 		i = skip_commands(tokens, i, command);
 	}
