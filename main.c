@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 10:15:32 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 09:09:10 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	update_path(t_data *data)
 	int		i;
 
 	if (data->path)
-		free_double(data->path);
+		free_double(&(data->path));
 	data->path = 0;
 	temp = data->env;
 	while (temp)
@@ -53,64 +53,60 @@ void	prep_env(t_data *data, char **envp)
 	return ;
 }
 
-/*Gets current working directory to display in prompt*/
-char	*build_prompt(t_data *data)
+/*Gets current working directory to display in prompt.
+Updates PATH in env and reads input from user.*/
+char	*get_input(t_data *data)
 {
+	char	*input;
 	char	*prompt;
 	char	*temp;
 
+	update_path(data);
 	temp = ft_strjoin("minishell:", data->curr_dir);
 	prompt = ft_strjoin(temp, "$ ");
 	free(temp);
-	return (prompt);
+	input = readline(prompt);
+	free(prompt);
+	return (input);
+}
+
+void	init(t_data *data, char **envp)
+{
+	data->env = 0;
+	data->path = 0;
+	data->tokens = 0;
+	data->curr_dir = 0;
+	data->logic_operator = 0;
+	data->cmd_st = 0;
+	data->permission_flag = 0;
+	signal_global();
+	prep_env(data, envp);
+	update_curr_prev(data);
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	t_data	data;
 	char	*input;
-	char	*prompt;
 
 	(void) ac;
 	(void) av;
-	data.env = 0;
-	data.path = 0;
-	data.tokens = 0;
-	data.curr_dir = 0;
-	data.logic_operator = 0;
-	data.cmd_st = 0;
-	data.permission_flag = 0;
-	signal_global();
-	prep_env(&data, envp);
-	update_curr_prev(&data);
+	init(&data, envp);
 	while (1)
 	{
-		update_path(&data);
-		prompt = build_prompt(&data);
-		input = readline(prompt);
-		free(prompt);
-		if (!input)
-		{
-			printf("exit\n");
+		input = get_input(&data);
+		if (!input && printf("exit\n"))
 			break ;
-		}
 		if (!input[0])
 		{
 			free(input);
 			continue ;
 		}
 		add_history(input);
-		data.tokens = lexer(&input);
-		free(input);
-		if (data.tokens)
-		{
+		if (!lexer(&data, &input))
 			if (!parser(&data))
 				executor(&data, data.tokens, 0);
-			free_double(data.tokens);
-		}
-		data.tokens = 0;
 	}
-	rl_clear_history();
 	free_all(0, &data);
 	return (0);
 }

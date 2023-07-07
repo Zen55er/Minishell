@@ -6,27 +6,31 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:08:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 10:15:07 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 09:09:18 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*Frees char***/
-void	free_double(char **array)
+void	free_double(char ***array)
 {
 	int	i;
 
+	if (!(*array))
+		return ;
 	i = -1;
-	while (array[++i])
+	while ((*array)[++i])
 	{
-		if (array[i])
-			free(array[i]);
+		if ((*array)[i])
+			free((*array)[i]);
 	}
-	free(array);
+	free(*array);
+	*array = 0;
+	return ;
 }
 
-/*Fress linked list*/
+/*Frees linked list*/
 void	free_list(t_ll **list)
 {
 	t_ll	*temp;
@@ -47,23 +51,24 @@ void	free_child(t_cmds *cmds, char **env2d)
 {
 	if (cmds)
 	{
-		free_double(cmds->cmd_args);
+		free_double(&(cmds->cmd_args));
 		free(cmds->cmd);
 		free(cmds);
 	}
 	if (env2d)
-		free_double(env2d);
+		free_double(&env2d);
 }
 
 /*Frees everything*/
 void	free_all(char *input, t_data *data)
 {
+	rl_clear_history();
 	if (input)
 		free(input);
 	if (data && data->path)
-		free_double(data->path);
+		free_double(&(data->path));
 	if (data && data->tokens)
-		free_double(data->tokens);
+		free_double(&(data->tokens));
 	if (data && data->env)
 		free_list(&data->env);
 	return ;

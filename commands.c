@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/06 10:07:18 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 08:50:02 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ int	cmd_exit(t_data *data, char **tokens, int token)
 	}
 	if (tokens[token + 1])
 		set_exit_code(check_exit_arg(tokens[token + 1]));
-	rl_clear_history();
 	free_all(0, data);
 	if (flag)
 		exit(update_exit_code(0, 0));

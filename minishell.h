@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/06 15:03:44 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 09:06:58 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,15 @@ typedef struct s_data
 /*main.c*/
 void				update_path(t_data *data);
 void				prep_env(t_data *data, char **envp);
-char				*build_prompt(t_data *data);
+char				*get_input(t_data *data);
+void				init(t_data *data, char **envp);
 
 /*lexer.c*/
 int					other(char *str);
 int					tok_len(char *str, int i);
 int					count_tokens(char *str);
 void				set_tokens(char **tokens, char *str);
-char				**lexer(char **input);
+int					lexer(t_data *data, char **input);
 
 /*utils_lexer.c*/
 int					char_finder(char *str, char c);
@@ -138,6 +139,7 @@ int					parser(t_data *data);
 char				*get_section(t_data *data, char *str, int i, int j);
 void				fix_tokens_wc(t_data *data, int *i);
 int					check_consecutive(char *tok1, char *tok2);
+int					validate_tokens2(char **tokens, int i);
 int					validate_tokens(t_data *data, char **tokens);
 
 /*executor.c*/
@@ -221,7 +223,7 @@ int					unexpected_eof(char c);
 unsigned long long	ft_atoull(const char *nptr);
 
 /*utils_free.c*/
-void				free_double(char **tokens);
+void				free_double(char ***array);
 void				free_list(t_ll **list);
 void				free_child(t_cmds *cmds, char **env2d);
 void				free_all(char *input, t_data *data);

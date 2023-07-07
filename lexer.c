@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 12:15:47 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 08:45:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,8 @@ void	set_tokens(char **tokens, char *str)
 }
 
 /*Calls functions to count and set tokens to send to parser.*/
-char	**lexer(char **input)
+int	lexer(t_data *data, char **input)
 {
-	char	**tokens;
 	int		tok_num;
 	int		exit;
 
@@ -110,14 +109,15 @@ char	**lexer(char **input)
 	if (exit)
 	{
 		update_exit_code(exit, 1);
-		return (0);
+		return (1);
 	}
 	tok_num = count_tokens(*input);
 	if (tok_num <= 0)
-		return (0);
-	tokens = (char **)malloc(sizeof(char *) * (tok_num + 1));
-	set_tokens(tokens, *input);
+		return (1);
+	data->tokens = (char **)malloc(sizeof(char *) * (tok_num + 1));
+	set_tokens(data->tokens, *input);
+	free(*input);
 	// for (int i = 0; tokens[i]; i++)
 	// 	printf("Token %i: :%s:\n", i, tokens[i]);
-	return (tokens);
+	return (0);
 }

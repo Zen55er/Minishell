@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 10:02:42 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/10 09:39:22 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 09:08:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	add_tokens(t_data *data, t_ll *matches, int token)
 			break ;
 		new_tok[i + j] = ft_strdup(data->tokens[i]);
 	}
-	free_double(data->tokens);
+	free_double(&(data->tokens));
 	data->tokens = new_tok;
 	return (n_list - 1);
 }
