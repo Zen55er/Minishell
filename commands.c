@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 08:50:02 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:30:21 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	cmd_echo(char **tokens, int tok)
 	{
 		if (delim_tok(tokens[tok]))
 			break ;
-		if (i == 1 && !ft_strcmp(tokens[tok], "-n")
+		if (!ft_strcmp(tokens[tok], "-n")
 			&& !tokens[tok][2])
 		{
 			n_flag = 1;
