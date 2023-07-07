@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 08:29:20 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 10:53:52 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	validate_tokens2(char **tokens, int i)
 			|| !ft_strcmp(tokens[i], ">>")
 			|| !ft_strcmp(tokens[i], "<<")))
 		return (syntax_error("newline"));
-	if (tokens[i + 1] && delim(tokens[i]) && delim(tokens[i + 1])
+	if (tokens[i + 1] && delim_tok(tokens[i]) && delim_tok(tokens[i + 1])
 		&& check_consecutive(tokens[i], tokens[i + 1]))
 		return (1);
 	return (0);
@@ -96,7 +96,7 @@ int	validate_tokens(t_data *data, char **tokens)
 	{
 		if (!ft_strcmp(tokens[i], "("))
 		{
-			if (i > 0 && !delim(tokens[i - 1]))
+			if (i > 0 && !delim_tok(tokens[i - 1]))
 				return (syntax_error(tokens[i]));
 			if (!check_single_cmd(data, tokens[i + 1]))
 				return (syntax_error(tokens[i + 1]));

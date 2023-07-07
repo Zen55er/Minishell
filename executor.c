@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 10:40:55 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 10:52:19 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	skip_commands(char **tokens, int i, int command)
 		if (!ft_strcmp(tokens[i], "("))
 			while (tokens[i] && ft_strcmp(tokens[i], ")"))
 				i++;
-		if (delim(tokens[i]))
+		if (delim_tok(tokens[i]))
 		{
 			if (ft_strcmp(tokens[i], "&&")
 				&& ft_strcmp(tokens[i], "||"))

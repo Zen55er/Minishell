@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/06 09:59:17 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 10:52:43 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ int	export_arg(t_data *data, char **tokens, int tok)
 {
 	int	i;
 
-	if (!tokens[tok + 1] || delim(tokens[tok + 1]))
+	if (!tokens[tok + 1] || delim_tok(tokens[tok + 1]))
 		return (0);
 	while (tokens[++tok])
 	{
-		if (delim(tokens[tok]))
+		if (delim_tok(tokens[tok]))
 			break ;
 		i = -1;
 		while (tokens[tok][++i])
@@ -84,7 +84,7 @@ int	cmd_export(t_data *data, char **tokens, int token)
 	if (export_arg(data, tokens, token))
 		return (ERROR_EXIT);
 	list_ranking(data->env);
-	if (tokens[token + 1] && !delim(tokens[token + 1]))
+	if (tokens[token + 1] && !delim_tok(tokens[token + 1]))
 		return (OK_EXIT);
 	print_ordered(data->env);
 	return (OK_EXIT);

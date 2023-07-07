@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 09:27:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 10:15:00 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 10:53:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ int	check_unset(t_data *data, t_ll **list, int token)
 /*If given an argument, checks if it is a variable in env and deletes node*/
 int	cmd_unset(t_data *data, char **tokens, int tok)
 {
-	if (!tokens[tok + 1] || delim(tokens[tok + 1]))
+	if (!tokens[tok + 1] || delim_tok(tokens[tok + 1]))
 		return (OK_EXIT);
 	while (tokens[++tok])
 	{
-		if (delim(tokens[tok]))
+		if (delim_tok(tokens[tok]))
 			break ;
 		if (!ft_isalpha(tokens[tok][0]) && tokens[tok][0] != '_')
 		{
