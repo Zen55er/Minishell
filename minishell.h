@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 10:41:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 11:48:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int					lexer(t_data *data, char **input);
 
 /*utils_lexer.c*/
 int					char_finder(char *str, char c);
-int					forbidden(char *str);
+int					forbidden(char *str, int i);
 int					delim(char *str);
 int					quote_case(char *str);
 int					special_dollar(char *str);

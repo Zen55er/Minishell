@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 11:37:19 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 11:48:41 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	validate_input(char **str)
 	{
 		if ((*str)[i] == '\'' || (*str)[i] == '\"')
 			i = jump_quotes(*str, i, (*str)[i]);
-		if (forbidden(&(*str)[i]))
+		if (forbidden((*str), i))
 			return (1);
 		else if ((*str)[i] == '(' || ((*str)[i] == '$' && (*str)[i + 1] == '{'))
 		{

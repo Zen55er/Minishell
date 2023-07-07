@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 08:50:38 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 11:56:02 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,19 @@ int	char_finder(char *str, char c)
 }
 
 /*Checks for characters that should not be interpreted*/
-int	forbidden(char *str)
+int	forbidden(char *str, int i)
 {
-	if (str[0] == '\\' || str[0] == '[' || str[0] == ']'
-		|| str[0] == ';' || str[0] == '^' || str[0] == '#'
-		|| str[0] == '`'
-		|| (str[0] == '(' && str[1] == ')')
-		|| (str[0] == '<' && str[1] == '(')
-		|| (str[0] == '$' && str[1] == '(')
-		|| (str[0] == ')' && str[1] == '$')
-		|| (str[0] == '&' && str[1] != '&'))
+	if (str[i] == '\\' || str[i] == '[' || str[i] == ']'
+		|| str[i] == ';' || str[i] == '^' || str[i] == '#'
+		|| str[i] == '`'
+		|| (str[i] == '(' && str[i + 1] == ')')
+		|| (str[i] == '<' && str[i + 1] == '(')
+		|| (str[i] == '$' && str[i + 1] == '(')
+		|| (str[i] == ')' && str[i + 1] == '$')
+		|| (str[i] == '&' && (str[i + 1] != '&' && (i && str[i - 1] != '&'))))
 	{
-		printf("Found forbidden character or character combination: %s\n", str);
+		printf("Found forbidden character or character combination: %s\n", \
+		&str[i]);
 		return (1);
 	}
 	return (0);
