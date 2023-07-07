@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 10:52:43 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:16:23 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,26 @@ void	add_to_env(t_data *data, int tok, int i)
 		node_add_back(&data->env, new_node(data->tokens[tok], 0));
 }
 
+/*Checks if var is valid*/
+int	validate_var(char **tokens, int tok)
+{
+	int	i;
+
+	if ((!tokens[tok] || !tokens[tok][0]))
+		return (print_error("export", "`'", "not a valid identifier", 0));
+	i = -1;
+	while (tokens[tok][++i])
+	{
+		if (i && tokens[tok][i] == '=')
+			break ;
+		if ((!i && !ft_isalpha(tokens[tok][i]) && tokens[tok][i] != '_')
+		|| (i && !ft_isalnum(tokens[tok][i]) && tokens[tok][i] != '_'))
+			return (print_error("export", tokens[tok]
+					, "not a valid identifier", 1));
+	}
+	return (0);
+}
+
 /*Checks for argument formatting and updates env*/
 int	export_arg(t_data *data, char **tokens, int tok)
 {
@@ -58,16 +78,8 @@ int	export_arg(t_data *data, char **tokens, int tok)
 	{
 		if (delim_tok(tokens[tok]))
 			break ;
-		i = -1;
-		while (tokens[tok][++i])
-		{
-			if (i && tokens[tok][i] == '=')
-				break ;
-			if ((!i && !ft_isalpha(tokens[tok][i]) && tokens[tok][i] != '_')
-				|| (i && !ft_isalnum(tokens[tok][i]) && tokens[tok][i] != '_'))
-				return (print_error("export", tokens[tok]
-						, "not a valid identifier", 1));
-		}
+		if (validate_var(tokens, tok))
+			continue ;
 		i = char_finder(tokens[tok], '=');
 		if ((tokens[tok][0] == '_' && !tokens[tok][1])
 			|| check_entry(data, data->env, tok, i))
