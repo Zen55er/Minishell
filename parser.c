@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/06 15:01:34 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/07 11:40:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*expansion(t_data *data, char *s)
 			continue ;
 		j = i + 1;
 		while (s[j] && s[j] != '$' && s[j] != '}' && s[j] != '\'' && s[j] != ' '
-			&& s[j] != '\"' && j++)
+			&& s[j] != '\"' && s[j] != '/' && j++)
 			if (s[j - 1] == '?' && j == i + 2)
 				break ;
 		val = update_expansion(data, val, ft_substr(s, i, j - i));
