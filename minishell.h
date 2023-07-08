@@ -212,6 +212,7 @@ void				list_ranking(t_ll *env);
 void				print_ordered(t_ll *list);
 
 /*signals.c*/
+void				signal_input(void);
 void				signal_cmd_handler(int sig);
 void				signal_cmd(void);
 void				signal_handler(int sig);

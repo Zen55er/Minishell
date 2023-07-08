@@ -16,9 +16,9 @@
 int	missing_input(char **input, char match)
 {
 	char	*temp;
-	char	*temp_extra;
 	char	*extra;
 
+	signal_input();
 	extra = ft_strdup(" ");
 	while (1)
 	{
@@ -26,10 +26,7 @@ int	missing_input(char **input, char match)
 		temp = get_next_line(STDIN_FILENO);
 		if (!temp)
 			break ;
-		temp_extra = extra;
-		extra = ft_strjoin(extra, temp);
-		free(temp);
-		free(temp_extra);
+		extra = ft_strjoin_free(extra, temp);
 		if (extra[0] == match || char_finder(extra, match))
 			break ;
 	}
