@@ -29,6 +29,7 @@ char	*get_end_cmd(char *str)
 	return (cmd);
 }
 
+/*Error message for ${VAR} cases.*/
 int	bad_substitution(char *str, int end)
 {
 	char	*temp;
@@ -39,16 +40,32 @@ int	bad_substitution(char *str, int end)
 	return (-1);
 }
 
+/*Error message for token validation.*/
 int	syntax_error(char *str)
 {
 	printf("minishell: syntax error near unexpected token `%s'\n", str);
 	return (1);
 }
 
-int	unexpected_eof(char c)
+/*Error message for missing input cases.
+When CTRL+D is used to cancel missing input cases the program must exit if
+match is newline (replaces input with exit 2 to exit minishell),
+otherwise minishell does not exit and the prompt will be updated.*/
+int	unexpected_eof(char **input, char c)
 {
-	printf("minishell: unexpected EOF while looking for matching`%c'\n", c);
-	printf("minishell: syntax error: unexpected end of file\n");
+	if (c == '\n')
+	{
+		printf("minishell: syntax error: unexpected end of file\n");
+		free (*input);
+		*input = (char *)malloc(sizeof(char) * 7);
+		ft_strlcpy(*input, "exit 2", 7);
+		return (0);
+	}
+	else
+	{
+		printf("minishell: unexpected EOF while looking for matching`%c'\n", c);
+		printf("minishell: syntax error: unexpected end of file\n");
+	}
 	return (ERROR_MISUSE);
 }
 

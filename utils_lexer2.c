@@ -36,7 +36,7 @@ int	missing_input(char **input, char match)
 	if (extra[0] != match && !char_finder(extra, match))
 	{
 		free(extra);
-		return (unexpected_eof(match));
+		return (unexpected_eof(input, match));
 	}
 	update_input(input, extra);
 	return (0);
@@ -95,7 +95,7 @@ int	validate_input(char **str)
 		}
 		else if (i && ((*str)[i] == '|' || (*str)[i] == '&'))
 			exit = check_end(str, i);
-		if (exit)
+		if (exit || !ft_strcmp(*str, "exit 2"))
 			return (exit);
 	}
 	return (0);

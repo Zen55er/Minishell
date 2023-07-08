@@ -221,7 +221,7 @@ void				signal_global(void);
 char				*get_end_cmd(char *str);
 int					bad_substitution(char *str, int end);
 int					syntax_error(char *str);
-int					unexpected_eof(char c);
+int					unexpected_eof(char **input, char c);
 unsigned long long	ft_atoull(const char *nptr);
 
 /*utils_free.c*/
