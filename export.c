@@ -79,7 +79,11 @@ int	export_arg(t_data *data, char **tokens, int tok)
 		if (delim_tok(tokens[tok]))
 			break ;
 		if (validate_var(tokens, tok))
-			continue ;
+		{
+			if (tokens[tok + 1])
+				continue ;
+			return (1);
+		}
 		i = char_finder(tokens[tok], '=');
 		if ((tokens[tok][0] == '_' && !tokens[tok][1])
 			|| check_entry(data, data->env, tok, i))
