@@ -226,6 +226,7 @@ int					unexpected_eof(char **input, char c);
 unsigned long long	ft_atoull(const char *nptr);
 
 /*utils_free.c*/
+int					int_free(void *str, int ret);
 void				free_double(char ***array);
 void				free_list(t_ll **list);
 void				free_child(t_cmds *cmds, char **env2d);

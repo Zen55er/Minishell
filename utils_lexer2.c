@@ -24,18 +24,18 @@ int	missing_input(char **input, char match)
 	{
 		write(STDOUT_FILENO, "> ", 2);
 		temp = get_next_line(STDIN_FILENO);
+		if (temp[0] == '\n' && int_free(temp, 1))
+			continue ;
 		if (!temp)
 			break ;
 		extra = ft_strjoin_free(extra, temp);
 		if (extra[0] == match || char_finder(extra, match))
 			break ;
 	}
-	if (extra[0] != match && !char_finder(extra, match))
-	{
-		free(extra);
+	if (extra[0] != match && !char_finder(extra, match) && int_free(extra, 1))
 		return (unexpected_eof(input, match));
-	}
 	update_input(input, extra);
+	signal_global();
 	return (0);
 }
 

@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+int	int_free(void *str, int ret)
+{
+	free(str);
+	return (ret);
+}
+
 /*Frees char***/
 void	free_double(char ***array)
 {

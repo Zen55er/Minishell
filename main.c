@@ -79,6 +79,7 @@ void	init(t_data *data, char **envp)
 	data->logic_operator = 0;
 	data->cmd_st = 0;
 	data->permission_flag = 0;
+	signal_global();
 	prep_env(data, envp);
 	update_curr_prev(data);
 }
@@ -93,7 +94,6 @@ int	main(int ac, char **av, char **envp)
 	init(&data, envp);
 	while (1)
 	{
-		signal_global();
 		input = get_input(&data);
 		if (!input && printf("exit\n"))
 			break ;
