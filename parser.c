@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 11:40:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 09:27:42 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,10 @@ int	parser(t_data	*data)
 	int		i;
 
 	if (validate_tokens(data, data->tokens))
+	{
+		free_double(&(data->tokens));
 		return (1);
+	}
 	i = -1;
 	while (data->tokens[++i])
 	{
@@ -120,7 +123,7 @@ int	parser(t_data	*data)
 			fix_tokens_wc(data, &i);
 		data->tokens[i] = token_parser(data, data->tokens[i]);
 	}
-	// for (int i = 0; data->tokens[i]; i++)
-	// 	printf("Token %i: :%s:\n", i, data->tokens[i]);
+	for (int i = 0; data->tokens[i]; i++)
+		printf("Token %i: :%s:\n", i, data->tokens[i]);
 	return (0);
 }
