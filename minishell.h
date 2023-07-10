@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 09:32:34 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 09:55:38 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void				update_input(char **input, char *extra);
 char				*quotes(char *str);
 
 /*logical_operators.c*/
+int					skip_parentheses(char **tokens, int i);
 int					logical_choice(char **tokens, int token);
 int					check_single_cmd(t_data *data, char *cmd);
 

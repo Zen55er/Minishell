@@ -6,11 +6,30 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 18:34:49 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 12:58:37 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 09:55:29 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*In executor, for parentheses cases, skips index to the final )*/
+int	skip_parentheses(char **tokens, int i)
+{
+	int	flag;
+
+	flag = 0;
+	while (tokens[i])
+	{
+		if (!ft_strcmp(tokens[i], "("))
+			flag++;
+		if (!ft_strcmp(tokens[i], ")"))
+			flag--;
+		if (!flag)
+			break ;
+		i++;
+	}
+	return (i);
+}
 
 /*Determines if the next command should execute
 based on logic operator and the previous command exit value*/
