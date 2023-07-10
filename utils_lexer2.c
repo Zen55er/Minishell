@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 11:48:41 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:19:32 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	missing_input(char **input, char match)
 	{
 		write(STDOUT_FILENO, "> ", 2);
 		temp = get_next_line(STDIN_FILENO);
-		if (temp[0] == '\n' && int_free(temp, 1))
+		if (temp && temp[0] == '\n' && int_free(temp, 1))
 			continue ;
 		if (!temp)
 			break ;
