@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 11:56:02 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 10:00:43 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	special_dollar(char *str)
 	i = -1;
 	while (str[++i])
 	{
-		if (ft_isspace(str[i]) && !found)
+		if ((ft_isspace(str[i]) || str[i] == '*') && !found)
 			bad_sub = i;
 		if (str[i] == '}')
 			found = i;
