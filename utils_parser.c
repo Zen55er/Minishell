@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 10:53:52 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 09:32:41 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ int	check_consecutive(char *tok1, char *tok2)
 Extra conditions for validate_tokens.*/
 int	validate_tokens2(char **tokens, int i)
 {
+	if (tokens[i + 1] && delim_tok(tokens[i]) && delim_tok(tokens[i + 1])
+		&& check_consecutive(tokens[i], tokens[i + 1]))
+		return (1);
 	if (i == 0 && (!ft_strcmp(tokens[i], "|")
 			|| !ft_strcmp(tokens[i], "||")
 			|| !ft_strcmp(tokens[i], "&&")))
@@ -77,15 +80,12 @@ int	validate_tokens2(char **tokens, int i)
 			|| !ft_strcmp(tokens[i], ">>")
 			|| !ft_strcmp(tokens[i], "<<")))
 		return (syntax_error("newline"));
-	if (tokens[i + 1] && delim_tok(tokens[i]) && delim_tok(tokens[i + 1])
-		&& check_consecutive(tokens[i], tokens[i + 1]))
-		return (1);
 	return (0);
 }
 
 /*If the current and next tokens are delimiters,
 calls check_consecutive to validate them.*/
-int	validate_tokens(t_data *data, char **tokens)
+int	validate_tokens(char **tokens)
 {
 	int	i;
 	int	flag;
@@ -98,8 +98,6 @@ int	validate_tokens(t_data *data, char **tokens)
 		{
 			if (i > 0 && !delim_tok(tokens[i - 1]))
 				return (syntax_error(tokens[i]));
-			if (!check_single_cmd(data, tokens[i + 1]))
-				return (syntax_error(tokens[i + 1]));
 			flag++;
 		}
 		if (!ft_strcmp(tokens[i], ")") && !flag)

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 09:27:42 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 09:32:23 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	parser(t_data	*data)
 {
 	int		i;
 
-	if (validate_tokens(data, data->tokens))
+	if (validate_tokens(data->tokens))
 	{
 		free_double(&(data->tokens));
 		return (1);
