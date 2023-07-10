@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 09:55:38 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:11:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@
 # define CMD_EXIT 9
 # define CMD_DIR 10
 # define IS_DIR 11
-# define IS_DIR_FAIL 12
 
 # define OK_EXIT 0
 # define ERROR_EXIT 1
@@ -122,7 +121,6 @@ int					validate_input(char **input);
 /*utils_lexer3.c*/
 char				get_match(char c);
 void				update_input(char **input, char *extra);
-char				*quotes(char *str);
 
 /*logical_operators.c*/
 int					skip_parentheses(char **tokens, int i);
@@ -142,6 +140,11 @@ void				fix_tokens_wc(t_data *data, int *i);
 int					check_consecutive(char *tok1, char *tok2);
 int					validate_tokens2(char **tokens, int i);
 int					validate_tokens(char **tokens);
+
+/*utils_parser2.c*/
+char				*quotes(char *str);
+int					check_quotes_delimiter(char *token);
+void				quotes_delimiter(char **tokens, int tok);
 
 /*executor.c*/
 int					command_call(t_data *data, char **tokens, int tok, int cmd);

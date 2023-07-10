@@ -6,7 +6,7 @@
 #    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2023/07/05 08:38:37 by gacorrei         ###   ########.fr        #
+#    Updated: 2023/07/10 10:57:39 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC			= main.c lexer.c signals.c utils.c utils_lexer.c utils_lists.c \
 			redirection.c pipes.c redirection_utils.c \
 			logical_operators.c executor.c wildcards.c utils_wildcards.c \
 			utils_parser.c utils_lexer2.c utils_lexer3.c utils_free.c exit_code.c \
-			subshell.c
+			subshell.c utils_parser2.c
 
 CC			= @cc
 LIBFT		= libft/libft.a
