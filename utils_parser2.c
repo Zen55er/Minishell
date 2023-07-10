@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:57:59 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 11:11:53 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:17:16 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*quotes(char *str)
 	int		len;
 	char	*new;
 
+	if (check_quotes_delimiter(str))
+		return (str);
 	len = ft_strlen(str);
 	new = ft_substr(str, 1, len - 2);
 	free (str);
