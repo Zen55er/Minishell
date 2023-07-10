@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 15:16:23 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:51:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	export_arg(t_data *data, char **tokens, int tok)
 	{
 		if (delim_tok(tokens[tok]))
 			break ;
+		quotes_delimiter_full(tokens, tok);
 		if (validate_var(tokens, tok))
 		{
 			if (tokens[tok + 1])

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 15:52:24 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:50:11 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ char	*cd_cases(t_data *data, char **tokens, int token)
 	else if (!ft_strcmp(tokens[token], "~-"))
 		dir = ft_strdup(data->prev_dir);
 	else
+	{
+		quotes_delimiter_full(tokens, token);
 		dir = ft_strdup(tokens[token]);
+	}
 	return (dir);
 }
 
@@ -82,7 +85,7 @@ int	cmd_cd(t_data *data, char **tokens, int token)
 			&& !delim_tok(tokens[token])
 			&& !delim_tok(tokens[token + 1])))
 	{
-		print_error("cd", 0, "too many arguments", 0);
+		print_error("cmd_cd", 0, "too many arguments", 0);
 		return (ERROR_EXIT);
 	}
 	dir = cd_cases(data, tokens, token);
@@ -90,7 +93,7 @@ int	cmd_cd(t_data *data, char **tokens, int token)
 	free(dir);
 	if (out)
 	{
-		perror("cmd_cd");
+		print_error("cmd_cd", tokens[token], "No such file or directory", 0);
 		return (ERROR_EXIT);
 	}
 	update_curr_prev(data);

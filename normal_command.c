@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 10:52:55 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:41:59 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ char	**prep_cmds(char **tokens, int token, char *cmd)
 	int		i;
 
 	i = 0;
-	temp = token;
-	while (tokens[temp])
+	temp = token - 1;
+	while (tokens[++temp])
 	{
-		if (delim_tok(tokens[temp]))
+		if (i && delim_tok(tokens[temp]))
 			break ;
+		quotes_delimiter_full(tokens, i);
 		i++;
-		temp++;
 	}
 	cmds = (char **)malloc(sizeof(char *) * (i + 1));
 	cmds[i] = 0;

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:57:59 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 11:17:16 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:41:13 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,13 @@ void	quotes_delimiter(char **tokens, int tok)
 	new_tok = ft_substr(tokens[tok], 1, ft_strlen(tokens[tok]) - 2);
 	free(tokens[tok]);
 	tokens[tok] = new_tok;
+	return ;
+}
+
+/*Combination of functions above for norminette reasons*/
+void	quotes_delimiter_full(char **tokens, int tok)
+{
+	if (check_quotes_delimiter(tokens[tok]))
+		quotes_delimiter(tokens, tok);
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 11:11:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:41:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ int					validate_tokens(char **tokens);
 char				*quotes(char *str);
 int					check_quotes_delimiter(char *token);
 void				quotes_delimiter(char **tokens, int tok);
+void				quotes_delimiter_full(char **tokens, int tok);
 
 /*executor.c*/
 int					command_call(t_data *data, char **tokens, int tok, int cmd);
