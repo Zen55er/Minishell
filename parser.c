@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 09:32:23 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 09:57:36 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*expansion(t_data *data, char *s)
 			continue ;
 		j = i + 1;
 		while (s[j] && s[j] != '$' && s[j] != '}' && s[j] != '\'' && s[j] != ' '
-			&& s[j] != '\"' && s[j] != '/' && j++)
+			&& s[j] != '\"' && s[j] != '/' && s[j] != '*' && j++)
 			if (s[j - 1] == '?' && j == i + 2)
 				break ;
 		val = update_expansion(data, val, ft_substr(s, i, j - i));
@@ -123,7 +123,7 @@ int	parser(t_data	*data)
 			fix_tokens_wc(data, &i);
 		data->tokens[i] = token_parser(data, data->tokens[i]);
 	}
-	for (int i = 0; data->tokens[i]; i++)
-		printf("Token %i: :%s:\n", i, data->tokens[i]);
+	/* for (int i = 0; data->tokens[i]; i++)
+		printf("Token %i: :%s:\n", i, data->tokens[i]); */
 	return (0);
 }
