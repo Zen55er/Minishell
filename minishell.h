@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/29 16:34:52 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/11 11:51:22 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ typedef struct s_data
 	char		**path;
 	char		*curr_dir;
 	char		*prev_dir;
-	int			fdin;
-	int			fdout;
 	int			lastfdout;
 	int			nodenmb;
 	t_cmd_st	*cmd_st;
 	pid_t		*pid;
+	int			fd_in;
+	int			fd_out;
 	int			logic_operator;
 	int			permission_flag;
 }			t_data;

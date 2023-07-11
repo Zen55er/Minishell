@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/05 13:49:29 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/11 11:55:31 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,20 @@ int	child_exec_cmd(t_data *data, int in, int out, t_cmd_st *node)
 	exit (0);
 }
 
-int	forking(t_data *data, t_cmd_st *node, int in, int out)
+int	forking(t_data *data, t_cmd_st *node, int flag)
 {
 	static int	i;
 
+	if (!flag)
+	{
+		i = 0;
+		return (0);
+	}
 	data->pid[i] = fork();
 	if (data->pid[i] < 0)
 		return (1);
 	if (data->pid[i] == 0)
-		if (child_exec_cmd(data, in, out, node) == 1)
+		if (child_exec_cmd(data, data->fd_in, data->fd_out, node) == 1)
 			return (1);
 	i++;
 	return (0);
@@ -47,7 +52,6 @@ void	waiting(t_data *data)
 
 	while (++i < st_size(data->cmd_st))
 	{
-		/* printf("pid %d: %d\n", i, data->pid[i]); */
 		waitpid(data->pid[i], 0, 0);
 	}
 }
@@ -56,23 +60,22 @@ void	waiting(t_data *data)
 int	pipeline(t_data *data)
 {
 	int			pipefd[2];
-	int			fd_in;
-	int			fd_out;
 	t_cmd_st	*tmp;
 
 	tmp = data->cmd_st;
-	fd_in = STDIN_FILENO;
+	data->fd_in = STDIN_FILENO;
+	forking(data, tmp, 0);
 	while (tmp)
 	{
 		if (tmp->next && pipe(pipefd))
 			return (1);
-		fd_in = check_fd_in(tmp, pipefd, fd_in);
-		fd_out = check_fd_out(tmp, pipefd);
-		if (forking(data, tmp, fd_in, fd_out))
+		data->fd_in = check_fd_in(tmp, pipefd, data->fd_in);
+		data->fd_out = check_fd_out(tmp, pipefd);
+		if (forking(data, tmp, 1))
 			return (1);
 		close(pipefd[1]);
 		if (tmp->next)
-			fd_in = pipefd[0];
+			data->fd_in = pipefd[0];
 		if (tmp->next)
 			tmp = tmp->next;
 		else

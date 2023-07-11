@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 12:24:27 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/05 13:56:05 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	char_finder(char *str, char c)
 int	forbidden(char *str)
 {
 	if (str[0] == '\\' || str[0] == '[' || str[0] == ']'
-		|| str[0] == ';' || str[0] == '^' || str[0] == '#'
+		|| str[0] == ';' /* || str[0] == '^'  */|| str[0] == '#'
 		|| str[0] == '`'
 		// || (str[0] == '(' && str[1] == '(')
 		|| (str[0] == '(' && str[1] == ')')

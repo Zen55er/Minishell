@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:19:52 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/04 15:17:32 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/11 11:48:22 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,17 @@ int	st_size(t_cmd_st *list)
 		n++;
 	}
 	return (n);
+}
+
+void	free_cmd_st(t_data *data)
+{
+	t_cmd_st	*tmp;
+
+	while (data->cmd_st)
+	{
+		tmp = data->cmd_st;
+		data->cmd_st = data->cmd_st->next;
+		free_double(tmp->cmd);
+		free(tmp);
+	}
 }
