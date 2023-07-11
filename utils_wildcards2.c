@@ -6,14 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 13:31:48 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 15:38:46 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:11:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Swaps nodes*/
-void	swap(t_ll **temp)
+/*Swaps nodes and updates temp positions*/
+void	swap(t_ll **matches, t_ll **temp, t_ll **temp2, int flag)
 {
 	t_ll	*swap;
 
@@ -21,6 +21,17 @@ void	swap(t_ll **temp)
 	(*temp)->next = swap->next;
 	swap->next = *temp;
 	*temp = swap;
+	if (!flag)
+	{
+		*matches = *temp;
+		*temp2 = *temp;
+	}
+	else
+	{
+		(*temp2)->next = *temp;
+		*temp = *matches;
+		*temp2 = *matches;
+	}
 	return ;
 }
 
@@ -38,17 +49,12 @@ void	reorder_list(t_ll **matches)
 	{
 		if (temp == *matches && temp->rank > temp->next->rank)
 		{
-			swap(&temp);
-			*matches = temp;
-			temp2 = temp;
+			swap(matches, &temp, &temp2, 0);
 			continue ;
 		}
 		else if (temp->rank > temp->next->rank)
 		{
-			swap(&temp);
-			temp2->next = temp;
-			temp = *matches;
-			temp2 = *matches;
+			swap(matches, &temp, &temp2, 1);
 			continue ;
 		}
 		temp = temp->next;

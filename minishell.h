@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 15:27:35 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:10:47 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,7 +258,7 @@ void				return_to_previous(int *i, int *j, int *prev_wc, int *back);
 int					final_wc_check(int i, char *token);
 
 /*utils_wildcards2.c*/
-void				swap(t_ll **temp);
+void				swap(t_ll **matches, t_ll **temp, t_ll **temp2, int flag);
 void				reorder_list(t_ll **matches);
 
 /*exit_code.c*/
