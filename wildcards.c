@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 10:02:42 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/11 08:42:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 09:14:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int	compare_wc(char *token, char *content)
 		else
 			return_to_previous(&i, &j, &prev_wc, &backtrack);
 	}
-	if ((j && content[j]) || !final_wc_check(i, token))
+	if ((!token[i] && token[i - 1] != '*' && j && content[j])
+		|| !final_wc_check(i, token))
 		return (0);
 	return (1);
 }
