@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/11 13:24:56 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/11 13:29:44 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	executor(t_data *data, char **tokens, int flag)
 	while (tokens[i])
 	{
 		if (check_pipe(tokens, data))
-			return ;
+			break ;
 		if (check_skip(data, tokens, &i))
 			continue ;
 		quotes_delimiter_full(tokens, i);
