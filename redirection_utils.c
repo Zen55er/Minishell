@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:52:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/11 13:06:35 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/11 13:52:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,16 @@ void	get_fds(char **tokens, int *fdin, int *fdout, int c)
 			|| !ft_strcmp(tokens[c], ">>"))
 		{
 			*fdout = open_fds(tokens[c], tokens[c + 1]);
+			break ;
 		}
 		else if (!ft_strcmp(tokens[c], "<")
 			|| !ft_strcmp(tokens[c], "<<"))
 		{
 			*fdin = open_fds(tokens[c], tokens[c + 1]);
+			break ;
 		}
 		c++;
 	}
+	if (*fdout == -1 || *fdin == -1)
+		print_error(tokens[c + 1], 0, "No such file or directory", 0);
 }

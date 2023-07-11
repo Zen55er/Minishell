@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:19:52 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/11 13:27:47 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/11 13:45:47 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ int	check_pipe(char **tokens, t_data *data)
 	i = -1;
 	while (tokens[++i])
 	{
-		if (!ft_strcmp(tokens[i], "|"))
+		if (!ft_strcmp(tokens[i], "|") || !ft_strcmp(tokens[i], ">")
+			|| !ft_strcmp(tokens[i], "<") || !ft_strcmp(tokens[i], "<<")
+			|| !ft_strcmp(tokens[i], ">>"))
 		{
 			redirection(data);
 			data->nodenmb = st_size(data->cmd_st);
