@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/11 13:25:11 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/11 13:32:28 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ typedef struct s_data
 	char		**path;
 	char		*curr_dir;
 	char		*prev_dir;
-	int			lastfdout;
 	int			nodenmb;
 	t_cmd_st	*cmd_st;
 	pid_t		*pid;
