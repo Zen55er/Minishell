@@ -6,11 +6,23 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 13:44:15 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:04:16 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Checks if token is a delimiter*/
+int	delim_tok(char *token)
+{
+	if (!ft_strcmp(token, "|") || !ft_strcmp(token, "||")
+		|| !ft_strcmp(token, "<") || !ft_strcmp(token, ">")
+		|| !ft_strcmp(token, "<<") || !ft_strcmp(token, ">>")
+		|| !ft_strcmp(token, "(") || !ft_strcmp(token, ")")
+		|| !ft_strcmp(token, "&&"))
+		return (1);
+	return (0);
+}
 
 /*Prints arguments of echo, if -n flag is present, does not write newline*/
 int	cmd_echo(char **tokens, int tok)
@@ -20,24 +32,21 @@ int	cmd_echo(char **tokens, int tok)
 
 	n_flag = 0;
 	i = 0;
-	if (!tokens[tok + 1] || delim(tokens[tok + 1]))
-	{
-		printf("\n");
+	if ((!tokens[tok + 1] || delim_tok(tokens[tok + 1])) && printf("\n"))
 		return (OK_EXIT);
-	}
 	while (tokens[++tok] && ++i)
 	{
-		if (delim(tokens[tok]))
+		if (delim_tok(tokens[tok]))
 			break ;
-		if (i == 1 && !ft_strcmp(tokens[tok], "-n")
-			&& !tokens[tok][2])
+		quotes_delimiter_full(tokens, tok);
+		if (!ft_strcmp(tokens[tok], "-n") && !tokens[tok][2])
 		{
 			n_flag = 1;
 			continue ;
 		}
 		if (tokens[tok])
 			printf("%s", tokens[tok]);
-		if (tokens[tok + 1] && !delim(tokens[tok + 1]))
+		if (tokens[tok + 1] && !delim_tok(tokens[tok + 1]))
 			printf(" ");
 	}
 	if (!n_flag)
@@ -52,13 +61,6 @@ int	cmd_env(t_data *data)
 	t_ll	*temp;
 
 	temp = data->env;
-	while (temp)
-	{
-		printf("%s=", temp->var);
-		printf("%s\n", temp->value);
-		temp = temp->next;
-	}
-	temp = data->exp;
 	while (temp)
 	{
 		if (!temp->value)
@@ -92,15 +94,15 @@ unsigned char	check_exit_arg(char *token)
 	check = ft_atoull(&token[i]);
 	while (token[i])
 	{
-		if (!ft_isdigit(token[i]) || (check > LLONG_MAX && signal)
-			|| (check - 1 > LLONG_MAX && !signal))
+		if (!ft_isdigit(token[i]) || (check > LLONG_MAX && signal == 1)
+			|| (check - 1 > LLONG_MAX && signal == -1))
 		{
-			printf("minishell: exit: %llu: numeric argument required\n", check);
+			print_error("exit", token, "numeric argument required", 0);
 			return (ERROR_MISUSE);
 		}
 		i++;
 	}
-	return ((unsigned char)((long long)check * signal));
+	return ((unsigned char)((long long)(check * signal)));
 }
 
 /*Prints "exit", updates prompt, frees memory and exits program.
@@ -115,12 +117,11 @@ int	cmd_exit(t_data *data, char **tokens, int token)
 		flag = 1;
 	if (tokens[token + 1] && tokens[token + 2])
 	{
-		printf("minishell: exit: too many arguments\n");
+		print_error("exit", 0, "too many arguments", 0);
 		return (ERROR_EXIT);
 	}
 	if (tokens[token + 1])
 		set_exit_code(check_exit_arg(tokens[token + 1]));
-	rl_clear_history();
 	free_all(0, data);
 	if (flag)
 		exit(update_exit_code(0, 0));

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+         #
+#    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2023/06/29 16:21:21 by mpatrao          ###   ########.fr        #
+#    Updated: 2023/07/11 13:00:57 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC			= main.c lexer.c signals.c utils.c utils_lexer.c utils_lists.c \
 			redirection.c pipes.c pipes_utils.c redirection_utils.c \
 			logical_operators.c executor.c wildcards.c utils_wildcards.c \
 			utils_parser.c utils_lexer2.c utils_lexer3.c utils_free.c exit_code.c \
-			subshell.c
+			subshell.c utils_parser2.c utils_wildcards2.c
 
 CC			= @cc
 LIBFT		= libft/libft.a

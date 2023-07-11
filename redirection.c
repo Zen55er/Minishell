@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:25 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/04 14:08:03 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/11 13:02:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_cmd_st	*add_cmd_st(char **cmd, int fdin, int fdout)
 	new = (t_cmd_st *)malloc(sizeof(t_cmd_st));
 	if (!new)
 	{
-		free_double(cmd);
+		free_double(&cmd);
 		return (0);
 	}
 	new->next = NULL;

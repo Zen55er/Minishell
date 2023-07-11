@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 10:02:42 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/10 09:39:22 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 09:14:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	add_tokens(t_data *data, t_ll *matches, int token)
 			break ;
 		new_tok[i + j] = ft_strdup(data->tokens[i]);
 	}
-	free_double(data->tokens);
+	free_double(&(data->tokens));
 	data->tokens = new_tok;
 	return (n_list - 1);
 }
@@ -88,7 +88,8 @@ int	compare_wc(char *token, char *content)
 		else
 			return_to_previous(&i, &j, &prev_wc, &backtrack);
 	}
-	if (!final_wc_check(i, token))
+	if ((!token[i] && token[i - 1] != '*' && j && content[j])
+		|| !final_wc_check(i, token))
 		return (0);
 	return (1);
 }
@@ -121,5 +122,6 @@ t_ll	*expand_wildcards(char *token)
 	}
 	closedir(directory);
 	list_ranking(matches);
+	reorder_list(&matches);
 	return (matches);
 }

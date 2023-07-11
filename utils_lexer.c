@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 13:56:05 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/11 13:02:50 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,33 @@ int	char_finder(char *str, char c)
 {
 	int	i;
 
+	if (!str || !str[0])
+		return (0);
 	i = 0;
 	while (str[++i])
 	{
 		if (str[i] == c)
 			return (i);
 	}
-	if (str[i] == c && (c == '\'' || c == '\"'))
+	if (str[0] == c && (c == '\'' || c == '\"'))
 		printf("Found unclosed quotes: %s\n", str);
 	return (0);
 }
 
 /*Checks for characters that should not be interpreted*/
-int	forbidden(char *str)
+int	forbidden(char *str, int i)
 {
-	if (str[0] == '\\' || str[0] == '[' || str[0] == ']'
-		|| str[0] == ';' /* || str[0] == '^'  */|| str[0] == '#'
-		|| str[0] == '`'
-		// || (str[0] == '(' && str[1] == '(')
-		|| (str[0] == '(' && str[1] == ')')
-		// || (str[0] == ')' && str[1] == ')')
-		|| (str[0] == '<' && str[1] == '(')
-		|| (str[0] == '$' && str[1] == '(')
-		|| (str[0] == ')' && str[1] == '$')
-		|| (str[0] == '&' && str[1] != '&'))
+	if (str[i] == '\\' || str[i] == '[' || str[i] == ']'
+		|| str[i] == ';' || str[i] == '^' || str[i] == '#'
+		|| str[i] == '`'
+		|| (str[i] == '(' && str[i + 1] == ')')
+		|| (str[i] == '<' && str[i + 1] == '(')
+		|| (str[i] == '$' && str[i + 1] == '(')
+		|| (str[i] == ')' && str[i + 1] == '$')
+		|| (str[i] == '&' && (str[i + 1] != '&' && (i && str[i - 1] != '&'))))
 	{
-		printf("Found forbidden character or character combination: %s\n", str);
+		printf("Found forbidden character or character combination: %s\n", \
+		&str[i]);
 		return (1);
 	}
 	return (0);
@@ -54,6 +55,8 @@ When running executer (flag == 1),
 avoids parenthesis from logical operator cases*/
 int	delim(char *str)
 {
+	if (!str)
+		return (0);
 	if ((str[0] == '|' && str[1] != '|')
 		|| (str[0] == '>' && str[1] != '>')
 		|| (str[0] == '<' && str[1] != '<')
@@ -83,10 +86,12 @@ int	quote_case(char *str)
 	j = char_finder(str, find);
 	if (!j)
 		return (-1);
-	return (j + 1);
+	return (j);
 }
 
-int	special_dollar(char *str, int flag)
+/*Handles special cases with ${VAR}.
+Checks if there are no spaces or wildcards inside the parentheses.*/
+int	special_dollar(char *str)
 {
 	int		bad_sub;
 	int		found;
@@ -97,9 +102,7 @@ int	special_dollar(char *str, int flag)
 	i = -1;
 	while (str[++i])
 	{
-		if (!flag && forbidden(&str[i]))
-			return (-1);
-		if (ft_isspace(str[i]) && !found)
+		if ((ft_isspace(str[i]) || str[i] == '*') && !found)
 			bad_sub = i;
 		if (str[i] == '}')
 			found = i;

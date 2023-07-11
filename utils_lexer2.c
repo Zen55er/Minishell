@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/22 11:30:11 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:20:47 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 int	missing_input(char **input, char match)
 {
 	char	*temp;
-	char	*temp_extra;
 	char	*extra;
 
+	signal_input();
 	extra = ft_strdup(" ");
 	while (1)
 	{
@@ -26,19 +26,16 @@ int	missing_input(char **input, char match)
 		temp = get_next_line(STDIN_FILENO);
 		if (!temp)
 			break ;
-		temp_extra = extra;
-		extra = ft_strjoin(extra, temp);
-		free(temp);
-		free(temp_extra);
+		if (temp[0] == '\n' && int_free(temp, 1))
+			continue ;
+		extra = ft_strjoin_free(extra, temp);
 		if (extra[0] == match || char_finder(extra, match))
 			break ;
 	}
-	if (extra[0] != match && !char_finder(extra, match))
-	{
-		free(extra);
-		return (unexpected_eof(match));
-	}
+	if (extra[0] != match && !char_finder(extra, match) && int_free(extra, 1))
+		return (unexpected_eof(input, match));
 	update_input(input, extra);
+	signal_global();
 	return (0);
 }
 
@@ -58,6 +55,18 @@ int	check_end(char **input, int i)
 	return (0);
 }
 
+/*Returns index of next matching quote (or end of str).
+If there is no matching quote and the string ends, returns the index
+of the previous character to avoid a heap overflow in validate_input.*/
+int	jump_quotes(char *str, int i, char quote)
+{
+	while (str[++i] && str[i] != quote)
+		continue ;
+	if (!str[i])
+		return (i - 1);
+	return (i);
+}
+
 /*Checks whether input is complete
 (no missing information after |, ||, && or ${).*/
 int	validate_input(char **str)
@@ -70,16 +79,20 @@ int	validate_input(char **str)
 	i = -1;
 	while ((*str)[++i])
 	{
-		if ((*str)[i] == '(' || ((*str)[i] == '$' && (*str)[i + 1] == '{'))
+		if ((*str)[i] == '\'' || (*str)[i] == '\"')
+			i = jump_quotes(*str, i, (*str)[i]);
+		if (forbidden((*str), i))
+			return (1);
+		else if ((*str)[i] == '(' || ((*str)[i] == '$' && (*str)[i + 1] == '{'))
 		{
 			match = get_match((*str)[i]);
 			if (!char_finder(*str, match))
 				exit = missing_input(str, match);
 			i += char_finder(*str + i, (*str)[i]);
 		}
-		else if (((*str)[i] == '|' || (*str)[i] == '&'))
+		else if (i && ((*str)[i] == '|' || (*str)[i] == '&'))
 			exit = check_end(str, i);
-		if (exit)
+		if (exit || !ft_strcmp(*str, "exit 2"))
 			return (exit);
 	}
 	return (0);

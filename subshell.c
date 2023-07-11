@@ -6,12 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:55:19 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/26 14:24:10 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:21:10 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Counts tokens between outer parentheses*/
 int	count_sub_tokens(char **tokens, int token)
 {
 	int	i;
@@ -35,6 +36,7 @@ int	count_sub_tokens(char **tokens, int token)
 	return (i);
 }
 
+/*Creates new array of tokens to be executed.*/
 void	assign_subs(char **tokens, char **sub_tokens, int *token)
 {
 	int	i;

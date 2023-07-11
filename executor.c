@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/29 16:39:05 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:58:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ int	command_call(t_data *data, char **tokens, int tok, int cmd)
 		return (cmd_env(data));
 	if (cmd == CMD_EXIT)
 		return (cmd_exit(data, tokens, tok));
+	if (cmd == CMD_DIR)
+		return (check_dir(tokens[tok]));
 	return (normal_command(data, tokens, tok));
 }
 
 /*Checks if input matches specific functions*/
-int	command_check(char *input)
+int	command_check(t_data *data, char *input, int flag)
 {
 	if (!ft_strcmp(input, "echo"))
 		return (CMD_ECHO);
@@ -49,25 +51,52 @@ int	command_check(char *input)
 		return (CMD_ENV);
 	if (!ft_strcmp(input, "exit"))
 		return (CMD_EXIT);
+	if (!flag && !check_single_cmd(data, input)
+		&& (!ft_strncmp(input, "./", 2) || input[0] == '/'))
+		return (CMD_DIR);
 	return (0);
 }
 
-int	skip_commands(char **tokens, int i)
+/*If token was a directory skips to the next token.
+If the token is the beginning of a subshell, skips to the closing parenthesis.
+If the token is a delimiter and a logical operator, skips to the next token*/
+int	skip_commands(char **tokens, int i, int command)
 {
+	if (command == CMD_DIR && !update_exit_code(0, 0))
+		return (++i);
 	while (tokens[++i])
 	{
 		if (!ft_strcmp(tokens[i], "("))
-			while (tokens[i] && ft_strcmp(tokens[i], ")"))
-				i++;
-		if (delim(tokens[i]))
+			i = skip_parentheses(tokens, i);
+		if (delim_tok(tokens[i]))
 		{
-			if (ft_strcmp(tokens[i], "&&")
-				&& ft_strcmp(tokens[i], "||"))
+			if (ft_strcmp(tokens[i], "&&") && ft_strcmp(tokens[i], "||"))
 				i++;
 			break ;
 		}
 	}
 	return (i);
+}
+
+/*Tests if next command should be skipped, if yes,updates index.*/
+int	check_skip(t_data *data, char **tokens, int *i)
+{
+	if (!tokens[*i] || !tokens[*i][0])
+		return (++(*i));
+	if ((!ft_strcmp(tokens[*i], "&&") || !ft_strcmp(tokens[*i], "||"))
+		&& !logical_choice(tokens, *i))
+	{
+		*i = skip_commands(tokens, *i, 0);
+		return (*i);
+	}
+	if (delim_tok(tokens[*i]))
+	{
+		if (!ft_strcmp(tokens[*i], "("))
+			subshell(data, tokens, i);
+		(*i)++;
+		return (*i);
+	}
+	return (0);
 }
 
 int	check_pipe(char **tokens)
@@ -116,16 +145,15 @@ void	executor(t_data *data, char **tokens, int flag)
 				subshell(data, tokens, &i);
 			i++;
 			continue ;
-		}
-		command = command_check(tokens[i]);
+		quotes_delimiter_full(tokens, i);
+		command = command_check(data, tokens[i], 0);
 		set_exit_code(command_call(data, tokens, i, command));
-		i = skip_commands(tokens, i);
+		i = skip_commands(tokens, i, command);
 	}
 	if (flag)
 	{
 		set_exit_code(update_exit_code(0, 0));
 		exit (update_exit_code(0, 0));
 	}
-	else
-		return ;
+	free_double(&(data->tokens));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   normal_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/05 13:47:06 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/11 13:01:42 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ char	**prep_cmds(char **tokens, int token, char *cmd)
 	int		i;
 
 	i = 0;
-	temp = token;
-	while (tokens[temp])
+	temp = token - 1;
+	while (tokens[++temp])
 	{
-		if (delim(tokens[temp]))
+		if (i && delim_tok(tokens[temp]))
 			break ;
+		quotes_delimiter_full(tokens, i);
 		i++;
-		temp++;
 	}
 	cmds = (char **)malloc(sizeof(char *) * (i + 1));
 	cmds[i] = 0;
@@ -94,7 +94,7 @@ void	child(t_data *data, char **tokens, int token)
 	cmds = get_cmd(data, tokens, token);
 	if (!cmds->cmd)
 	{
-		ft_printf("%s: command not found\n", cmds->cmd_args[0]);
+		print_error(cmds->cmd_args[0], 0, "command not found", 0);
 		free_child(cmds, 0);
 		if (data->permission_flag)
 		{
