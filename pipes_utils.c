@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:19:52 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/11 11:48:22 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/11 13:27:47 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,27 @@ void	free_cmd_st(t_data *data)
 	{
 		tmp = data->cmd_st;
 		data->cmd_st = data->cmd_st->next;
-		free_double(tmp->cmd);
+		free_double(&tmp->cmd);
 		free(tmp);
 	}
+}
+
+int	check_pipe(char **tokens, t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (tokens[++i])
+	{
+		if (!ft_strcmp(tokens[i], "|"))
+		{
+			redirection(data);
+			data->nodenmb = st_size(data->cmd_st);
+			data->pid = (pid_t *)malloc(sizeof(pid_t) * data->nodenmb);
+			pipeline(data);
+			free(data->pid);
+			return (1);
+		}
+	}
+	return (0);
 }

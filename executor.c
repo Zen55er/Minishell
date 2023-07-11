@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/11 12:58:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 13:24:56 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,17 +99,6 @@ int	check_skip(t_data *data, char **tokens, int *i)
 	return (0);
 }
 
-int	check_pipe(char **tokens)
-{
-	int	i;
-
-	i = -1;
-	while (tokens[++i])
-		if (!ft_strcmp(tokens[i], "|"))
-			return (1);
-	return (0);
-}
-
 /*Iterates through tokens and executes commands.
 flag determines if function is called from main (0) or from subshell (1).*/
 void	executor(t_data *data, char **tokens, int flag)
@@ -120,30 +109,9 @@ void	executor(t_data *data, char **tokens, int flag)
 	i = 0;
 	while (tokens[i])
 	{
-		if (check_pipe(tokens))
-		{
-			redirection(data);
-			data->nodenmb = st_size(data->cmd_st);
-			data->pid = (pid_t *)malloc(sizeof(pid_t) * data->nodenmb);
-			pipeline(data);
-			free(data->pid);
+		if (check_pipe(tokens, data))
 			return ;
-		}
-		if (!ft_strcmp(tokens[i], "&&") || !ft_strcmp(tokens[i], "||"))
-		{
-			if (!logical_choice(tokens, i))
-			{
-				i = skip_commands(tokens, i);
-				continue ;
-			}
-			i++;
-		}
-		if (delim(tokens[i]) && ft_strcmp(tokens[i], "&&")
-			&& ft_strcmp(tokens[i], "||"))
-		{
-			if (!ft_strcmp(tokens[i], "("))
-				subshell(data, tokens, &i);
-			i++;
+		if (check_skip(data, tokens, &i))
 			continue ;
 		quotes_delimiter_full(tokens, i);
 		command = command_check(data, tokens[i], 0);

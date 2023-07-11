@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/11 11:55:31 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/11 13:17:26 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,11 @@ void	waiting(t_data *data)
 	int	i;
 
 	i = -1;
-
 	while (++i < st_size(data->cmd_st))
 	{
 		waitpid(data->pid[i], 0, 0);
 	}
 }
-
 
 int	pipeline(t_data *data)
 {
@@ -84,4 +82,3 @@ int	pipeline(t_data *data)
 	waiting(data);
 	return (0);
 }
-

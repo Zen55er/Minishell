@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/11 13:01:21 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 13:25:11 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,9 +162,15 @@ int					pipeline(t_data *data);
 int					check_fd_in(t_cmd_st *node, int pipefd[2], int j);
 int					check_fd_out(t_cmd_st *node, int pipefd[2]);
 int					st_size(t_cmd_st *list);
+int					check_pipe(char **tokens, t_data *data);
+void				free_cmd_st(t_data *data);
 
 /*redirection*/
 int					redirection(t_data *data);
+t_cmd_st			*init_cmd_st_node(t_data *data, int j, int d);
+void				data_cmd_st_add_back(t_cmd_st **lst, t_cmd_st *node);
+t_cmd_st			*add_cmd_st(char **cmd, int fdin, int fdout);
+int					check_redir(t_data *data, int c);
 
 /*redirections utils*/
 void				count_pipes(t_data *data);

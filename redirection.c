@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:25 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/11 13:02:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 13:27:26 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	check_redir(t_data *data, int c)
+{
+	if (!ft_strcmp(data->tokens[c], ">") || !ft_strcmp(data->tokens[c], "<")
+		|| !ft_strcmp(data->tokens[c], ">>")
+		|| !ft_strcmp(data->tokens[c], "<<"))
+		return (1);
+	return (0);
+}
 
 t_cmd_st	*add_cmd_st(char **cmd, int fdin, int fdout)
 {
@@ -46,10 +55,9 @@ void	data_cmd_st_add_back(t_cmd_st **lst, t_cmd_st *node)
 	node->prev = tmp;
 }
 
-t_cmd_st	*init_cmd_st_node(t_data *data, int j)
+t_cmd_st	*init_cmd_st_node(t_data *data, int j, int d)
 {
 	int			c;
-	int			d;
 	char		**cmd;
 	int			fdin;
 	int			fdout;
@@ -60,16 +68,12 @@ t_cmd_st	*init_cmd_st_node(t_data *data, int j)
 	if (!cmd)
 		return (NULL);
 	c = j - 1;
-	d = -1;
 	get_fds(data->tokens, &fdin, &fdout, c + 1);
-	if (fdin == -1 || fdout == -1)
+	if ((fdin == -1 || fdout == -1) && int_free(cmd, 1))
 		return (NULL);
 	while (data->tokens[++c] && ft_strncmp(data->tokens[c], "|", 2))
 	{
-		if (!ft_strcmp(data->tokens[c], ">") 
-			|| !ft_strcmp(data->tokens[c], ">>")
-			|| !ft_strcmp(data->tokens[c], "<")
-			|| !ft_strcmp(data->tokens[c], "<<"))
+		if (check_redir(data, c))
 			c = c + 2;
 		if (!data->tokens[c])
 			break ;
@@ -91,7 +95,7 @@ int	redirection(t_data *data)
 	{
 		if (!ft_strcmp(data->tokens[i], "|") || !data->tokens[i + 1])
 		{
-			node = init_cmd_st_node(data, j);
+			node = init_cmd_st_node(data, j, -1);
 			if (!node)
 				return (1);
 			data_cmd_st_add_back(&data->cmd_st, node);
