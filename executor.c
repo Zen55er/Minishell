@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/11 13:29:44 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/11 14:24:03 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,12 @@ int	check_skip(t_data *data, char **tokens, int *i)
 		(*i)++;
 		return (*i);
 	}
+	if (check_pipe(tokens, data) != -1)
+	{
+		while (tokens[*i])
+			++(*i);
+		return (*i);
+	}
 	return (0);
 }
 
@@ -109,8 +115,6 @@ void	executor(t_data *data, char **tokens, int flag)
 	i = 0;
 	while (tokens[i])
 	{
-		if (check_pipe(tokens, data))
-			break ;
 		if (check_skip(data, tokens, &i))
 			continue ;
 		quotes_delimiter_full(tokens, i);

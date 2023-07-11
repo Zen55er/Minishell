@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:52:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/11 13:52:07 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 14:06:37 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,15 @@ void	get_fds(char **tokens, int *fdin, int *fdout, int c)
 			|| !ft_strcmp(tokens[c], ">>"))
 		{
 			*fdout = open_fds(tokens[c], tokens[c + 1]);
-			break ;
+			if (*fdout == -1)
+				break ;
 		}
 		else if (!ft_strcmp(tokens[c], "<")
 			|| !ft_strcmp(tokens[c], "<<"))
 		{
 			*fdin = open_fds(tokens[c], tokens[c + 1]);
-			break ;
+			if (*fdin == -1)
+				break ;
 		}
 		c++;
 	}
