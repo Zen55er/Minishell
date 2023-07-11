@@ -6,12 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 09:32:41 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:26:56 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Returns original string modified with any necessary dollar expansions and/or
+without outer quotes.*/
 char	*get_section(t_data *data, char *str, int i, int j)
 {
 	char	*section;
@@ -32,6 +34,8 @@ char	*get_section(t_data *data, char *str, int i, int j)
 	return (section);
 }
 
+/*Gets list of expanded wildcards and calls function to replace array of tokens
+with new entries.*/
 void	fix_tokens_wc(t_data *data, int *i)
 {
 	t_ll	*matches;

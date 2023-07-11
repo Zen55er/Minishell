@@ -6,12 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:08:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 09:09:18 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:22:00 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Runs free and returns ret.
+Used to save space in other functions.*/
 int	int_free(void *str, int ret)
 {
 	free(str);

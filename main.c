@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/07 09:09:10 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:14:10 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ char	*get_input(t_data *data)
 	return (input);
 }
 
+/*Initializes data variables, starts signal interception, env copy and
+current and previous directories*/
 void	init(t_data *data, char **envp)
 {
 	data->env = 0;

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:48:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/23 10:28:18 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:28:22 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	unexpected_eof(char **input, char c)
 	return (ERROR_MISUSE);
 }
 
+/*Used in exit argument cases. Returns token value in unsigned long long form.*/
 unsigned long long	ft_atoull(const char *nptr)
 {
 	int					i;

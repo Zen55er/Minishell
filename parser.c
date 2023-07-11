@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 11:53:26 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:19:38 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ char	*expansion(t_data *data, char *s)
 	return (val);
 }
 
+/*Iterates through token to identify sections delimited by quotes.
+Sends each section to get section which will return the expanded string and
+append it to new_token.*/
 char	*token_parser(t_data *data, char *token)
 {
 	int		i;

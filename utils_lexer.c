@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 10:00:43 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:23:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int	quote_case(char *str)
 	return (j);
 }
 
+/*Handles special cases with ${VAR}.
+Checks if there are no spaces or wildcards inside the parentheses.*/
 int	special_dollar(char *str)
 {
 	int		bad_sub;

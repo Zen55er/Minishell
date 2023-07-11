@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 11:41:48 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:16:47 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ int	command_check(t_data *data, char *input, int flag)
 	return (0);
 }
 
+/*If token was a directory skips to the next token.
+If the token is the beginning of a subshell, skips to the closing parenthesis.
+If the token is a delimiter and a logical operator, skips to the next token*/
 int	skip_commands(char **tokens, int i, int command)
 {
 	if (command == CMD_DIR && !update_exit_code(0, 0))
