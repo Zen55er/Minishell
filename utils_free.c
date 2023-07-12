@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:08:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/11 11:22:00 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/12 09:53:58 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,7 @@ void	free_all(char *input, t_data *data)
 		free_double(&(data->tokens));
 	if (data && data->env)
 		free_list(&data->env);
+	if (data && data->cmd_st)
+		free_cmd_st(data);
 	return ;
 }
