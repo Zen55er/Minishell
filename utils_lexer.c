@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/11 13:02:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/12 12:04:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	char_finder(char *str, char c)
 int	forbidden(char *str, int i)
 {
 	if (str[i] == '\\' || str[i] == '[' || str[i] == ']'
-		|| str[i] == ';' || str[i] == '^' || str[i] == '#'
-		|| str[i] == '`'
+		|| str[i] == ';' || str[i] == '#' || str[i] == '`'
 		|| (str[i] == '(' && str[i + 1] == ')')
 		|| (str[i] == '<' && str[i + 1] == '(')
 		|| (str[i] == '$' && str[i + 1] == '(')

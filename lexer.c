@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:09:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/11 14:32:59 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/12 10:26:26 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	lexer(t_data *data, char **input)
 	data->tokens = (char **)malloc(sizeof(char *) * (tok_num + 1));
 	set_tokens(data->tokens, *input);
 	free(*input);
-	for (int i = 0; data->tokens[i]; i++)
-		printf("Token %i: :%s:\n", i, data->tokens[i]);
+	// for (int i = 0; data->tokens[i]; i++)
+	// 	printf("Token %i: :%s:\n", i, data->tokens[i]);
 	return (0);
 }
