@@ -71,11 +71,11 @@ t_cmd_st	*init_cmd_st_node(t_data *data, int j, int d)
 	get_fds(data->tokens, &fdin, &fdout, c + 1);
 	if ((fdin == -1 || fdout == -1) && int_free(cmd, 1))
 		return (NULL);
-	while (data->tokens[++c] && ft_strncmp(data->tokens[c], "|", 2))
+	while (data->tokens[++c] && ft_strcmp(data->tokens[c], "|"))
 	{
 		while (data->tokens[c] && check_redir(data, c))
 			c = c + 2;
-		if (!data->tokens[c])
+		if (!data->tokens[c] || !ft_strcmp(data->tokens[c], "|"))
 			break ;
 		if (data->tokens[c])
 			cmd[++d] = ft_strdup(data->tokens[c]);

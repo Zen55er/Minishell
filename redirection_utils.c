@@ -12,20 +12,6 @@
 
 #include "minishell.h"
 
-void	count_pipes(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	data->cmd_st->num_pipes = 0;
-	while (data->tokens[i])
-	{
-		if (data->tokens[i][0] == '|' && !data->tokens[i][1])
-			data->cmd_st->num_pipes++;
-		i++;
-	}
-}
-
 int	count_args(t_data *data, int j)
 {
 	int	c;

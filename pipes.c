@@ -21,6 +21,10 @@ int	child_exec_cmd(t_data *data, int in, int out, t_cmd_st *node)
 		exit (1);
 	if (dup2(out, STDOUT_FILENO) < 0)
 		exit (1);
+	if (node->fd_out > 2)
+		close(node->fd_out);
+	if (node->fd_in > 2)
+		close(node->fd_in);
 	subshell(data, node->cmd, &p);
 	exit (0);
 }
@@ -39,7 +43,11 @@ int	forking(t_data *data, t_cmd_st *node, int flag)
 		return (1);
 	if (data->pid[i] == 0)
 		if (child_exec_cmd(data, data->fd_in, data->fd_out, node) == 1)
-			return (1);
+			exit (1);
+	if (node->fd_out > 2)
+		close(node->fd_out);
+	if (node->fd_in > 2)
+		close(node->fd_in);
 	i++;
 	return (0);
 }
@@ -50,9 +58,7 @@ void	waiting(t_data *data)
 
 	i = -1;
 	while (++i < st_size(data->cmd_st))
-	{
 		waitpid(data->pid[i], 0, 0);
-	}
 }
 
 int	pipeline(t_data *data)
@@ -67,11 +73,12 @@ int	pipeline(t_data *data)
 	{
 		if (tmp->next && pipe(pipefd))
 			return (1);
-		data->fd_in = check_fd_in(tmp, pipefd, data->fd_in);
+		data->fd_in = check_fd_in(tmp, data->fd_in);
 		data->fd_out = check_fd_out(tmp, pipefd);
+		tmp->fd_in = data->fd_in;
+		tmp->fd_out = data->fd_out;
 		if (forking(data, tmp, 1))
 			return (1);
-		close(data->fd_in);
 		if (tmp->next)
 			data->fd_in = pipefd[0];
 		if (tmp->next)

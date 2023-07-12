@@ -12,15 +12,10 @@
 
 #include "minishell.h"
 
-int	check_fd_in(t_cmd_st *node, int pipefd[2], int j)
+int	check_fd_in(t_cmd_st *node, int j)
 {
 	if (node->redir_in > 0)
-	{
-		if (j > 0)
-			close(j);
 		j = node->redir_in;
-		close(pipefd[0]);
-	}
 	return (j);
 }
 
@@ -30,16 +25,11 @@ int	check_fd_out(t_cmd_st *node, int pipefd[2])
 
 	i = 1;
 	if (pipefd[1] > 0)
-	{
 		i = pipefd[1];
-	}
 	if (!node->next)
 		i = 1;
 	if (node->redir_out > 1)
-	{
 		i = node->redir_out;
-		close(pipefd[1]);
-	}
 	return (i);
 }
 

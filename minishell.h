@@ -68,10 +68,10 @@ typedef struct s_ll
 typedef struct cmd_st
 {
 	char			**cmd;
-	int				num_redir;
-	int				num_pipes;
 	int				redir_in;
 	int				redir_out;
+	int				fd_in;
+	int				fd_out;
 	struct cmd_st	*next;
 	struct cmd_st	*prev;
 }	t_cmd_st;
@@ -158,7 +158,7 @@ void				executor(t_data *data, char **tokens, int flag);
 int					pipeline(t_data *data);
 
 /*pipes_utils*/
-int					check_fd_in(t_cmd_st *node, int pipefd[2], int j);
+int					check_fd_in(t_cmd_st *node, int j);
 int					check_fd_out(t_cmd_st *node, int pipefd[2]);
 int					st_size(t_cmd_st *list);
 int					check_pipe(char **tokens, t_data *data);
