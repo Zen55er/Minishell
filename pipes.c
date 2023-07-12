@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/11 13:17:26 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/12 13:46:51 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	pipeline(t_data *data)
 		data->fd_out = check_fd_out(tmp, pipefd);
 		if (forking(data, tmp, 1))
 			return (1);
-		close(pipefd[1]);
+		close(data->fd_in);
 		if (tmp->next)
 			data->fd_in = pipefd[0];
 		if (tmp->next)
