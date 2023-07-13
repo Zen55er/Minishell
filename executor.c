@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/12 13:54:31 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/13 12:10:57 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,12 @@ int	check_skip(t_data *data, char **tokens, int *i)
 {
 	if (!tokens[*i] || !tokens[*i][0])
 		return (++(*i));
+	if (check_pipe(tokens, data) != -1)
+	{
+		while (tokens[*i])
+			++(*i);
+		return (*i);
+	}
 	if ((!ft_strcmp(tokens[*i], "&&") || !ft_strcmp(tokens[*i], "||"))
 		&& !logical_choice(tokens, *i))
 	{
@@ -94,12 +100,6 @@ int	check_skip(t_data *data, char **tokens, int *i)
 		if (!ft_strcmp(tokens[*i], "("))
 			subshell(data, tokens, i);
 		(*i)++;
-		return (*i);
-	}
-	if (check_pipe(tokens, data) != -1)
-	{
-		while (tokens[*i])
-			++(*i);
 		return (*i);
 	}
 	return (0);

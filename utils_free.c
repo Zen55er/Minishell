@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:08:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/12 09:53:58 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/13 14:54:00 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ void	free_all(char *input, t_data *data)
 		free_list(&data->env);
 	if (data && data->cmd_st)
 		free_cmd_st(data);
+	unlink(".here_doc");
 	return ;
 }

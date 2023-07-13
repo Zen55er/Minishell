@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:52:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/11 14:06:37 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/13 15:07:39 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,50 @@ int	count_args(t_data *data, int j)
 	return (c);
 }
 
-int	here_doc(char *limiter)
+pid_t	here_doc(char *limiter)
 {
 	int		doc;
 	char	*buf;
+	pid_t	p;
 
-	doc = open(".here_doc", O_RDWR, O_CREAT | O_TRUNC, 0644);
-	while (1)
+	signal(SIGINT, SIG_IGN);
+	p = fork();
+	if (p == 0)
 	{
-		write(1, "here_doc>", 9);
-		buf = get_next_line(STDIN_FILENO);
-		if (!buf || (!ft_strcmp(buf, limiter)
-				&& buf[ft_strlen(limiter)] == '\n'))
-			break ;
-		write(doc, buf, ft_strlen(buf));
+		signal(SIGINT, SIG_DFL);
+		doc = open(".here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
+		while (1)
+		{
+			write(1, "here_doc>", 9);
+			buf = get_next_line(STDIN_FILENO);
+			if (!buf || (!ft_strncmp(buf, limiter, ft_strlen(limiter))
+					&& buf[ft_strlen(limiter)] == '\n'))
+				break ;
+			write(doc, buf, ft_strlen(buf));
+			free(buf);
+		}
 		free(buf);
+		close (doc);
+		exit(0);
 	}
-	free(buf);
-	close (doc);
-	return (doc);
+	return (p);
 }
 
 int	open_fds(char *redir, char *file)
 {
-	int	i;
+	int		i;
+	pid_t	p;
 
 	i = -1;
-	if (!ft_strcmp(redir, ">"))
+	if (!ft_strcmp(redir, "<<"))
+	{
+		unlink(".here_doc");
+		p = here_doc(file);
+		waitpid(p, 0, 0);
+		signal_global();
+		i = open(".here_doc", O_RDONLY);
+	}
+	else if (!ft_strcmp(redir, ">"))
 		i = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	else if (!ft_strcmp(redir, ">>"))
 		i = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
@@ -60,10 +77,6 @@ int	open_fds(char *redir, char *file)
 		else
 			i = -1;
 	}
-	else if (!ft_strcmp(redir, "<<"))
-		i = here_doc(file);
-	if (i == -1)
-		return (-1);
 	return (i);
 }
 
