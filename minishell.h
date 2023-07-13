@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/11 13:32:28 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/13 09:22:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_data
 	int			nodenmb;
 	t_cmd_st	*cmd_st;
 	pid_t		*pid;
+	int			pipefd[2];
 	int			fd_in;
 	int			fd_out;
 	int			logic_operator;
