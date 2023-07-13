@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:25 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/12 14:06:07 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/13 11:25:17 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ t_cmd_st	*init_cmd_st_node(t_data *data, int j, int d)
 		return (NULL);
 	c = j - 1;
 	get_fds(data->tokens, &fdin, &fdout, c + 1);
-	if ((fdin == -1 || fdout == -1) && int_free(cmd, 1))
-		return (NULL);
 	while (data->tokens[++c] && ft_strcmp(data->tokens[c], "|"))
 	{
 		while (data->tokens[c] && check_redir(data, c))

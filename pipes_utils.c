@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:19:52 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/13 10:02:43 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/13 11:24:39 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_fd_in(t_cmd_st *node, int j)
 {
-	if (node->redir_in > 0)
+	if (node->redir_in)
 		j = node->redir_in;
 	return (j);
 }
@@ -28,7 +28,7 @@ int	check_fd_out(t_cmd_st *node, int pipefd[2])
 		i = pipefd[1];
 	if (!node->next)
 		i = 1;
-	if (node->redir_out > 1)
+	if (node->redir_out > 1 || node->redir_out == -1)
 		i = node->redir_out;
 	return (i);
 }
