@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/13 09:23:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/13 10:55:44 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ int	child_exec_cmd(t_data *data, int in, int out, t_cmd_st *node)
 
 	p = -1;
 	if (dup2(in, STDIN_FILENO) < 0)
-		exit (1);
+		exit (update_exit_code(1, 1));
 	if (dup2(out, STDOUT_FILENO) < 0)
-		exit (1);
+		exit (update_exit_code(1, 1));
 	close(data->pipefd[0]);
 	if (node->fd_out > 2)
 		close(node->fd_out);
 	if (node->fd_in > 2)
 		close(node->fd_in);
 	subshell(data, node->cmd, &p);
-	exit (0);
+	exit (update_exit_code(0, 0));
 }
 
 int	forking(t_data *data, t_cmd_st *node, int flag)
@@ -41,10 +41,9 @@ int	forking(t_data *data, t_cmd_st *node, int flag)
 	}
 	data->pid[i] = fork();
 	if (data->pid[i] < 0)
-		return (1);
+		return (update_exit_code(1, 1));
 	if (data->pid[i] == 0)
-		if (child_exec_cmd(data, data->fd_in, data->fd_out, node) == 1)
-			exit (1);
+		child_exec_cmd(data, data->fd_in, data->fd_out, node);
 	if (node->fd_out > 2)
 		close(node->fd_out);
 	if (node->fd_in > 2)
@@ -56,10 +55,14 @@ int	forking(t_data *data, t_cmd_st *node, int flag)
 void	waiting(t_data *data)
 {
 	int	i;
+	int	status;
 
 	i = -1;
 	while (++i < st_size(data->cmd_st))
-		waitpid(data->pid[i], 0, 0);
+	{
+		waitpid(data->pid[i], &status, 0);
+		set_exit_code(WEXITSTATUS(status));
+	}
 }
 
 int	pipeline(t_data *data)
@@ -72,13 +75,13 @@ int	pipeline(t_data *data)
 	while (tmp)
 	{
 		if (tmp->next && pipe(data->pipefd))
-			return (1);
+			return (update_exit_code(1, 1));
 		data->fd_in = check_fd_in(tmp, data->fd_in);
 		data->fd_out = check_fd_out(tmp, data->pipefd);
 		tmp->fd_in = data->fd_in;
 		tmp->fd_out = data->fd_out;
 		if (forking(data, tmp, 1))
-			return (1);
+			return (update_exit_code(1, 1));
 		if (tmp->next)
 			data->fd_in = data->pipefd[0];
 		if (tmp->next)

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:19:52 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/12 12:06:45 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/13 10:02:43 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ int	check_pipe(char **tokens, t_data *data)
 			if (redirection(data))
 			{
 				free_cmd_st(data);
-				return (1);
+				return (update_exit_code(1, 1));
 			}
 			data->nodenmb = st_size(data->cmd_st);
 			data->pid = (pid_t *)malloc(sizeof(pid_t) * data->nodenmb);
 			pipeline(data);
 			free(data->pid);
 			free_cmd_st(data);
-			return (0);
+			return (update_exit_code(0, 0));
 		}
 	}
 	return (-1);
