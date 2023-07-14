@@ -21,7 +21,8 @@ int	child_exec_cmd(t_data *data, int in, int out, t_cmd_st *node)
 		exit (update_exit_code(1, 1));
 	if (dup2(out, STDOUT_FILENO) < 0)
 		exit (update_exit_code(1, 1));
-	close(data->pipefd[0]);
+	if (data->pipefd[0] > 2)
+		close(data->pipefd[0]);
 	if (node->fd_out > 2)
 		close(node->fd_out);
 	if (node->fd_in > 2)

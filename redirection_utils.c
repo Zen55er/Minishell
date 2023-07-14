@@ -99,7 +99,7 @@ int	get_fds(char **tokens, int *fdin, int *fdout, int c)
 			|| !ft_strcmp(tokens[c], "<<"))
 		{
 			*fdin = open_fds(tokens[c], tokens[c + 1]);
-			if (*fdin < 0)
+			if (*fdin == -1)
 				break ;
 		}
 		c++;

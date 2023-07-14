@@ -12,13 +12,6 @@
 
 #include "minishell.h"
 
-/*Runs at start of missing input to ignore ctrl+c and ctrl+\ signals.*/
-void	signal_input(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-}
-
 /*Changes ctrl+c (SIGINT) so that a new line is correctly displayed.
 Special case for child processes to not redisplay prompt.*/
 void	signal_cmd_handler(int sig)

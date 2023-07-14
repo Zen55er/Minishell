@@ -227,7 +227,6 @@ void				list_ranking(t_ll *env);
 void				print_ordered(t_ll *list);
 
 /*signals.c*/
-void				signal_input(void);
 void				signal_cmd_handler(int sig);
 void				signal_cmd(void);
 void				signal_handler(int sig);
@@ -276,6 +275,7 @@ char				*format_str(char *str, int flag);
 int					print_error(char *src, char *str, char *err, int flag);
 int					update_exit_code(int error_code, int update);
 void				set_exit_code(int exit_code);
+int					update_missing_input(int update, int new);
 
 /*subshell.c*/
 void				subshell(t_data *data, char **tokens, int *token);
