@@ -68,7 +68,8 @@ t_cmd_st	*init_cmd_st_node(t_data *data, int j, int d)
 	if (!cmd)
 		return (NULL);
 	c = j - 1;
-	get_fds(data->tokens, &fdin, &fdout, c + 1);
+	if (get_fds(data->tokens, &fdin, &fdout, c + 1) && int_free(cmd, 1))
+		return (NULL);
 	while (data->tokens[++c] && ft_strcmp(data->tokens[c], "|"))
 	{
 		while (data->tokens[c] && check_redir(data, c))

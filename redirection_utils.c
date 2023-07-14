@@ -55,6 +55,7 @@ pid_t	here_doc(char *limiter)
 int	open_fds(char *redir, char *file)
 {
 	int		i;
+	int		status;
 	pid_t	p;
 
 	i = -1;
@@ -62,8 +63,10 @@ int	open_fds(char *redir, char *file)
 	{
 		unlink(".here_doc");
 		p = here_doc(file);
-		waitpid(p, 0, 0);
+		waitpid(p, &status, 0);
 		signal_global();
+		if (WIFSIGNALED(status) && WTERMSIG(status) == 2 && printf("\n"))
+			return (-2);
 		i = open(".here_doc", O_RDONLY);
 	}
 	else if (!ft_strcmp(redir, ">"))
@@ -74,13 +77,14 @@ int	open_fds(char *redir, char *file)
 	{
 		if (!access(file, R_OK))
 			i = open(file, O_RDONLY);
+		/*Can be removed?*/
 		else
 			i = -1;
 	}
 	return (i);
 }
 
-void	get_fds(char **tokens, int *fdin, int *fdout, int c)
+int	get_fds(char **tokens, int *fdin, int *fdout, int c)
 {
 	while (tokens[c] && ft_strcmp(tokens[c], "|"))
 	{
@@ -95,11 +99,14 @@ void	get_fds(char **tokens, int *fdin, int *fdout, int c)
 			|| !ft_strcmp(tokens[c], "<<"))
 		{
 			*fdin = open_fds(tokens[c], tokens[c + 1]);
-			if (*fdin == -1)
+			if (*fdin < 0)
 				break ;
 		}
 		c++;
 	}
 	if (*fdout == -1 || *fdin == -1)
 		print_error(tokens[c + 1], 0, "No such file or directory", 0);
+	if (*fdin == -2)
+		return (1);
+	return (0);
 }

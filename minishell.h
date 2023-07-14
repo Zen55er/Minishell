@@ -172,10 +172,9 @@ void				data_cmd_st_add_back(t_cmd_st **lst, t_cmd_st *node);
 t_cmd_st			*add_cmd_st(char **cmd, int fdin, int fdout);
 int					check_redir(t_data *data, int c);
 
-/*redirections utils*/
-void				count_pipes(t_data *data);
+/*redirection utils*/
 int					count_args(t_data *data, int j);
-void				get_fds(char **tokens, int *fdin, int *fdout, int c);
+int					get_fds(char **tokens, int *fdin, int *fdout, int c);
 
 /*commands.c*/
 int					delim_tok(char *token);
