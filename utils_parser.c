@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/11 11:26:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/14 16:50:50 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	check_consecutive(char *tok1, char *tok2)
 		|| (!ft_strcmp(tok2, "(") && (!ft_strcmp(tok1, ">>")
 				|| !ft_strcmp(tok1, "<<")
 				|| !ft_strcmp(tok1, ">") || !ft_strcmp(tok1, "<"))))
-		return (syntax_error(tok2));
+		return (print_error("syntax error near unexpected token", tok2, 0, 2));
 	return (0);
 }
 
@@ -78,12 +78,12 @@ int	validate_tokens2(char **tokens, int i)
 	if (i == 0 && (!ft_strcmp(tokens[i], "|")
 			|| !ft_strcmp(tokens[i], "||")
 			|| !ft_strcmp(tokens[i], "&&")))
-		return (syntax_error(tokens[i]));
+		return (print_error("syntax error near unexpected token", tokens[i], 0, 2));
 	else if (!tokens[i + 1] && (!ft_strcmp(tokens[i], ">")
 			|| !ft_strcmp(tokens[i], "<")
 			|| !ft_strcmp(tokens[i], ">>")
 			|| !ft_strcmp(tokens[i], "<<")))
-		return (syntax_error("newline"));
+		return (print_error("syntax error near unexpected token", "newline", 0, 2));
 	return (0);
 }
 
@@ -101,11 +101,11 @@ int	validate_tokens(char **tokens)
 		if (!ft_strcmp(tokens[i], "("))
 		{
 			if (i > 0 && !delim_tok(tokens[i - 1]))
-				return (syntax_error(tokens[i]));
+				return (print_error("syntax error near unexpected token", tokens[i], 0, 2));
 			flag++;
 		}
 		if (!ft_strcmp(tokens[i], ")") && !flag)
-			return (syntax_error(tokens[i]));
+			return (print_error("syntax error near unexpected token", tokens[i], 0, 2));
 		else if (!ft_strcmp(tokens[i], ")") && flag)
 			flag--;
 		if (validate_tokens2(tokens, i))

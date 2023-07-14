@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_code.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 08:43:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/06 10:08:10 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/14 16:55:38 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ char	*format_str(char *str, int flag)
 	if (flag)
 	{
 		temp2 = ft_strjoin("`", str);
-		temp1 = ft_strjoin(temp2, "': ");
+		if (flag == 1)
+			temp1 = ft_strjoin(temp2, "': ");
+		else
+			temp1 = ft_strjoin(temp2, "'");
 		free(temp2);
 	}
 	else
@@ -35,7 +38,15 @@ int	print_error(char *src, char *str, char *err, int flag)
 	char	*temp1;
 	char	*temp2;
 
-	temp1 = ft_strjoin(src, ": ");
+	if (src)
+	{
+		if (flag != 2)
+			temp1 = ft_strjoin(src, ": ");
+		else
+			temp1 = ft_strjoin(src, " ");
+	}
+	else
+		temp1 = ft_strdup("");
 	temp2 = ft_strjoin("minishell: ", temp1);
 	free(temp1);
 	if (str)
@@ -43,7 +54,10 @@ int	print_error(char *src, char *str, char *err, int flag)
 		temp1 = format_str(str, flag);
 		temp2 = ft_strjoin_free(temp2, temp1);
 	}
-	temp1 = ft_strjoin(err, "\n");
+	if (err)
+		temp1 = ft_strjoin(err, "\n");
+	else
+		temp1 = ft_strdup("\n");
 	temp1 = ft_strjoin_free(temp2, temp1);
 	ft_putstr_fd(temp1, STDERR_FILENO);
 	free(temp1);

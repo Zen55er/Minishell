@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/12 08:19:36 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:46:57 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	init(t_data *data, char **envp)
 	data->logic_operator = 0;
 	data->cmd_st = 0;
 	data->permission_flag = 0;
+	data->pipefd[0] = -1;
+	data->pipefd[1] = -1;
 	signal_global();
 	prep_env(data, envp);
 	update_curr_prev(data);

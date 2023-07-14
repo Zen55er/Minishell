@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 11:51:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/14 16:18:36 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,11 @@ int	validate_var(char **tokens, int tok)
 int	export_arg(t_data *data, char **tokens, int tok)
 {
 	int	i;
+	int	f;
 
+	f = 0;
 	if (!tokens[tok + 1] || delim_tok(tokens[tok + 1]))
-		return (0);
+		return (OK_EXIT);
 	while (tokens[++tok])
 	{
 		if (delim_tok(tokens[tok]))
@@ -81,9 +83,8 @@ int	export_arg(t_data *data, char **tokens, int tok)
 		quotes_delimiter_full(tokens, tok);
 		if (validate_var(tokens, tok))
 		{
-			if (tokens[tok + 1])
-				continue ;
-			return (1);
+			f = 1;
+			continue ;
 		}
 		i = char_finder(tokens[tok], '=');
 		if ((tokens[tok][0] == '_' && !tokens[tok][1])
@@ -91,7 +92,9 @@ int	export_arg(t_data *data, char **tokens, int tok)
 			continue ;
 		add_to_env(data, tok, i);
 	}
-	return (0);
+	if (f)
+		return (ERROR_EXIT);
+	return (OK_EXIT);
 }
 
 /*With no arguments simply prints env alphabetically,
