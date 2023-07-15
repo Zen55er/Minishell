@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/14 16:50:50 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/15 17:17:29 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	validate_tokens2(char **tokens, int i)
 			|| !ft_strcmp(tokens[i], "&&")))
 		return (print_error("syntax error near unexpected token", tokens[i], 0, 2));
 	else if (!tokens[i + 1] && (!ft_strcmp(tokens[i], ">")
+			|| !ft_strcmp(tokens[i], "|")
 			|| !ft_strcmp(tokens[i], "<")
 			|| !ft_strcmp(tokens[i], ">>")
 			|| !ft_strcmp(tokens[i], "<<")))

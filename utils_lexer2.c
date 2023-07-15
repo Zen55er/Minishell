@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/14 14:47:51 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/15 17:13:31 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,8 @@ int	validate_input(char **str)
 				exit = missing_input_fork(str, match);
 			i += char_finder(*str + i, (*str)[i]);
 		}
-		else if (i && ((*str)[i] == '|' || (*str)[i] == '&'))
+		else if (i && (((*str)[i] == '|' && (*str)[i - 1] == '|')
+					|| (*str)[i] == '&'))
 			exit = check_end(str, i);
 		if (exit)
 			return (exit);
