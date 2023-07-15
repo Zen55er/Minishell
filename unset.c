@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 09:27:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 11:52:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/14 16:13:54 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	unset_var(t_ll **list, int count)
 
 /*Checks each node of list until it finds one which has a matching variable
 before calling unset_var*/
-int	check_unset(t_data *data, t_ll **list, int token)
+int	check_unset(t_data *data, t_ll **list, int token, int *i)
 {
 	t_ll	*temp;
 	int		count;
@@ -53,6 +53,12 @@ int	check_unset(t_data *data, t_ll **list, int token)
 		return (0);
 	temp = *list;
 	count = 0;
+	if (data->tokens[token][ft_strlen(data->tokens[token]) - 1] == '=')
+	{
+		*i = 1;
+		return (print_error("unset", data->tokens[token]
+				, "not a valid identifier", 1));
+	}
 	while (temp)
 	{
 		if (!ft_strcmp(data->tokens[token], temp->var))
@@ -66,21 +72,26 @@ int	check_unset(t_data *data, t_ll **list, int token)
 /*If given an argument, checks if it is a variable in env and deletes node*/
 int	cmd_unset(t_data *data, char **tokens, int tok)
 {
+	int	i;
+
+	i = 0;
 	if (!tokens[tok + 1] || delim_tok(tokens[tok + 1]))
 		return (OK_EXIT);
 	while (tokens[++tok])
 	{
 		if (delim_tok(tokens[tok]))
 			break ;
-		if (!ft_isalpha(tokens[tok][0]) && tokens[tok][0] != '_')
+		quotes_delimiter_full(tokens, tok);
+		if (validate_var(tokens, tok))
 		{
-			printf("unset: '%c': not a valid identifier\n",
-				tokens[tok][0]);
+			i = 1;
 			continue ;
 		}
 		if ((tokens[tok][0] == '_' && !tokens[tok][1])
-			|| check_unset(data, &data->env, tok))
+			|| check_unset(data, &data->env, tok, &i))
 			continue ;
 	}
+	if (i)
+		return (ERROR_EXIT);
 	return (OK_EXIT);
 }

@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/13 12:10:36 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/14 16:14:15 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ int					cmd_export(t_data *data, char **tokens, int token);
 
 /*unset.c*/
 int					unset_var(t_ll **list, int count);
-int					check_unset(t_data *data, t_ll **list, int token);
+int					check_unset(t_data *data, t_ll **list, int token, int *i);
 int					cmd_unset(t_data *data, char **tokens, int tok);
 
 /*utils_export.c*/
