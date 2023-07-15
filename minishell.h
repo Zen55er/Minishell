@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/14 16:14:15 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/15 16:12:56 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ int					check_redir(t_data *data, int c);
 /*redirection utils*/
 int					count_args(t_data *data, int j);
 int					get_fds(char **tokens, int *fdin, int *fdout, int c);
+void				ctrl_d_error(char *limiter);
 
 /*commands.c*/
 int					delim_tok(char *token);

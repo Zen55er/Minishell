@@ -6,11 +6,54 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:52:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/13 15:07:39 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/15 17:01:01 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ctrl_d_error(char *limiter)
+{
+	char			*tmp;
+	int				fd;
+	static int		n;
+	char			*s2;
+	int				test;
+
+	printf("%d\n", n);
+	test = 0;
+	fd = open(".here_doc", O_RDONLY);
+	tmp = get_next_line(fd);
+	if (n)
+		n++;
+	while (tmp && int_free(tmp, 1))
+	{
+		if (!ft_strcmp(tmp, limiter))
+			test = 1;
+		tmp = get_next_line(fd);
+		if (tmp)
+		{
+			test = 0;
+			n++;
+		}
+	}
+	if (test)
+	{
+		free(tmp);
+		return ;
+	}
+	free(tmp);
+	close(fd);
+	tmp = ft_strdup("minishell: warning: here-document at line ");
+	s2 = ft_itoa(n);
+	tmp = ft_strjoin_free(tmp, s2);
+	s2 = ft_strdup(" delimited by end-of-file (wanted `");
+	tmp = ft_strjoin_free(tmp, s2);
+	s2 = ft_strjoin(limiter, "')\n");
+	tmp = ft_strjoin_free(tmp, s2);
+	ft_putstr_fd(tmp, 2);
+	free(tmp);
+}
 
 int	count_args(t_data *data, int j)
 {
@@ -37,7 +80,7 @@ pid_t	here_doc(char *limiter)
 		doc = open(".here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
 		while (1)
 		{
-			write(1, "here_doc>", 9);
+			write(1, "here_doc> ", 10);
 			buf = get_next_line(STDIN_FILENO);
 			if (!buf || (!ft_strncmp(buf, limiter, ft_strlen(limiter))
 					&& buf[ft_strlen(limiter)] == '\n'))
@@ -45,8 +88,8 @@ pid_t	here_doc(char *limiter)
 			write(doc, buf, ft_strlen(buf));
 			free(buf);
 		}
-		free(buf);
 		close (doc);
+		free(buf);
 		exit(0);
 	}
 	return (p);
@@ -61,9 +104,9 @@ int	open_fds(char *redir, char *file)
 	i = -1;
 	if (!ft_strcmp(redir, "<<"))
 	{
-		unlink(".here_doc");
 		p = here_doc(file);
 		waitpid(p, &status, 0);
+		ctrl_d_error(file);
 		signal_global();
 		if (WIFSIGNALED(status) && WTERMSIG(status) == 2 && printf("\n"))
 			return (-2);
@@ -74,13 +117,8 @@ int	open_fds(char *redir, char *file)
 	else if (!ft_strcmp(redir, ">>"))
 		i = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
 	else if (!ft_strcmp(redir, "<"))
-	{
 		if (!access(file, R_OK))
 			i = open(file, O_RDONLY);
-		/*Can be removed?*/
-		else
-			i = -1;
-	}
 	return (i);
 }
 

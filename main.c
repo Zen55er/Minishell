@@ -6,7 +6,7 @@
 /*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/14 14:46:57 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/15 16:22:19 by mpatrao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	init(t_data *data, char **envp)
 	signal_global();
 	prep_env(data, envp);
 	update_curr_prev(data);
+	unlink(".here_doc");
 }
 
 int	main(int ac, char **av, char **envp)
@@ -110,7 +111,6 @@ int	main(int ac, char **av, char **envp)
 		if (!lexer(&data, &input))
 			if (!parser(&data))
 				executor(&data, data.tokens, 0);
-		unlink(".here_doc");
 	}
 	free_all(0, &data);
 	return (update_exit_code(0, 0));
