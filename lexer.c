@@ -118,6 +118,7 @@ int	lexer(t_data *data, char **input)
 	if (tok_num <= 0)
 	{
 		free(*input);
+		update_exit_code(1, 1);
 		return (1);
 	}
 	data->tokens = (char **)malloc(sizeof(char *) * (tok_num + 1));

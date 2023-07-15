@@ -12,31 +12,84 @@
 
 #include "minishell.h"
 
+/*Reads missing input from file.*/
+int	read_missing(char **input, char *file)
+{
+	int		input_fd;
+	char	*new_input;
+	char	*temp;
+
+	input_fd = open(file, O_RDONLY);
+	if (input_fd == -1)
+		return (1);
+	new_input = ft_strdup("");
+	while (1)
+	{
+		temp = get_next_line(input_fd);
+		if (!temp)
+			break ;
+		new_input = ft_strjoin_free(new_input, temp);
+	}
+	close(input_fd);
+	unlink(file);
+	update_input(input, new_input);
+	return (0);
+}
+
+/*Prepares missing input fd to read remaining input.*/
+int	missing_input_fork(char **input, char match)
+{
+	int		status;
+	pid_t	pid;
+
+	signal(SIGINT, SIG_IGN);
+	unlink(".missing_input");
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("missing_input fork");
+		return (1);
+	}
+	if (!pid)
+		missing_input(input, match);
+	waitpid(pid, &status, 0);
+	signal_global();
+	if (WIFEXITED(status) && WEXITSTATUS(status))
+		return (1);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == 2 && printf("\n"))
+		return (CTRL_C);
+	if (read_missing(input, ".missing_input"))
+		return (1);
+	return (0);
+}
+
 /*Requests extra input from user and updates input string*/
 int	missing_input(char **input, char match)
 {
+	int		input_fd;
 	char	*temp;
-	char	*extra;
 
-	signal_input();
-	extra = ft_strdup(" ");
+	signal(SIGINT, SIG_DFL);
+	input_fd = open(".missing_input", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	write(input_fd, " ", 1);
 	while (1)
 	{
 		write(STDOUT_FILENO, "> ", 2);
 		temp = get_next_line(STDIN_FILENO);
 		if (!temp)
 			break ;
-		if (temp[0] == '\n' && int_free(temp, 1))
+		if (match == '\n' && temp[0] == '\n' && int_free(temp, 1))
 			continue ;
-		extra = ft_strjoin_free(extra, temp);
-		if (extra[0] == match || char_finder(extra, match))
+		write(input_fd, temp, ft_strlen(temp));
+		if (temp[0] == match || char_finder(temp, match))
 			break ;
+		free(temp);
 	}
-	if (extra[0] != match && !char_finder(extra, match) && int_free(extra, 1))
-		return (unexpected_eof(input, match));
-	update_input(input, extra);
-	signal_global();
-	return (0);
+	if (temp[0] != match && !char_finder(temp, match) && int_free(temp, 1))
+		exit (unexpected_eof(input, match));
+	free(temp);
+	close(input_fd);
+	exit (0);
 }
 
 /*If input ends in |, || or &&, calls missing input to complete it.*/
@@ -51,7 +104,7 @@ int	check_end(char **input, int i)
 	while ((*input)[i] && ft_isspace((*input)[i]))
 		i++;
 	if (!(*input)[i])
-		return (missing_input(input, '\n'));
+		return (missing_input_fork(input, '\n'));
 	return (0);
 }
 
@@ -87,7 +140,7 @@ int	validate_input(char **str)
 		{
 			match = get_match((*str)[i]);
 			if (!char_finder(*str, match))
-				exit = missing_input(str, match);
+				exit = missing_input_fork(str, match);
 			i += char_finder(*str + i, (*str)[i]);
 		}
 		else if (i && ((*str)[i] == '|' || (*str)[i] == '&'))

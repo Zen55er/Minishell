@@ -114,6 +114,8 @@ int					quote_case(char *str);
 int					special_dollar(char *str);
 
 /*utils_lexer2.c*/
+int					read_missing(char **input, char *file);
+int					missing_input_fork(char **input, char match);
 int					missing_input(char **input, char match);
 int					check_end(char **input, int i);
 int					jump_quotes(char *str, int i, char quote);

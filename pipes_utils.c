@@ -75,7 +75,8 @@ int	check_pipe(char **tokens, t_data *data)
 			if (redirection(data))
 			{
 				free_cmd_st(data);
-				return (update_exit_code(1, 1));
+				set_exit_code(1);
+				return (1);
 			}
 			data->nodenmb = st_size(data->cmd_st);
 			data->pid = (pid_t *)malloc(sizeof(pid_t) * data->nodenmb);

@@ -88,25 +88,20 @@ int	get_fds(char **tokens, int *fdin, int *fdout, int c)
 {
 	while (tokens[c] && ft_strcmp(tokens[c], "|"))
 	{
-		if (!ft_strcmp(tokens[c], ">")
-			|| !ft_strcmp(tokens[c], ">>"))
-		{
+		if (!ft_strcmp(tokens[c], ">") || !ft_strcmp(tokens[c], ">>"))
 			*fdout = open_fds(tokens[c], tokens[c + 1]);
-			if (*fdout == -1)
-				break ;
-		}
-		else if (!ft_strcmp(tokens[c], "<")
-			|| !ft_strcmp(tokens[c], "<<"))
-		{
+		else if (!ft_strcmp(tokens[c], "<") || !ft_strcmp(tokens[c], "<<"))
 			*fdin = open_fds(tokens[c], tokens[c + 1]);
-			if (*fdin == -1)
-				break ;
-		}
+		if (*fdin == -1 || *fdout == -1)
+			break ;
 		c++;
 	}
 	if (*fdout == -1 || *fdin == -1)
 		print_error(tokens[c + 1], 0, "No such file or directory", 0);
 	if (*fdin == -2)
+	{
+		set_exit_code(CTRL_C);
 		return (1);
+	}
 	return (0);
 }
