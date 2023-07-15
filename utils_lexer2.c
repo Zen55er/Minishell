@@ -56,7 +56,8 @@ int	missing_input_fork(char **input, char match)
 	signal_global();
 	if (WIFEXITED(status) && WEXITSTATUS(status))
 		return (1);
-	if (WIFSIGNALED(status) && WTERMSIG(status) == 2 && printf("\n"))
+	if (WIFSIGNALED(status) && WTERMSIG(status) == 2 && printf("\n")
+		&& !unlink(".missing_input"))
 		return (CTRL_C);
 	if (read_missing(input, ".missing_input"))
 		return (1);

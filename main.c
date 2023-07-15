@@ -110,6 +110,7 @@ int	main(int ac, char **av, char **envp)
 		if (!lexer(&data, &input))
 			if (!parser(&data))
 				executor(&data, data.tokens, 0);
+		unlink(".here_doc");
 	}
 	free_all(0, &data);
 	return (update_exit_code(0, 0));
