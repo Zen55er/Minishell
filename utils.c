@@ -53,18 +53,14 @@ match is newline (replaces input with exit 2 to exit minishell),
 otherwise minishell does not exit and the prompt will be updated.*/
 int	unexpected_eof(char **input, char c)
 {
-	if (c == '\n')
+	if (c == '}')
+		print_error("unexpected EOF while looking for matching", "}", 0, 2);
+	print_error("syntax error: unexpected end of file", 0, 0, 2);
+	if (c != '}')
 	{
-		printf("minishell: syntax error: unexpected end of file\n");
 		free (*input);
 		*input = (char *)malloc(sizeof(char) * 7);
 		ft_strlcpy(*input, "exit 2", 7);
-		return (0);
-	}
-	else
-	{
-		printf("minishell: unexpected EOF while looking for matching`%c'\n", c);
-		printf("minishell: syntax error: unexpected end of file\n");
 	}
 	return (ERROR_MISUSE);
 }

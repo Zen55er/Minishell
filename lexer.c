@@ -111,8 +111,11 @@ int	lexer(t_data *data, char **input)
 	if (exit)
 	{
 		update_exit_code(exit, 1);
-		free(*input);
-		return (1);
+		if (ft_strcmp(*input, "exit 2"))
+		{
+			free(*input);
+			return (1);
+		}
 	}
 	tok_num = count_tokens(*input);
 	if (tok_num <= 0)

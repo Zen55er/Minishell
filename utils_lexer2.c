@@ -51,11 +51,11 @@ int	missing_input_fork(char **input, char match)
 		return (1);
 	}
 	if (!pid)
-		missing_input(input, match);
+		missing_input(match);
 	waitpid(pid, &status, 0);
 	signal_global();
 	if (WIFEXITED(status) && WEXITSTATUS(status))
-		return (1);
+		return (unexpected_eof(input, match));
 	if (WIFSIGNALED(status) && WTERMSIG(status) == 2 && printf("\n")
 		&& !unlink(".missing_input"))
 		return (CTRL_C);
@@ -65,7 +65,7 @@ int	missing_input_fork(char **input, char match)
 }
 
 /*Requests extra input from user and updates input string*/
-int	missing_input(char **input, char match)
+int	missing_input(char match)
 {
 	int		input_fd;
 	char	*temp;
@@ -86,10 +86,11 @@ int	missing_input(char **input, char match)
 			break ;
 		free(temp);
 	}
-	if (temp[0] != match && !char_finder(temp, match) && int_free(temp, 1))
-		exit (unexpected_eof(input, match));
-	free(temp);
 	close(input_fd);
+	if (!temp || (temp[0] != match && !char_finder(temp, match)
+			&& int_free(temp, 1)))
+		exit (ERROR_MISUSE);
+	free(temp);
 	exit (0);
 }
 
@@ -146,7 +147,7 @@ int	validate_input(char **str)
 		}
 		else if (i && ((*str)[i] == '|' || (*str)[i] == '&'))
 			exit = check_end(str, i);
-		if (exit || !ft_strcmp(*str, "exit 2"))
+		if (exit)
 			return (exit);
 	}
 	return (0);

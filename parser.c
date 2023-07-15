@@ -117,6 +117,7 @@ int	parser(t_data	*data)
 	if (validate_tokens(data->tokens))
 	{
 		free_double(&(data->tokens));
+		update_exit_code(ERROR_MISUSE, 1);
 		return (1);
 	}
 	i = -1;
