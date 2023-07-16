@@ -88,8 +88,7 @@ int	compare_wc(char *token, char *content)
 		else
 			return_to_previous(&i, &j, &prev_wc, &backtrack);
 	}
-	if ((!token[i] && token[i - 1] != '*' && j && content[j])
-		|| !final_wc_check(i, token))
+	if (!final_wc_check(i, token))
 		return (0);
 	return (1);
 }
