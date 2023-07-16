@@ -67,7 +67,7 @@ char	*expansion(t_data *data, char *s)
 		j = i + 1;
 		while (s[j] && s[j] != '$' && s[j] != '}' && s[j] != '\'' && s[j] != ' '
 			&& s[j] != '\"' && s[j] != '/' && s[j] != '*' && j++)
-			if (s[j - 1] == '?' && j == i + 2)
+			if ((s[j - 1] == '?' && j == i + 2) || (ft_isdigit(s[j - 1]) && ft_isdigit(s[j])))
 				break ;
 		val = update_expansion(data, val, ft_substr(s, i, j - i));
 		i = j;
