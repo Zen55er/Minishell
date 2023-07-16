@@ -14,13 +14,11 @@
 
 void	ctrl_d_error(char *limiter)
 {
-	char			*tmp;
-	int				fd;
-	static int		n;
-	char			*s2;
-	int				test;
+	char		*tmp;
+	int			fd;
+	static int	n;
+	int			test;
 
-	printf("%d\n", n);
 	test = 0;
 	fd = open(".here_doc", O_RDONLY);
 	tmp = get_next_line(fd);
@@ -31,28 +29,14 @@ void	ctrl_d_error(char *limiter)
 		if (!ft_strcmp(tmp, limiter))
 			test = 1;
 		tmp = get_next_line(fd);
-		if (tmp)
-		{
+		if (tmp && ++n)
 			test = 0;
-			n++;
-		}
 	}
-	if (test)
-	{
-		free(tmp);
+	if (test && int_free(tmp, 1))
 		return ;
-	}
 	free(tmp);
 	close(fd);
-	tmp = ft_strdup("minishell: warning: here-document at line ");
-	s2 = ft_itoa(n);
-	tmp = ft_strjoin_free(tmp, s2);
-	s2 = ft_strdup(" delimited by end-of-file (wanted `");
-	tmp = ft_strjoin_free(tmp, s2);
-	s2 = ft_strjoin(limiter, "')\n");
-	tmp = ft_strjoin_free(tmp, s2);
-	ft_putstr_fd(tmp, 2);
-	free(tmp);
+	print_error2(limiter, &n);
 }
 
 int	count_args(t_data *data, int j)

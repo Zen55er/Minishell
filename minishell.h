@@ -118,12 +118,13 @@ int					read_missing(char **input, char *file);
 int					missing_input_fork(char **input, char match);
 int					missing_input(char match);
 int					check_end(char **input, int i);
-int					jump_quotes(char *str, int i, char quote);
 int					validate_input(char **input);
 
 /*utils_lexer3.c*/
 char				get_match(char c);
 void				update_input(char **input, char *extra);
+int					jump_quotes(char *str, int i, char quote);
+int					check_end_chars(char *str, int i);
 
 /*logical_operators.c*/
 int					skip_parentheses(char **tokens, int i);
@@ -158,26 +159,31 @@ int					check_skip(t_data *data, char **tokens, int *i);
 void				executor(t_data *data, char **tokens, int flag);
 
 /*pipes*/
+int					child_exec_cmd(t_data *data, int in, int out, t_cmd_st *nd);
+int					forking(t_data *data, t_cmd_st *node, int flag);
+void				waiting(t_data *data);
 int					pipeline(t_data *data);
 
 /*pipes_utils*/
 int					check_fd_in(t_cmd_st *node, int j);
 int					check_fd_out(t_cmd_st *node, int pipefd[2]);
 int					st_size(t_cmd_st *list);
-int					check_pipe(char **tokens, t_data *data);
 void				free_cmd_st(t_data *data);
+int					check_pipe(char **tokens, t_data *data);
 
 /*redirection*/
-int					redirection(t_data *data);
-t_cmd_st			*init_cmd_st_node(t_data *data, int j, int d);
-void				data_cmd_st_add_back(t_cmd_st **lst, t_cmd_st *node);
-t_cmd_st			*add_cmd_st(char **cmd, int fdin, int fdout);
 int					check_redir(t_data *data, int c);
+t_cmd_st			*add_cmd_st(char **cmd, int fdin, int fdout);
+void				data_cmd_st_add_back(t_cmd_st **lst, t_cmd_st *node);
+t_cmd_st			*init_cmd_st_node(t_data *data, int j, int d);
+int					redirection(t_data *data);
 
 /*redirection utils*/
-int					count_args(t_data *data, int j);
-int					get_fds(char **tokens, int *fdin, int *fdout, int c);
 void				ctrl_d_error(char *limiter);
+int					count_args(t_data *data, int j);
+pid_t				here_doc(char *limiter);
+int					open_fds(char *redir, char *file);
+int					get_fds(char **tokens, int *fdin, int *fdout, int c);
 
 /*commands.c*/
 int					delim_tok(char *token);
@@ -219,15 +225,15 @@ int					validate_var(char **tokens, int tok);
 int					export_arg(t_data *data, char **tokens, int tok);
 int					cmd_export(t_data *data, char **tokens, int token);
 
-/*unset.c*/
-int					unset_var(t_ll **list, int count);
-int					check_unset(t_data *data, t_ll **list, int token, int *i);
-int					cmd_unset(t_data *data, char **tokens, int tok);
-
 /*utils_export.c*/
 void				rank_reset(t_ll *env);
 void				list_ranking(t_ll *env);
 void				print_ordered(t_ll *list);
+
+/*unset.c*/
+int					unset_var(t_ll **list, int count);
+int					check_unset(t_data *data, t_ll **list, int token, int *i);
+int					cmd_unset(t_data *data, char **tokens, int tok);
 
 /*signals.c*/
 void				signal_cmd_handler(int sig);
@@ -238,7 +244,7 @@ void				signal_global(void);
 /*utils*/
 char				*get_end_cmd(char *str);
 int					bad_substitution(char *str, int end);
-int					syntax_error(char *str);
+int					check_end_var(char *str, int *j);
 int					unexpected_eof(char **input, char c);
 unsigned long long	ft_atoull(const char *nptr);
 
@@ -276,11 +282,13 @@ void				reorder_list(t_ll **matches);
 /*exit_code.c*/
 char				*format_str(char *str, int flag);
 int					print_error(char *src, char *str, char *err, int flag);
+void				print_error2(char *limiter, int *n);
 int					update_exit_code(int error_code, int update);
 void				set_exit_code(int exit_code);
-int					update_missing_input(int update, int new);
 
 /*subshell.c*/
+int					count_sub_tokens(char **tokens, int token);
+void				assign_subs(char **tokens, char **sub_tokens, int *token);
 void				subshell(t_data *data, char **tokens, int *token);
 
 #endif

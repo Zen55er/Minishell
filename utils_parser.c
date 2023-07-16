@@ -78,13 +78,15 @@ int	validate_tokens2(char **tokens, int i)
 	if (i == 0 && (!ft_strcmp(tokens[i], "|")
 			|| !ft_strcmp(tokens[i], "||")
 			|| !ft_strcmp(tokens[i], "&&")))
-		return (print_error("syntax error near unexpected token", tokens[i], 0, 2));
+		return (print_error("syntax error near unexpected token",
+				tokens[i], 0, 2));
 	else if (!tokens[i + 1] && (!ft_strcmp(tokens[i], ">")
 			|| !ft_strcmp(tokens[i], "|")
 			|| !ft_strcmp(tokens[i], "<")
 			|| !ft_strcmp(tokens[i], ">>")
 			|| !ft_strcmp(tokens[i], "<<")))
-		return (print_error("syntax error near unexpected token", "newline", 0, 2));
+		return (print_error("syntax error near unexpected token",
+				"newline", 0, 2));
 	return (0);
 }
 
@@ -102,11 +104,13 @@ int	validate_tokens(char **tokens)
 		if (!ft_strcmp(tokens[i], "("))
 		{
 			if (i > 0 && !delim_tok(tokens[i - 1]))
-				return (print_error("syntax error near unexpected token", tokens[i], 0, 2));
+				return (print_error("syntax error near unexpected token",
+						tokens[i], 0, 2));
 			flag++;
 		}
 		if (!ft_strcmp(tokens[i], ")") && !flag)
-			return (print_error("syntax error near unexpected token", tokens[i], 0, 2));
+			return (print_error("syntax error near unexpected token",
+					tokens[i], 0, 2));
 		else if (!ft_strcmp(tokens[i], ")") && flag)
 			flag--;
 		if (validate_tokens2(tokens, i))

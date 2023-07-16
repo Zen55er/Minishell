@@ -65,9 +65,9 @@ char	*expansion(t_data *data, char *s)
 		if (j && expansion_join(&val, s, &i, &j))
 			continue ;
 		j = i + 1;
-		while (s[j] && s[j] != '$' && s[j] != '}' && s[j] != '\'' && s[j] != ' '
-			&& s[j] != '\"' && s[j] != '/' && s[j] != '*' && j++)
-			if ((s[j - 1] == '?' && j == i + 2) || (ft_isdigit(s[j - 1]) && ft_isdigit(s[j])))
+		while (check_end_var(s, &j))
+			if ((s[j - 1] == '?' && j == i + 2)
+				|| (ft_isdigit(s[j - 1]) && ft_isdigit(s[j])))
 				break ;
 		val = update_expansion(data, val, ft_substr(s, i, j - i));
 		i = j;
@@ -127,7 +127,5 @@ int	parser(t_data	*data)
 			fix_tokens_wc(data, &i);
 		data->tokens[i] = token_parser(data, data->tokens[i]);
 	}
-	//for (int i = 0; data->tokens[i]; i++)
-		//printf("Token %i: :%s:\n", i, data->tokens[i]);
 	return (0);
 }

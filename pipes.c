@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	child_exec_cmd(t_data *data, int in, int out, t_cmd_st *node)
+int	child_exec_cmd(t_data *data, int in, int out, t_cmd_st *nd)
 {
 	int	p;
 
@@ -23,11 +23,11 @@ int	child_exec_cmd(t_data *data, int in, int out, t_cmd_st *node)
 		exit (update_exit_code(1, 1));
 	if (data->pipefd[0] > 2)
 		close(data->pipefd[0]);
-	if (node->fd_out > 2)
-		close(node->fd_out);
-	if (node->fd_in > 2)
-		close(node->fd_in);
-	subshell(data, node->cmd, &p);
+	if (nd->fd_out > 2)
+		close(nd->fd_out);
+	if (nd->fd_in > 2)
+		close(nd->fd_in);
+	subshell(data, nd->cmd, &p);
 	exit (update_exit_code(0, 0));
 }
 

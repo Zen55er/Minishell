@@ -37,3 +37,24 @@ void	update_input(char **input, char *extra)
 	free(temp);
 	free(extra);
 }
+
+/*Returns index of next matching quote (or end of str).
+If there is no matching quote and the string ends, returns the index
+of the previous character to avoid a heap overflow in validate_input.*/
+int	jump_quotes(char *str, int i, char quote)
+{
+	while (str[++i] && str[i] != quote)
+		continue ;
+	if (!str[i])
+		return (i - 1);
+	return (i);
+}
+
+/*Checks if final characters are && or || to call check end in validate input.
+Needed for norm.*/
+int	check_end_chars(char *str, int i)
+{
+	if ((str[i] == '|' && str[i - 1] == '|') || str[i] == '&')
+		return (1);
+	return (0);
+}

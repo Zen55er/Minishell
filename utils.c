@@ -40,11 +40,15 @@ int	bad_substitution(char *str, int end)
 	return (-1);
 }
 
-/*Error message for token validation.*/
-int	syntax_error(char *str)
+/*Conditions for end of variable name in expansion cases.
+Needed for norm.*/
+int	check_end_var(char *str, int *j)
 {
-	printf("minishell: syntax error near unexpected token `%s'\n", str);
-	return (1);
+	if (str[*j] && str[*j] != '$' && str[*j] != '}' && str[*j] != '\''
+		&& str[*j] != ' ' && str[*j] != '\"' && str[*j] != '/' && str[*j] != '*'
+		&& (*j)++)
+		return (1);
+	return (0);
 }
 
 /*Error message for missing input cases.

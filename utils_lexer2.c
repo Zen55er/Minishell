@@ -110,18 +110,6 @@ int	check_end(char **input, int i)
 	return (0);
 }
 
-/*Returns index of next matching quote (or end of str).
-If there is no matching quote and the string ends, returns the index
-of the previous character to avoid a heap overflow in validate_input.*/
-int	jump_quotes(char *str, int i, char quote)
-{
-	while (str[++i] && str[i] != quote)
-		continue ;
-	if (!str[i])
-		return (i - 1);
-	return (i);
-}
-
 /*Checks whether input is complete
 (no missing information after |, ||, && or ${).*/
 int	validate_input(char **str)
@@ -145,8 +133,7 @@ int	validate_input(char **str)
 				exit = missing_input_fork(str, match);
 			i += char_finder(*str + i, (*str)[i]);
 		}
-		else if (i && (((*str)[i] == '|' && (*str)[i - 1] == '|')
-					|| (*str)[i] == '&'))
+		else if (i && check_end_chars(*str, i))
 			exit = check_end(str, i);
 		if (exit)
 			return (exit);

@@ -38,13 +38,10 @@ int	print_error(char *src, char *str, char *err, int flag)
 	char	*temp1;
 	char	*temp2;
 
-	if (src)
-	{
-		if (flag != 2)
-			temp1 = ft_strjoin(src, ": ");
-		else
-			temp1 = ft_strjoin(src, " ");
-	}
+	if (src && flag != 2)
+		temp1 = ft_strjoin(src, ": ");
+	else if (src && flag == 2)
+		temp1 = ft_strjoin(src, " ");
 	else
 		temp1 = ft_strdup("");
 	temp2 = ft_strjoin("minishell: ", temp1);
@@ -60,8 +57,24 @@ int	print_error(char *src, char *str, char *err, int flag)
 		temp1 = ft_strdup("\n");
 	temp1 = ft_strjoin_free(temp2, temp1);
 	ft_putstr_fd(temp1, STDERR_FILENO);
-	free(temp1);
-	return (1);
+	return (int_free(temp1, 1));
+}
+
+/*Prints error for heredoc cancellation cases*/
+void	print_error2(char *limiter, int *n)
+{
+	char	*tmp;
+	char	*s2;
+
+	tmp = ft_strdup("minishell: warning: here-document at line ");
+	s2 = ft_itoa(n);
+	tmp = ft_strjoin_free(tmp, s2);
+	s2 = ft_strdup(" delimited by end-of-file (wanted `");
+	tmp = ft_strjoin_free(tmp, s2);
+	s2 = ft_strjoin(limiter, "')\n");
+	tmp = ft_strjoin_free(tmp, s2);
+	ft_putstr_fd(tmp, 2);
+	free(tmp);
 }
 
 /*Gets last exit code.
