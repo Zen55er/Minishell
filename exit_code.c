@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_code.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 08:43:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/14 16:55:38 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/17 08:31:17 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	print_error2(char *limiter, int *n)
 	char	*s2;
 
 	tmp = ft_strdup("minishell: warning: here-document at line ");
-	s2 = ft_itoa(n);
+	s2 = ft_itoa(*n);
 	tmp = ft_strjoin_free(tmp, s2);
 	s2 = ft_strdup(" delimited by end-of-file (wanted `");
 	tmp = ft_strjoin_free(tmp, s2);
