@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/17 11:01:16 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:49:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	waiting(t_data *data)
 	while (++i < st_size(data->cmd_st))
 	{
 		waitpid(data->pid[i], &status, 0);
-		set_exit_code(WEXITSTATUS(status));
+		update_exit_code(WEXITSTATUS(status), 1);
 	}
 }
 

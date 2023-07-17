@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:25 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/13 11:25:17 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:05:50 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_cmd_st	*init_cmd_st_node(t_data *data, int j, int d)
 	fdin = STDIN_FILENO;
 	fdout = STDOUT_FILENO;
 	cmd = ft_calloc(count_args(data, j) + 1, sizeof(char *));
-	if (!cmd)
+	if (!cmd && update_exit_code(1, 1))
 		return (NULL);
 	c = j - 1;
 	if (get_fds(data->tokens, &fdin, &fdout, c + 1) && int_free(cmd, 1))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subshell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:55:19 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/13 12:10:24 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/17 13:50:04 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	subshell(t_data *data, char **tokens, int *token)
 	else if (!pid)
 		executor(data, sub_tokens, 1);
 	waitpid(pid, &status, 0);
-	set_exit_code(WEXITSTATUS(status));
+	update_exit_code(WEXITSTATUS(status), 1);
 	free(sub_tokens);
 	return ;
 }

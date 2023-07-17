@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/11 13:01:42 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:59:01 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,7 @@ int	normal_command(t_data *data, char **tokens, int token)
 		child(data, tokens, token);
 	waitpid(new_fork, &status, 0);
 	signal_global();
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
 	return (WEXITSTATUS(status));
 }

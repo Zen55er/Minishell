@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:52:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/17 11:44:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:49:37 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	get_fds(char **tokens, int *fdin, int *fdout, int c)
 		print_error(tokens[c + 1], 0, "No such file or directory", 0);
 	if (*fdin == -2)
 	{
-		set_exit_code(CTRL_C);
+		update_exit_code(CTRL_C, 1);
 		return (1);
 	}
 	return (0);

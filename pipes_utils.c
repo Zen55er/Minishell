@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:19:52 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/17 11:01:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:07:05 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	check_pipe(char **tokens, t_data *data)
 			if (redirection(data))
 			{
 				free_cmd_st(data);
-				set_exit_code(1);
 				return (1);
 			}
 			data->nodenmb = st_size(data->cmd_st);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/13 12:10:57 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/17 13:47:44 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,10 @@ void	executor(t_data *data, char **tokens, int flag)
 			continue ;
 		quotes_delimiter_full(tokens, i);
 		command = command_check(data, tokens[i], 0);
-		set_exit_code(command_call(data, tokens, i, command));
+		update_exit_code(command_call(data, tokens, i, command), 1);
 		i = skip_commands(tokens, i, command);
 	}
 	if (flag)
-	{
-		set_exit_code(update_exit_code(0, 0));
 		exit (update_exit_code(0, 0));
-	}
 	free_double(&(data->tokens));
 }

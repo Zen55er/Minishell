@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 10:57:25 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/22 16:41:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:50:04 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void	signal_cmd_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		set_exit_code(CTRL_C);
+		update_exit_code(CTRL_C, 1);
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 	}
 	if (sig == SIGQUIT)
 	{
-		set_exit_code(CTRL_BS);
+		update_exit_code(CTRL_BS, 1);
 		printf("Quit (core dumped)\n");
 	}
 }
@@ -42,7 +42,7 @@ void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		set_exit_code(130);
+		update_exit_code(CTRL_C, 1);
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
