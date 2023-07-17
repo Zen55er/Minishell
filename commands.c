@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/11 11:04:16 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:10:45 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,25 @@ int	delim_tok(char *token)
 int	cmd_echo(char **tokens, int tok)
 {
 	int	n_flag;
-	int	i;
 
 	n_flag = 0;
-	i = 0;
 	if ((!tokens[tok + 1] || delim_tok(tokens[tok + 1])) && printf("\n"))
 		return (OK_EXIT);
-	while (tokens[++tok] && ++i)
+	while (!ft_strcmp(tokens[++tok], "-n") && !tokens[tok][2])
+	{
+		n_flag = 1;
+		continue ;
+	}
+	while (tokens[tok])
 	{
 		if (delim_tok(tokens[tok]))
 			break ;
 		quotes_delimiter_full(tokens, tok);
-		if (!ft_strcmp(tokens[tok], "-n") && !tokens[tok][2])
-		{
-			n_flag = 1;
-			continue ;
-		}
 		if (tokens[tok])
 			printf("%s", tokens[tok]);
 		if (tokens[tok + 1] && !delim_tok(tokens[tok + 1]))
 			printf(" ");
+		tok++;
 	}
 	if (!n_flag)
 		printf("\n");
