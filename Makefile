@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+         #
+#    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2023/07/12 14:05:10 by mpatrao          ###   ########.fr        #
+#    Updated: 2023/07/17 10:33:05 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

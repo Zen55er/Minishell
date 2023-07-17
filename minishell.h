@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/15 16:12:56 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/17 11:23:21 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ int					check_skip(t_data *data, char **tokens, int *i);
 void				executor(t_data *data, char **tokens, int flag);
 
 /*pipes*/
+int					st_size(t_cmd_st *list);
 int					child_exec_cmd(t_data *data, int in, int out, t_cmd_st *nd);
 int					forking(t_data *data, t_cmd_st *node, int flag);
 void				waiting(t_data *data);
@@ -167,9 +168,9 @@ int					pipeline(t_data *data);
 /*pipes_utils*/
 int					check_fd_in(t_cmd_st *node, int j);
 int					check_fd_out(t_cmd_st *node, int pipefd[2]);
-int					st_size(t_cmd_st *list);
 void				free_cmd_st(t_data *data);
 int					check_pipe(char **tokens, t_data *data);
+int					count_args(t_data *data, int j);
 
 /*redirection*/
 int					check_redir(t_data *data, int c);
@@ -180,7 +181,7 @@ int					redirection(t_data *data);
 
 /*redirection utils*/
 void				ctrl_d_error(char *limiter);
-int					count_args(t_data *data, int j);
+pid_t				here_doc_fork(char *limiter);
 pid_t				here_doc(char *limiter);
 int					open_fds(char *redir, char *file);
 int					get_fds(char **tokens, int *fdin, int *fdout, int c);
@@ -282,7 +283,7 @@ void				reorder_list(t_ll **matches);
 /*exit_code.c*/
 char				*format_str(char *str, int flag);
 int					print_error(char *src, char *str, char *err, int flag);
-void				print_error2(char *limiter, int *n);
+void				print_error2(char *limiter, int n);
 int					update_exit_code(int error_code, int update);
 void				set_exit_code(int exit_code);
 

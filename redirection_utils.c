@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:52:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/15 17:01:01 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/17 11:44:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,66 +17,62 @@ void	ctrl_d_error(char *limiter)
 	char		*tmp;
 	int			fd;
 	static int	n;
-	int			test;
+	static int	first;
 
-	test = 0;
 	fd = open(".here_doc", O_RDONLY);
 	tmp = get_next_line(fd);
-	if (n)
-		n++;
-	while (tmp && int_free(tmp, 1))
+	n++;
+	while (tmp)
 	{
-		if (!ft_strcmp(tmp, limiter))
-			test = 1;
+		free(tmp);
 		tmp = get_next_line(fd);
-		if (tmp && ++n)
-			test = 0;
+		if (tmp)
+			n++;
 	}
-	if (test && int_free(tmp, 1))
-		return ;
 	free(tmp);
 	close(fd);
-	print_error2(limiter, &n);
+	if (!first)
+	{
+		first = 1;
+		print_error2(limiter, first);
+		return ;
+	}
+	print_error2(limiter, n);
 }
 
-int	count_args(t_data *data, int j)
+pid_t	here_doc_fork(char *limiter)
 {
-	int	c;
-
-	c = j + 1;
-	while (data->tokens[c]
-		&& !(data->tokens[c][0] == '|' && !data->tokens[c][1]))
-		c++;
-	return (c);
-}
-
-pid_t	here_doc(char *limiter)
-{
-	int		doc;
-	char	*buf;
 	pid_t	p;
 
 	signal(SIGINT, SIG_IGN);
 	p = fork();
 	if (p == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		doc = open(".here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
-		while (1)
-		{
-			write(1, "here_doc> ", 10);
-			buf = get_next_line(STDIN_FILENO);
-			if (!buf || (!ft_strncmp(buf, limiter, ft_strlen(limiter))
-					&& buf[ft_strlen(limiter)] == '\n'))
-				break ;
-			write(doc, buf, ft_strlen(buf));
-			free(buf);
-		}
-		close (doc);
-		free(buf);
-		exit(0);
-	}
+		here_doc(limiter);
 	return (p);
+}
+
+int	here_doc(char *limiter)
+{
+	int		doc;
+	char	*buf;
+
+	signal(SIGINT, SIG_DFL);
+	doc = open(".here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	while (1)
+	{
+		write(1, "here_doc> ", 10);
+		buf = get_next_line(STDIN_FILENO);
+		if (!buf || (!ft_strncmp(buf, limiter, ft_strlen(limiter))
+				&& buf[ft_strlen(limiter)] == '\n'))
+			break ;
+		write(doc, buf, ft_strlen(buf));
+		free(buf);
+	}
+	close (doc);
+	if (!buf)
+		exit(1);
+	free(buf);
+	exit(0);
 }
 
 int	open_fds(char *redir, char *file)
@@ -88,10 +84,11 @@ int	open_fds(char *redir, char *file)
 	i = -1;
 	if (!ft_strcmp(redir, "<<"))
 	{
-		p = here_doc(file);
+		p = here_doc_fork(file);
 		waitpid(p, &status, 0);
-		ctrl_d_error(file);
 		signal_global();
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
+			ctrl_d_error(file);
 		if (WIFSIGNALED(status) && WTERMSIG(status) == 2 && printf("\n"))
 			return (-2);
 		i = open(".here_doc", O_RDONLY);

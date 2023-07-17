@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:33 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/13 12:10:50 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/17 11:01:16 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	st_size(t_cmd_st *list)
+{
+	int	n;
+
+	if (!list)
+		return (0);
+	n = 0;
+	while (list)
+	{
+		list = list->next;
+		n++;
+	}
+	return (n);
+}
 
 int	child_exec_cmd(t_data *data, int in, int out, t_cmd_st *nd)
 {

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:19:52 by mpatrao           #+#    #+#             */
-/*   Updated: 2023/07/13 11:24:39 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 11:01:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,6 @@ int	check_fd_out(t_cmd_st *node, int pipefd[2])
 	if (node->redir_out > 1 || node->redir_out == -1)
 		i = node->redir_out;
 	return (i);
-}
-
-int	st_size(t_cmd_st *list)
-{
-	int	n;
-
-	if (!list)
-		return (0);
-	n = 0;
-	while (list)
-	{
-		list = list->next;
-		n++;
-	}
-	return (n);
 }
 
 void	free_cmd_st(t_data *data)
@@ -87,4 +72,15 @@ int	check_pipe(char **tokens, t_data *data)
 		}
 	}
 	return (-1);
+}
+
+int	count_args(t_data *data, int j)
+{
+	int	c;
+
+	c = j + 1;
+	while (data->tokens[c]
+		&& !(data->tokens[c][0] == '|' && !data->tokens[c][1]))
+		c++;
+	return (c);
 }
