@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:13:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/15 17:17:29 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/17 15:53:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*get_section(t_data *data, char *str, int i, int j)
 		free(temp);
 	}
 	if (section[0] == '\'' || section[0] == '\"')
-		section = quotes(section);
+		section = quotes(data, section);
 	return (section);
 }
 

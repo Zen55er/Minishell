@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/17 15:06:24 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:24:15 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_data
 	int			fd_out;
 	int			logic_operator;
 	int			permission_flag;
+	int			quote_flag;
 }			t_data;
 
 /*main.c*/
@@ -146,10 +147,11 @@ int					validate_tokens2(char **tokens, int i);
 int					validate_tokens(char **tokens);
 
 /*utils_parser2.c*/
-char				*quotes(char *str);
+char				*quotes(t_data *data, char *str);
 int					check_quotes_delimiter(char *token);
 void				quotes_delimiter(char **tokens, int tok);
 void				quotes_delimiter_full(char **tokens, int tok);
+int					exclude_delims(char *str);
 
 /*executor.c*/
 int					command_call(t_data *data, char **tokens, int tok, int cmd);

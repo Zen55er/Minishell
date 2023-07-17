@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 09:39:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/15 17:20:24 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/17 16:14:26 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,9 @@ int	parser(t_data	*data)
 	{
 		if (data->tokens[i][0] == '*' || char_finder(data->tokens[i], '*'))
 			fix_tokens_wc(data, &i);
+		data->quote_flag = 0;
+		if (exclude_delims(data->tokens[i]))
+			data->quote_flag = 1;
 		data->tokens[i] = token_parser(data, data->tokens[i]);
 	}
 	return (0);

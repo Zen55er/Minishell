@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/17 13:40:47 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:52:39 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	init(t_data *data, char **envp)
 	data->permission_flag = 0;
 	data->pipefd[0] = -1;
 	data->pipefd[1] = -1;
+	data->quote_flag = 0;
 	signal_global();
 	prep_env(data, envp);
 	update_curr_prev(data);

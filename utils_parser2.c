@@ -6,19 +6,19 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:57:59 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 11:41:13 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:23:49 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*Returns new string with text formatted without edge quotes*/
-char	*quotes(char *str)
+char	*quotes(t_data *data, char *str)
 {
 	int		len;
 	char	*new;
 
-	if (check_quotes_delimiter(str))
+	if (check_quotes_delimiter(str) && !data->quote_flag)
 		return (str);
 	len = ft_strlen(str);
 	new = ft_substr(str, 1, len - 2);
@@ -60,4 +60,30 @@ void	quotes_delimiter_full(char **tokens, int tok)
 	if (check_quotes_delimiter(tokens[tok]))
 		quotes_delimiter(tokens, tok);
 	return ;
+}
+
+/*Check to change quote_flag for parser quote cases.*/
+int	exclude_delims(char *str)
+{
+	int	i;
+	int	delims;
+	int	extra;
+
+	delims = 0;
+	extra = 0;
+	i = -1;
+	while (str[++i])
+	{
+		while (str[i] == '\'' || str[i] == '\"')
+			i++;
+		if (!str[i])
+			break ;
+		if (delim(&str[i]))
+			delims++;
+		else
+			extra++;
+		if (delims > 1 || extra)
+			return (1);
+	}
+	return (0);
 }
