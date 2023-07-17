@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/17 11:23:21 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:06:24 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,7 @@ void				print_ordered(t_ll *list);
 /*unset.c*/
 int					unset_var(t_ll **list, int count);
 int					check_unset(t_data *data, t_ll **list, int token, int *i);
+int					validate_var_unset(char **tokens, int tok);
 int					cmd_unset(t_data *data, char **tokens, int tok);
 
 /*signals.c*/

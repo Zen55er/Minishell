@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 18:34:49 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 09:55:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:11:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	check_single_cmd(t_data *data, char *cmd)
 		|| (cmd[0] == '/' && check_path(data->path, cmd)))
 		return (1);
 	i = -1;
-	while (data->path[++i])
+	while (data->path && data->path[++i])
 	{
 		test = ft_strjoin(data->path[i], cmd);
 		if (!access(test, X_OK))

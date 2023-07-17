@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 09:27:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/14 16:13:54 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/17 15:06:34 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,27 @@ int	check_unset(t_data *data, t_ll **list, int token, int *i)
 	return (0);
 }
 
+/*Checks if var is valid for unset.*/
+int	validate_var_unset(char **tokens, int tok)
+{
+	int	i;
+
+	if ((!tokens[tok] || !tokens[tok][0]))
+		return (print_error("unset", "`'", "not a valid identifier", 0));
+	i = -1;
+	while (tokens[tok][++i])
+	{
+		if (i && tokens[tok][i] == '=')
+			break ;
+		if ((!i && !ft_isalpha(tokens[tok][i]) && tokens[tok][i] != '_')
+		|| (i && !ft_isalnum(tokens[tok][i]) && tokens[tok][i] != '_'
+		&& tokens[tok][i] != '/' && tokens[tok][i] != ':'))
+			return (print_error("unset", tokens[tok]
+					, "not a valid identifier", 1));
+	}
+	return (0);
+}
+
 /*If given an argument, checks if it is a variable in env and deletes node*/
 int	cmd_unset(t_data *data, char **tokens, int tok)
 {
@@ -82,7 +103,7 @@ int	cmd_unset(t_data *data, char **tokens, int tok)
 		if (delim_tok(tokens[tok]))
 			break ;
 		quotes_delimiter_full(tokens, tok);
-		if (validate_var(tokens, tok))
+		if (validate_var_unset(tokens, tok))
 		{
 			i = 1;
 			continue ;
