@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpatrao <mpatrao@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/14 16:18:36 by mpatrao          ###   ########.fr       */
+/*   Updated: 2023/07/17 14:43:27 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_entry(t_data *data, t_ll *list, int tok, int i)
 	{
 		if (!i)
 			i = ft_strlen(data->tokens[tok]);
-		if (!ft_strcmp(temp->var, data->tokens[tok]))
+		if (!ft_strncmp(temp->var, data->tokens[tok], i))
 		{
 			if (temp->value)
 				free(temp->value);
@@ -38,6 +38,8 @@ int	check_entry(t_data *data, t_ll *list, int tok, int i)
 /*Adds node to env list taking into account if there is a value for var*/
 void	add_to_env(t_data *data, int tok, int i)
 {
+	if (check_entry(data, data->env, tok, i))
+		return ;
 	if (i && data->tokens[tok][i - 1] != '='
 		&& !ft_isspace(data->tokens[tok][i - 1])
 		&& data->tokens[tok][i + 1] != '='
@@ -87,8 +89,7 @@ int	export_arg(t_data *data, char **tokens, int tok)
 			continue ;
 		}
 		i = char_finder(tokens[tok], '=');
-		if ((tokens[tok][0] == '_' && !tokens[tok][1])
-			|| check_entry(data, data->env, tok, i))
+		if ((tokens[tok][0] == '_' && !tokens[tok][1]))
 			continue ;
 		add_to_env(data, tok, i);
 	}
