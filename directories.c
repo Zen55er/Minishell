@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/10 11:50:11 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 17:03:32 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ char	*cd_cases(t_data *data, char **tokens, int token)
 		dir = ft_strdup(data->prev_dir);
 	else
 	{
-		quotes_delimiter_full(tokens, token);
+		quotes_delimiter_full(tokens, token, 0);
 		dir = ft_strdup(tokens[token]);
+		quotes_delimiter_full(tokens, token, 1);
 	}
 	return (dir);
 }

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:40:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/17 14:43:27 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 17:07:19 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	export_arg(t_data *data, char **tokens, int tok)
 	{
 		if (delim_tok(tokens[tok]))
 			break ;
-		quotes_delimiter_full(tokens, tok);
+		quotes_delimiter_full(tokens, tok, 0);
 		if (validate_var(tokens, tok))
 		{
 			f = 1;
@@ -92,6 +92,7 @@ int	export_arg(t_data *data, char **tokens, int tok)
 		if ((tokens[tok][0] == '_' && !tokens[tok][1]))
 			continue ;
 		add_to_env(data, tok, i);
+		quotes_delimiter_full(tokens, tok, 1);
 	}
 	if (f)
 		return (ERROR_EXIT);

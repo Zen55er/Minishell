@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 13:31:48 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/11 11:11:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 17:00:50 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,18 @@ void	reorder_list(t_ll **matches)
 		if (temp != (*matches)->next)
 			temp2 = temp2->next;
 	}
+}
+
+/*Re-adds quotes to necessary tokens*/
+void	reverse_delim_quotes(char **tokens, int tok)
+{
+	char	*new_tok;
+	char	*temp;
+
+	temp = ft_strdup("'");
+	new_tok = ft_strjoin("'", tokens[tok]);
+	new_tok = ft_strjoin_free(new_tok, temp);
+	free(tokens[tok]);
+	tokens[tok] = new_tok;
+	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:57:59 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/17 16:23:49 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 17:48:59 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*quotes(t_data *data, char *str)
 	int		len;
 	char	*new;
 
-	if (check_quotes_delimiter(str) && !data->quote_flag)
+	if (check_quotes_delimiter(str, 2) && !data->quote_flag)
 		return (str);
 	len = ft_strlen(str);
 	new = ft_substr(str, 1, len - 2);
@@ -27,10 +27,18 @@ char	*quotes(t_data *data, char *str)
 }
 
 /*Checks if token is a delimiter with quotes*/
-int	check_quotes_delimiter(char *token)
+int	check_quotes_delimiter(char *token, int flag)
 {
-	char	*test;
+	char		*test;
+	static int	change_flag;
 
+	if (!change_flag && !flag)
+		change_flag = 1;
+	else if (change_flag && flag == 1)
+	{
+		change_flag = 0;
+		return (1);
+	}
 	if (token[0] != '\'' && token[0] != '\"')
 		return (0);
 	test = ft_substr(token, 1, ft_strlen(token) - 2);
@@ -55,10 +63,12 @@ void	quotes_delimiter(char **tokens, int tok)
 }
 
 /*Combination of functions above for norminette reasons*/
-void	quotes_delimiter_full(char **tokens, int tok)
+void	quotes_delimiter_full(char **tokens, int tok, int flag)
 {
-	if (check_quotes_delimiter(tokens[tok]))
+	if (!flag && check_quotes_delimiter(tokens[tok], flag))
 		quotes_delimiter(tokens, tok);
+	else if (flag && check_quotes_delimiter(tokens[tok], flag))
+		reverse_delim_quotes(tokens, tok);
 	return ;
 }
 

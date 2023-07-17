@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 09:27:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/17 15:06:34 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 17:17:05 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,17 @@ int	cmd_unset(t_data *data, char **tokens, int tok)
 	{
 		if (delim_tok(tokens[tok]))
 			break ;
-		quotes_delimiter_full(tokens, tok);
+		quotes_delimiter_full(tokens, tok, 0);
 		if (validate_var_unset(tokens, tok))
 		{
 			i = 1;
+			quotes_delimiter_full(tokens, tok, 1);
 			continue ;
 		}
-		if ((tokens[tok][0] == '_' && !tokens[tok][1])
-			|| check_unset(data, &data->env, tok, &i))
+		if (tokens[tok][0] == '_' && !tokens[tok][1])
 			continue ;
+		check_unset(data, &data->env, tok, &i);
+		quotes_delimiter_full(tokens, tok, 1);
 	}
 	if (i)
 		return (ERROR_EXIT);

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:08:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/17 13:47:44 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 17:04:23 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,10 @@ void	executor(t_data *data, char **tokens, int flag)
 	{
 		if (check_skip(data, tokens, &i))
 			continue ;
-		quotes_delimiter_full(tokens, i);
+		quotes_delimiter_full(tokens, i, 0);
 		command = command_check(data, tokens[i], 0);
 		update_exit_code(command_call(data, tokens, i, command), 1);
+		quotes_delimiter_full(tokens, i, 1);
 		i = skip_commands(tokens, i, command);
 	}
 	if (flag)

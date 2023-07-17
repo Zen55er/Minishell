@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:13:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/17 16:24:15 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/07/17 17:47:04 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,9 +148,9 @@ int					validate_tokens(char **tokens);
 
 /*utils_parser2.c*/
 char				*quotes(t_data *data, char *str);
-int					check_quotes_delimiter(char *token);
+int					check_quotes_delimiter(char *token, int flag);
 void				quotes_delimiter(char **tokens, int tok);
-void				quotes_delimiter_full(char **tokens, int tok);
+void				quotes_delimiter_full(char **token, int tok, int flag);
 int					exclude_delims(char *str);
 
 /*executor.c*/
@@ -282,13 +282,13 @@ int					final_wc_check(int i, char *token);
 /*utils_wildcards2.c*/
 void				swap(t_ll **matches, t_ll **temp, t_ll **temp2, int flag);
 void				reorder_list(t_ll **matches);
+void				reverse_delim_quotes(char **tokens, int tok);
 
 /*exit_code.c*/
 char				*format_str(char *str, int flag);
 int					print_error(char *src, char *str, char *err, int flag);
 void				print_error2(char *limiter, int n);
 int					update_exit_code(int error_code, int update);
-void				set_exit_code(int exit_code);
 
 /*subshell.c*/
 int					count_sub_tokens(char **tokens, int token);
