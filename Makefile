@@ -6,7 +6,7 @@
 #    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2023/07/17 10:33:05 by gacorrei         ###   ########.fr        #
+#    Updated: 2023/07/18 11:11:16 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC			= main.c lexer.c signals.c utils.c utils_lexer.c utils_lists.c \
 CC			= @cc
 LIBFT		= libft/libft.a
 LIBFT_DIR	= libft
-CFLAGS		= -Wall -Wextra -Werror -g3 -lreadline
+CFLAGS		= -Wall -Wextra -Werror -g3 -O3 -lreadline
 
 all:		$(NAME)
 
