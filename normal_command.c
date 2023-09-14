@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:22:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/07/17 17:02:35 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/14 12:01:41 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,10 @@ void	child(t_data *data, char **tokens, int token)
 		if (data->permission_flag)
 		{
 			data->permission_flag = 0;
+			free_all(0, data);
 			exit (ERROR_EXECUTE_PERMISSIONS);
 		}
+		free_all(0, data);
 		exit (ERROR_WRONG_COMMAND);
 	}
 	env2d = get_env2d(data->env);

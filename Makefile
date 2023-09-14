@@ -6,7 +6,7 @@
 #    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2023/07/18 11:11:16 by gacorrei         ###   ########.fr        #
+#    Updated: 2023/09/14 11:48:22 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ all:		$(NAME)
 
 $(NAME):	$(SRC)
 			@$(MAKE) --no-print-directory -C $(LIBFT_DIR)
-			$(CC) $(CFLAGS) $(^) -o $(@) $(LIBFT) -fsanitize=address,undefined
+			$(CC) $(CFLAGS) $(^) -o $(@) $(LIBFT)
+#-fsanitize=address,undefined
 
 clean:
 			@$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean
